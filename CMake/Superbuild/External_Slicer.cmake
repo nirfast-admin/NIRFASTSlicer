@@ -50,7 +50,6 @@ if(NOT DEFINED ${proj}_DIR)
     ViewControllers
     )
   set(${proj}_QTSCRIPTEDMODULES_DISABLED
-    DataProbe
     Endoscopy
     LabelStatistics
     PerformanceTests
@@ -60,8 +59,6 @@ if(NOT DEFINED ${proj}_DIR)
     )
   set(Slicer_CLIMODULES_DISABLED
     ACPCTransform
-    AddScalarVolumes
-    CastScalarVolume
     CheckerBoardFilter
     CreateDICOMSeries
     CurvatureAnisotropicDiffusion
@@ -77,18 +74,13 @@ if(NOT DEFINED ${proj}_DIR)
     HistogramMatching
     ImageLabelCombine
     LabelMapSmoothing
-    MaskScalarVolume
     MedianImageFilter
     ModelToLabelMap
-    MultiplyScalarVolumes
     N4ITKBiasFieldCorrection
     OrientScalarVolume
     PETStandardUptakeValueComputation
     ProbeVolumeWithModel
     RobustStatisticsSegmenter
-    SimpleRegionGrowingSegmentation
-    SubtractScalarVolumes
-    ThresholdScalarVolume
     VotingBinaryHoleFillingImageFilter
     MergeModels
     ModelMaker
@@ -152,7 +144,7 @@ if(NOT DEFINED ${proj}_DIR)
       -D${proj}_BUILD_DICOM_SUPPORT:BOOL=ON
       -D${proj}_BUILD_DIFFUSION_SUPPORT:BOOL=OFF
       -D${proj}_BUILD_EXTENSIONMANAGER_SUPPORT:BOOL=OFF
-      -D${proj}_BUILD_MULTIVOLUME_SUPPORT:BOOL=OFF
+      -D${proj}_BUILD_MULTIVOLUME_SUPPORT:BOOL=ON
       -D${proj}_USE_NUMPY:BOOL=ON
       -D${proj}_USE_OpenIGTLink:BOOL=OFF
       -D${proj}_USE_PYTHONQT_WITH_TCL:BOOL=OFF

@@ -47,16 +47,19 @@ set(ep_common_cxx_flags "${CMAKE_CXX_FLAGS_INIT} ${ADDITIONAL_CXX_FLAGS}")
 
 include(ExternalProjectAddSource)
 
-#ExternalProject_Add_Source(MyRemoteModule
-#  GIT_REPOSITORY ${git_protocol}://github.com/MyUser/MyRemoteModule.git
-#  GIT_TAG "123456790"
-#  SOURCE_DIR_VAR MyRemoteModule_SOURCE_DIR
-#  )
-#list(APPEND Slicer_REMOTE_DEPENDENCIES MyRemoteModule)
+ExternalProject_Add_Source(MatlabBridge
+  SVN_REPOSITORY https://subversion.assembla.com/svn/slicerrt/trunk/MatlabBridge
+  SVN_REVISION -r "2197"
+  SVN_USERNAME slicerbot
+  SVN_PASSWORD slicer
+  SOURCE_DIR_VAR MatlabBridge_SOURCE_DIR
+  )
+list(APPEND Slicer_REMOTE_DEPENDENCIES MatlabBridge)
 
 set(Slicer_REMOTE_SOURCE_DIRS
-#  ${MyRemoteModule_SOURCE_DIR}
+  ${MatlabBridge_SOURCE_DIR}
   )
+
 set_property(GLOBAL APPEND PROPERTY ${APPLICATION_NAME}_MODULES ${Slicer_REMOTE_SOURCE_DIRS})
 
 #-----------------------------------------------------------------------------
