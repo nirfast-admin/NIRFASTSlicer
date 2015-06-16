@@ -57,7 +57,7 @@ ExternalProject_Add_Source(MatlabBridge
 list(APPEND Slicer_REMOTE_DEPENDENCIES MatlabBridge)
 
 set(Slicer_REMOTE_SOURCE_DIRS
-  ${MatlabBridge_SOURCE_DIR}
+  ${MatlabBridge_SOURCE_DIR}/src
   )
 
 set_property(GLOBAL APPEND PROPERTY ${APPLICATION_NAME}_MODULES ${Slicer_REMOTE_SOURCE_DIRS})
