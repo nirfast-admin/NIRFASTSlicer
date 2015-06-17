@@ -146,7 +146,7 @@ if(NOT DEFINED ${proj}_DIR)
       -D${proj}_BUILD_EXTENSIONMANAGER_SUPPORT:BOOL=OFF
       -D${proj}_BUILD_MULTIVOLUME_SUPPORT:BOOL=ON
       -D${proj}_USE_NUMPY:BOOL=ON
-      -D${proj}_USE_OpenIGTLink:BOOL=OFF
+      -D${proj}_USE_OpenIGTLink:BOOL=ON
       -D${proj}_USE_PYTHONQT_WITH_TCL:BOOL=OFF
       -D${proj}_USE_PYTHONQT:BOOL=ON
       -D${proj}_USE_QtTesting:BOOL=OFF
