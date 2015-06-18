@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<executable>
+  <category>Matlab</category>
+  <title>NIRFast</title>
+  <description><![CDATA[Interface to NIRFast Matlab routines.]]></description>
+  <version>0.0.0.1</version>
+  <license/>
+  <contributor>Ricardo Ortiz (Kitware, Inc.)</contributor>
+  <parameters>
+    <label>Processing Parameters</label>
+    <description><![CDATA[NIRFast Parameters]]></description>
+    <string>
+      <label>Path to NIRFast</label>
+      <longflag>pathToNIRFast</longflag>
+    </string>
+  </parameters>
+  <parameters>
+    <label>IO</label>
+    <description><![CDATA[Input/output parameters]]></description>
+    <image>
+      <label>Input Volume</label>
+      <description><![CDATA[Input volume to be filtered]]></description>
+      <longflag>inputvolume</longflag>
+      <channel>input</channel>
+    </image>
+    <geometry type="model">
+      <label>Output Mesh</label>
+      <description><![CDATA[Output computed mesh]]></description>
+      <longflag>outputmesh</longflag>
+      <channel>output</channel>
+    </geometry>
+  </parameters>
+</executable>
