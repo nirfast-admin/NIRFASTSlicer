@@ -48,10 +48,8 @@ set(ep_common_cxx_flags "${CMAKE_CXX_FLAGS_INIT} ${ADDITIONAL_CXX_FLAGS}")
 include(ExternalProjectAddSource)
 
 ExternalProject_Add_Source(MatlabBridge
-  SVN_REPOSITORY https://subversion.assembla.com/svn/slicerrt/trunk/MatlabBridge
-  SVN_REVISION -r "2197"
-  SVN_USERNAME slicerbot
-  SVN_PASSWORD slicer
+  GIT_REPOSITORY git@kwgitlab.kitware.com:dartmouth/MatlabBridge.git
+  GIT_TAG NIRView
   SOURCE_DIR_VAR MatlabBridge_SOURCE_DIR
   )
 list(APPEND Slicer_REMOTE_DEPENDENCIES MatlabBridge)
