@@ -25,7 +25,8 @@
 #include <QSplashScreen>
 #include <QString>
 #include <QTimer>
-#include <QtGui>
+#include <QLabel>
+#include <QLineEdit>
 
 // Slicer includes
 #include "vtkSlicerConfigure.h"
@@ -243,17 +244,29 @@ int SlicerAppMain(int argc, char* argv[])
     }
 
   // Edit MatlabModuleGenerator widget
-  qSlicerAbstractCoreModule * matlabCoreModule = moduleManager->module("MatlabModuleGenerator");
-  qSlicerAbstractModuleWidget* matlabWidget = dynamic_cast<qSlicerAbstractModuleWidget*>(matlabCoreModule->widgetRepresentation());
+  qSlicerAbstractCoreModule * matlabModuleGenerator = moduleManager->module("MatlabModuleGenerator");
+  qSlicerAbstractModuleWidget* matlabWidget = dynamic_cast<qSlicerAbstractModuleWidget*>(matlabModuleGenerator->widgetRepresentation());
   if(matlabWidget)
     {
-    matlabWidget->findChild<QLabel*>("label_3")->hide();
-    matlabWidget->findChild<QLineEdit*>("lineEdit_MatlabScriptDirectory")->hide();
-    matlabWidget->findChild<ctkCollapsibleButton*>("CollapsibleButton")->hide();
+    QLabel* matlabLabel = matlabWidget->findChild<QLabel*>("label_3");
+    if(matlabLabel)
+      {
+      matlabLabel->hide();
+      }
+    QLineEdit* matlabLineEdit = matlabWidget->findChild<QLineEdit*>("lineEdit_MatlabScriptDirectory");
+    if(matlabLineEdit)
+      {
+        matlabLineEdit->hide();
+      }
+    ctkCollapsibleButton* matlabCollapsibleButton = matlabWidget->findChild<ctkCollapsibleButton*>("CollapsibleButton");
+    if(matlabCollapsibleButton)
+      {
+      matlabCollapsibleButton->hide();
+      }
     }
   else
     {
-    qDebug() << "Warning : could not update UI for the module"<< matlabCoreModule->name();
+    qWarning() << "Could not update UI for the module"<< matlabModuleGenerator->name();
     }
 
   // Launch NIRView splashScreen & window
