@@ -15,7 +15,11 @@
 
 ==============================================================================*/
 
+// MatlabModules include
+#include "NIRViewMatLabModulesConfigure.h"
+
 // Qt includes
+#include <QDebug>
 #include <QList>
 #include <QSettings>
 #include <QSplashScreen>
@@ -73,6 +77,20 @@ void setEnableQtTesting()
     }
 }
 #endif
+
+//-----------------------------------------------------------------------------
+bool isPathWithinPathsList(const QString& dirPath, const QStringList& pathsList)
+{
+  QDir dirToCheck(dirPath);
+  foreach(const QString& path, pathsList)
+  {
+    if (dirToCheck == QDir(dirPath))
+    {
+      return true;
+    }
+  }
+  return false;
+}
 
 //----------------------------------------------------------------------------
 void splashMessage(QScopedPointer<QSplashScreen>& splashScreen, const QString& message)
@@ -166,6 +184,17 @@ int SlicerAppMain(int argc, char* argv[])
     splashScreen->show();
     }
 
+  // Append Matlab module path to the additional paths
+  QString matlabModulesPath = app.slicerHome() + "/" + NIRView_MATLABMODULES_DIR;
+  QStringList additionalPaths = app.revisionUserSettings()->value("Modules/AdditionalPaths").toStringList();
+  if (!isPathWithinPathsList(matlabModulesPath,additionalPaths))
+    {
+    additionalPaths << matlabModulesPath;
+    app.revisionUserSettings()->setValue("Modules/AdditionalPaths",additionalPaths);
+    qDebug() << "Adding path to Modules/AdditionalPaths : " << matlabModulesPath.toLatin1();
+    }
+
+  // Define ModuleFactoryManager using the additional paths
   qSlicerModuleManager * moduleManager = qSlicerApplication::application()->moduleManager();
   qSlicerModuleFactoryManager * moduleFactoryManager = moduleManager->factoryManager();
   moduleFactoryManager->addSearchPaths(app.commandOptions()->additonalModulePaths());

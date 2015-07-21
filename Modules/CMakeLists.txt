@@ -19,3 +19,4 @@
 add_subdirectory(CLI)
 add_subdirectory(Loadable)
 add_subdirectory(Scripted)
+set_property(GLOBAL APPEND PROPERTY ${APPLICATION_NAME}_MODULES ${CMAKE_CURRENT_SOURCE_DIR}/MatlabModules)
