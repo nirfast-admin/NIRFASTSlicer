@@ -25,12 +25,14 @@
 #include <QSplashScreen>
 #include <QString>
 #include <QTimer>
+#include <QtGui>
 
 // Slicer includes
 #include "vtkSlicerConfigure.h"
 
 // CTK includes
 #include <ctkAbstractLibraryFactory.h>
+#include <ctkCollapsibleButton.h>
 #ifdef Slicer_USE_PYTHONQT
 # include <ctkPythonConsole.h>
 #endif
@@ -49,6 +51,8 @@
 #include "qSlicerCommandOptions.h"
 #include "qSlicerModuleFactoryManager.h"
 #include "qSlicerModuleManager.h"
+#include <qSlicerAbstractModuleRepresentation.h>
+#include <qSlicerAbstractModuleWidget.h>
 #include "Widgets/qAppStyle.h"
 
 // ITK includes
@@ -238,6 +242,21 @@ int SlicerAppMain(int argc, char* argv[])
     qDebug() << "Number of loaded modules:" << moduleManager->modulesNames().count();
     }
 
+  // Edit MatlabModuleGenerator widget
+  qSlicerAbstractCoreModule * matlabCoreModule = moduleManager->module("MatlabModuleGenerator");
+  qSlicerAbstractModuleWidget* matlabWidget = dynamic_cast<qSlicerAbstractModuleWidget*>(matlabCoreModule->widgetRepresentation());
+  if(matlabWidget)
+    {
+    matlabWidget->findChild<QLabel*>("label_3")->hide();
+    matlabWidget->findChild<QLineEdit*>("lineEdit_MatlabScriptDirectory")->hide();
+    matlabWidget->findChild<ctkCollapsibleButton*>("CollapsibleButton")->hide();
+    }
+  else
+    {
+    qDebug() << "Warning : could not update UI for the module"<< matlabCoreModule->name();
+    }
+
+  // Launch NIRView splashScreen & window
   splashMessage(splashScreen, QString());
 
   if (window)
