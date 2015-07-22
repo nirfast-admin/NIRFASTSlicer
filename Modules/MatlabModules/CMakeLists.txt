@@ -16,20 +16,48 @@
 #
 #============================================================================
 
+# The following call will include the NIRViewConfig.cmake
+# defining the variable NIRFast_SOURCE_DIR
+find_package(NIRView REQUIRED)
+
+### NIRFast ###
+
+# Set paths
+set(NIRView_NIRFAST_DIR "${Slicer_LIB_DIR}/NIRFast")
+set(NIRView_INSTALL_NIRFAST_DIR "${Slicer_INSTALL_ROOT}${NIRView_NIRFAST_DIR}")
+
+# Copy NIRFast
+message(STATUS "Copying project sources: NIRFast")
+file(
+  COPY ${NIRFast_SOURCE_DIR}
+  DESTINATION ${CMAKE_BINARY_DIR}/${Slicer_LIB_DIR}
+)
+
+# Install NIRFast
+install(
+  DIRECTORY ${NIRFast_SOURCE_DIR}
+  DESTINATION ${NIRView_INSTALL_NIRFAST_DIR}
+  COMPONENT Runtime
+)
+
+### MatlabModules ###
+
+# Define names of MatlabModules
 set(modules NIRFast Threshold)
 
+# Set paths
 set(NIRView_MATLABMODULES_DIR "${Slicer_LIB_DIR}/MatlabModules")
 set(NIRView_INSTALL_MATLABMODULES_DIR "${Slicer_INSTALL_ROOT}${NIRView_MATLABMODULES_DIR}")
 
+# Configure and Install files
 foreach(module ${modules})
-
   message(STATUS "Configuring Matlab module: ${module}")
   configure_file(
     ${module}.xml 
     ${CMAKE_BINARY_DIR}/${NIRView_MATLABMODULES_DIR}/${module}.xml
   )
   configure_file(
-    ${module}.m
+    ${module}.m.in
     ${CMAKE_BINARY_DIR}/${NIRView_MATLABMODULES_DIR}/${module}.m
   )
   configure_file(
@@ -43,7 +71,9 @@ foreach(module ${modules})
   )
 endforeach()
 
+# Configure file containing the variable NIRView_MATLABMODULES_DIR
+# readable by main.cxx to add the path to the modules additional paths
 configure_file(
   NIRViewMatLabModulesConfigure.h.in
   ${CMAKE_BINARY_DIR}/NIRViewMatLabModulesConfigure.h
-  )
+)

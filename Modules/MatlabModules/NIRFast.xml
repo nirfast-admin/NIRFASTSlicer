@@ -7,14 +7,6 @@
   <license/>
   <contributor>Ricardo Ortiz (Kitware, Inc.)</contributor>
   <parameters>
-    <label>Processing Parameters</label>
-    <description><![CDATA[NIRFast Parameters]]></description>
-    <string>
-      <label>Path to NIRFast</label>
-      <longflag>pathToNIRFast</longflag>
-    </string>
-  </parameters>
-  <parameters>
     <label>IO</label>
     <description><![CDATA[Input/output parameters]]></description>
     <image>
@@ -23,11 +15,21 @@
       <longflag>inputvolume</longflag>
       <channel>input</channel>
     </image>
+  </parameters>
+  <parameters>
+    <label>Output</label>
+    <description>Matlab command output</description>
     <geometry type="model">
       <label>Output Mesh</label>
       <description><![CDATA[Output computed mesh]]></description>
       <longflag>outputmesh</longflag>
       <channel>output</channel>
     </geometry>
+    <string>
+      <label>NIRFast Path</label>
+      <name>NIRFastPath</name>
+      <channel>output</channel>
+    </string>    
   </parameters>
+
 </executable>

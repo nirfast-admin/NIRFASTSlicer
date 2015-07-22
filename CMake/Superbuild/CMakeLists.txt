@@ -47,10 +47,19 @@ set(ep_common_cxx_flags "${CMAKE_CXX_FLAGS_INIT} ${ADDITIONAL_CXX_FLAGS}")
 
 include(ExternalProjectAddSource)
 
+ExternalProject_Add_Source(NIRFast
+  GIT_REPOSITORY git@kwgitlab.kitware.com:dartmouth/NIRFast-3DSlicer.git
+  GIT_TAG 181a28a2
+  SOURCE_DIR_VAR NIRFast_SOURCE_DIR
+  PROJECTS Slicer
+  )
+list(APPEND Slicer_REMOTE_DEPENDENCIES NIRFast)
+
 ExternalProject_Add_Source(MatlabBridge
   GIT_REPOSITORY git@kwgitlab.kitware.com:dartmouth/MatlabBridge.git
   GIT_TAG NIRView
   SOURCE_DIR_VAR MatlabBridge_SOURCE_DIR
+  PROJECTS Slicer
   )
 list(APPEND Slicer_REMOTE_DEPENDENCIES MatlabBridge)
 

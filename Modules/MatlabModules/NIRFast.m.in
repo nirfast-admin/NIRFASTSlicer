@@ -3,23 +3,25 @@ function outputParams=NIRFast(inputParams)
 % and performs thresholding operation on the volume.
 %
 % Parameters:
-%  inputParams.threshold: threshold value
-%  inputParams.inputvolume: input image filename
-%  inputParams.outputvolume: output image filename, result of the processing
-%  outputParams.min: image minimum value
-%  outputParams.max: image maximum value
+%  inputParams.inputvolume: labelmap
+%  inputParams.outputmesh: output mesh
+%  outputParams.NIRFastPath: path to NIRFast sources
 %
-addpath(strcat(inputParams.pathToNIRFast,'/gui'))
-addpath(strcat(inputParams.pathToNIRFast,'/toolbox'))
-%img=cli_imageread(inputParams.inputvolume);
 
-%outputParams.min=min(min(min(img.pixelData)));
-%outputParams.max=max(max(max(img.pixelData)));
+% Get paths from CMAKE variables
+NIRViewPath='@CMAKE_BINARY_DIR@';
+NIRFastPath='@NIRView_NIRFAST_DIR@';
 
-%img.pixelData=(double(img.pixelData)>inputParams.threshold)*100;
+% Add paths to 'gui' and 'toolbox' within NIRFast
+GUIPath=fullfile(NIRViewPath,NIRFastPath,'gui');
+TOOLPath=fullfile(NIRViewPath,NIRFastPath,'toolbox');
+addpath(genpath(GUIPath));
+addpath(genpath(TOOLPath));
 
-%cli_imagewrite(inputParams.outputvolume, img);
+% Display NIRFast sources directory
+outputParams.NIRFastPath=fullfile(NIRViewPath,NIRFastPath);
 
+% Launch main function from nirfast.m in NIRFAST
 out = nirfast()
 
 %% Help for reading/writing parameters
