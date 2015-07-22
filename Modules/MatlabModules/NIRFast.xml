@@ -25,11 +25,5 @@
       <longflag>outputmesh</longflag>
       <channel>output</channel>
     </geometry>
-    <string>
-      <label>NIRFast Path</label>
-      <name>NIRFastPath</name>
-      <channel>output</channel>
-    </string>    
   </parameters>
-
 </executable>

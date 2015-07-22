@@ -8,18 +8,11 @@ function outputParams=NIRFast(inputParams)
 %  outputParams.NIRFastPath: path to NIRFast sources
 %
 
-% Get paths from CMAKE variables
-NIRViewPath='@CMAKE_BINARY_DIR@';
-NIRFastPath='@NIRView_NIRFAST_DIR@';
-
 % Add paths to 'gui' and 'toolbox' within NIRFast
-GUIPath=fullfile(NIRViewPath,NIRFastPath,'gui');
-TOOLPath=fullfile(NIRViewPath,NIRFastPath,'toolbox');
+GUIPath=fullfile('..','NIRFast','gui');
+TOOLPath=fullfile('..','NIRFast','toolbox');
 addpath(genpath(GUIPath));
 addpath(genpath(TOOLPath));
-
-% Display NIRFast sources directory
-outputParams.NIRFastPath=fullfile(NIRViewPath,NIRFastPath);
 
 % Launch main function from nirfast.m in NIRFAST
 out = nirfast();

@@ -23,14 +23,14 @@ find_package(NIRView REQUIRED)
 ### NIRFast ###
 
 # Set paths
-set(NIRView_NIRFAST_DIR "${Slicer_LIB_DIR}/NIRFast")
+set(NIRView_NIRFAST_DIR "${Slicer_LIB_DIR}")
 set(NIRView_INSTALL_NIRFAST_DIR "${Slicer_INSTALL_ROOT}${NIRView_NIRFAST_DIR}")
 
 # Copy NIRFast
 message(STATUS "Copying project sources: NIRFast")
 file(
   COPY ${NIRFast_SOURCE_DIR}
-  DESTINATION ${CMAKE_BINARY_DIR}/${Slicer_LIB_DIR}
+  DESTINATION ${NIRView_NIRFAST_DIR}
 )
 
 # Install NIRFast
@@ -51,21 +51,24 @@ set(NIRView_INSTALL_MATLABMODULES_DIR "${Slicer_INSTALL_ROOT}${NIRView_MATLABMOD
 
 # Configure and Install files
 foreach(module ${modules})
-  message(STATUS "Configuring Matlab module: ${module}")
+  message(STATUS "Copying Matlab module: ${module}")
   configure_file(
     ${module}.xml 
     ${CMAKE_BINARY_DIR}/${NIRView_MATLABMODULES_DIR}/${module}.xml
+    COPY_ONLY
   )
   configure_file(
-    ${module}.m.in
+    ${module}.m
     ${CMAKE_BINARY_DIR}/${NIRView_MATLABMODULES_DIR}/${module}.m
+    COPY_ONLY
   )
   configure_file(
     ${module}
     ${CMAKE_BINARY_DIR}/${NIRView_MATLABMODULES_DIR}/${module}
+    COPY_ONLY
   )
   install(
-    FILES ${module}.xml ${module}.m.in ${module}
+    FILES ${module}.xml ${module}.m ${module}
     DESTINATION ${NIRView_INSTALL_MATLABMODULES_DIR}
     COMPONENT Runtime
   )
