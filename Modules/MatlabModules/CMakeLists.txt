@@ -65,7 +65,7 @@ foreach(module ${modules})
     ${CMAKE_BINARY_DIR}/${NIRView_MATLABMODULES_DIR}/${module}
   )
   install(
-    FILES ${module}.xml ${module}.m ${module}
+    FILES ${module}.xml ${module}.m.in ${module}
     DESTINATION ${NIRView_INSTALL_MATLABMODULES_DIR}
     COMPONENT Runtime
   )
