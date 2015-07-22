@@ -22,7 +22,7 @@ addpath(genpath(TOOLPath));
 outputParams.NIRFastPath=fullfile(NIRViewPath,NIRFastPath);
 
 % Launch main function from nirfast.m in NIRFAST
-out = nirfast()
+out = nirfast();
 
 %% Help for reading/writing parameters
 %
