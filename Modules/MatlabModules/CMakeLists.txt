@@ -30,7 +30,7 @@ set(NIRView_INSTALL_NIRFAST_DIR "${Slicer_INSTALL_ROOT}${NIRView_NIRFAST_DIR}")
 message(STATUS "Copying project sources: NIRFast")
 file(
   COPY ${NIRFast_SOURCE_DIR}
-  DESTINATION ${NIRView_NIRFAST_DIR}
+  DESTINATION ${CMAKE_BINARY_DIR}/${NIRView_NIRFAST_DIR}
 )
 
 # Install NIRFast
