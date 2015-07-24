@@ -68,7 +68,12 @@ foreach(module ${modules})
     COPY_ONLY
   )
   install(
-    FILES ${module}.xml ${module}.m ${module}
+    FILES ${module}.xml ${module}.m
+    DESTINATION ${NIRView_INSTALL_MATLABMODULES_DIR}
+    COMPONENT Runtime
+  )
+  install(
+    PROGRAMS ${module}
     DESTINATION ${NIRView_INSTALL_MATLABMODULES_DIR}
     COMPONENT Runtime
   )
