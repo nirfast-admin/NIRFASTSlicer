@@ -157,6 +157,7 @@ if(NOT DEFINED ${proj}_DIR)
       -D${proj}_QTSCRIPTEDMODULES_DISABLED:STRING=${${proj}_QTSCRIPTEDMODULES_DISABLED}
       -D${proj}_BUILD_EMSegment:BOOL=OFF
       # Slicer remote modules
+      -D${proj}_BUILD_MultiVolumeExplorer:BOOL=OFF
       -D${proj}_BUILD_BRAINSTOOLS:BOOL=OFF
       -D${proj}_BUILD_ChangeTrackerPy:BOOL=OFF
       -D${proj}_BUILD_CompareVolumes:BOOL=OFF
