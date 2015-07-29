@@ -1,7 +1,5 @@
 function outputParams=Image2Mesh(inputParams)
-% Example function that returns the minimum and maximum voxel value in a volume
-% and performs thresholding operation on the volume.
-%
+% TODO instead of launching directly image2mesh_gui and giving those parameters path
 % Parameters:
 %  inputParams.inputvolume: labelmap
 %  inputParams.outputmesh: output mesh

@@ -6,24 +6,4 @@
   <version>0.0.0.2</version>
   <license/>
   <contributor>Ricardo Ortiz (Kitware, Inc.), Alexis Girault (Kitware, Inc)</contributor>
-  <parameters>
-    <label>IO</label>
-    <description><![CDATA[Input/output parameters]]></description>
-    <image>
-      <label>Input Volume</label>
-      <description><![CDATA[Input volume to be filtered]]></description>
-      <longflag>inputvolume</longflag>
-      <channel>input</channel>
-    </image>
-  </parameters>
-  <parameters>
-    <label>Output</label>
-    <description>Matlab command output</description>
-    <geometry type="model">
-      <label>Output Mesh</label>
-      <description><![CDATA[Output computed mesh]]></description>
-      <longflag>outputmesh</longflag>
-      <channel>output</channel>
-    </geometry>
-  </parameters>
 </executable>
