@@ -40,6 +40,26 @@ install(
   COMPONENT Runtime
 )
 
+### NIRFastMeshing ###
+
+# Set paths
+set(NIRView_NIRFASTMESHING_DIR "${Slicer_LIB_DIR}")
+set(NIRView_INSTALL_NIRFASTMESHING_DIR "${Slicer_INSTALL_ROOT}${NIRView_NIRFASTMESHING_DIR}")
+
+# Copy NIRFast
+message(STATUS "Copying project sources: NIRFastMeshing")
+file(
+  COPY ${NIRFastMeshing_SOURCE_DIR}
+  DESTINATION ${CMAKE_BINARY_DIR}/${NIRView_NIRFASTMESHING_DIR}
+)
+
+# Install NIRFast
+install(
+  DIRECTORY ${NIRFastMeshing_SOURCE_DIR}
+  DESTINATION ${NIRView_INSTALL_NIRFASTMESHING_DIR}
+  COMPONENT Runtime
+)
+
 ### MatlabModules ###
 
 # Define names of MatlabModules

@@ -13,8 +13,14 @@ TOOLPath=fullfile('..','NIRFast','toolbox');
 addpath(genpath(GUIPath));
 addpath(genpath(TOOLPath));
 
+% Add paths to 'base' and 'image2mesh_cgal' within NIRFastMeshing
+BASEPath=fullfile('..','NIRFastMeshing','base','trunk');
+MESHERPath=fullfile('..','NIRFastMeshing','image2mesh_cgal','trunk');
+addpath(genpath(BASEPath));
+addpath(genpath(MESHERPath));
+
 % Launch main function from nirfast.m in NIRFAST
-out = nirfast();
+out = image2mesh_gui();
 
 %% Help for reading/writing parameters
 %

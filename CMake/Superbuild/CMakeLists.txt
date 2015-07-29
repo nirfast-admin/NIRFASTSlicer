@@ -55,6 +55,14 @@ ExternalProject_Add_Source(NIRFast
   )
 list(APPEND Slicer_REMOTE_DEPENDENCIES NIRFast)
 
+ExternalProject_Add_Source(NIRFastMeshing
+  GIT_REPOSITORY https://github.com/nirfast/nirfast-meshing-dev.git
+  GIT_TAG e5b3cb3
+  SOURCE_DIR_VAR NIRFastMeshing_SOURCE_DIR
+  PROJECTS Slicer
+  )
+list(APPEND Slicer_REMOTE_DEPENDENCIES NIRFastMeshing)
+
 ExternalProject_Add_Source(MultiVolumeExplorer
   GIT_REPOSITORY git@kwgitlab.kitware.com:dartmouth/MultiVolumeExplorer.git
   GIT_TAG NIRView

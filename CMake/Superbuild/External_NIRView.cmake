@@ -63,6 +63,7 @@ if(NOT DEFINED ${proj}_DIR AND NOT ${CMAKE_PROJECT_NAME}_USE_SYSTEM_${proj})
       -DVTK_DIR:PATH=${VTK_DIR}
       -DITK_DIR:PATH=${ITK_DIR}
       -DNIRFast_SOURCE_DIR:PATH=${NIRFast_SOURCE_DIR}
+      -DNIRFastMeshing_SOURCE_DIR:PATH=${NIRFastMeshing_SOURCE_DIR}
       #${dependency_args}
     DEPENDS
       ${${proj}_DEPENDENCIES}
