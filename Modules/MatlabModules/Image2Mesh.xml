@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <executable>
-  <category>Matlab</category>
-  <title>NIRFast</title>
+  <category>NIRFast</category>
+  <title>Image2Mesh</title>
   <description><![CDATA[Interface to NIRFast Matlab routines.]]></description>
-  <version>0.0.0.1</version>
+  <version>0.0.0.2</version>
   <license/>
-  <contributor>Ricardo Ortiz (Kitware, Inc.)</contributor>
+  <contributor>Ricardo Ortiz (Kitware, Inc.), Alexis Girault (Kitware, Inc)</contributor>
   <parameters>
     <label>IO</label>
     <description><![CDATA[Input/output parameters]]></description>

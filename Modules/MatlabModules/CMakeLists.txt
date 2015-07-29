@@ -43,7 +43,7 @@ install(
 ### MatlabModules ###
 
 # Define names of MatlabModules
-set(modules NIRFast Threshold)
+set(modules Image2Mesh)
 
 # Set paths
 set(NIRView_MATLABMODULES_DIR "${Slicer_LIB_DIR}/MatlabModules")

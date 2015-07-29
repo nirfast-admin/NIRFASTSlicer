@@ -3,7 +3,7 @@
 # otherwise run the associated Matlab script.
 # MatlabBridge proxy version: 1.1
 
-MODULE_NAME="NIRFast"
+MODULE_NAME="Image2Mesh"
 
 if [ $1 = "--xml" ]; then
   cat $MODULE_NAME.xml

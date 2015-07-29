@@ -1,11 +1,10 @@
-function outputParams=NIRFast(inputParams)
+function outputParams=Image2Mesh(inputParams)
 % Example function that returns the minimum and maximum voxel value in a volume
 % and performs thresholding operation on the volume.
 %
 % Parameters:
 %  inputParams.inputvolume: labelmap
 %  inputParams.outputmesh: output mesh
-%  outputParams.NIRFastPath: path to NIRFast sources
 %
 
 % Add paths to 'gui' and 'toolbox' within NIRFast
