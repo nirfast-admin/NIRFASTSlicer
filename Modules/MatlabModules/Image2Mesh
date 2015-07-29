@@ -5,7 +5,7 @@
 
 MODULE_NAME="Image2Mesh"
 
-if [ $1 = "--xml" ]; then
+if [ "$1" == "--xml" ]; then
   cat $MODULE_NAME.xml
   exit 0
 fi
