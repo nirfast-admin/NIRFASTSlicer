@@ -63,8 +63,8 @@ void qAppMainWindowPrivate::setupUi(QMainWindow * mainWindow)
   this->MainToolBar->setVisible(false);
   //this->ModuleSelectorToolBar->setVisible(false);
   this->ModuleToolBar->setVisible(false);
-  this->ViewToolBar->setVisible(false);
-  this->MouseModeToolBar->setVisible(false);
+  //this->ViewToolBar->setVisible(false);
+  //this->MouseModeToolBar->setVisible(false);
   this->CaptureToolBar->setVisible(false);
   this->ViewersToolBar->setVisible(false);
   this->DialogToolBar->setVisible(false);
