@@ -5,20 +5,16 @@ function outputParams=Image2Mesh(inputParams)
 %  inputParams.outputmesh: output mesh
 %
 
-% Add paths to 'gui' and 'toolbox' within NIRFast
-GUIPath=fullfile('..','NIRFast','gui');
-TOOLPath=fullfile('..','NIRFast','toolbox');
-addpath(genpath(GUIPath));
-addpath(genpath(TOOLPath));
+% Add paths to NIRFast
+NIRFASTPath=fullfile('..','NIRFast');
+addpath(genpath(NIRFASTPath));
 
-% Add paths to 'base' and 'image2mesh_cgal' within NIRFastMeshing
-BASEPath=fullfile('..','NIRFastMeshing','base','trunk');
-MESHERPath=fullfile('..','NIRFastMeshing','image2mesh_cgal','trunk');
-addpath(genpath(BASEPath));
-addpath(genpath(MESHERPath));
+% Add paths to NIRFastMeshing
+MESHINGPath=fullfile('..','NIRFastMeshing');
+addpath(genpath(MESHINGPath));
 
 % Launch main function from nirfast.m in NIRFAST
-out = image2mesh_gui();
+image2mesh_gui();
 
 %% Help for reading/writing parameters
 %
