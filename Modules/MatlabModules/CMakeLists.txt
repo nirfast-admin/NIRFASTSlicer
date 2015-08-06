@@ -71,29 +71,39 @@ set(NIRView_INSTALL_MATLABMODULES_DIR "${Slicer_INSTALL_ROOT}${NIRView_MATLABMOD
 
 # Configure and Install files
 foreach(module ${modules})
+
   message(STATUS "Copying Matlab module: ${module}")
+
+  set(moduleXMLFile ${module}.xml)
+  set(moduleMFile ${module}.m)
+  if(WIN32)
+	set(moduleExecutable ${module}.bat)
+  else()
+    set(moduleExecutable ${module})
+  endif()
+  
   configure_file(
-    ${module}.xml 
-    ${CMAKE_BINARY_DIR}/${NIRView_MATLABMODULES_DIR}/${module}.xml
+    ${moduleXMLFile}
+    ${CMAKE_BINARY_DIR}/${NIRView_MATLABMODULES_DIR}/${moduleXMLFile}
     COPY_ONLY
   )
   configure_file(
-    ${module}.m
-    ${CMAKE_BINARY_DIR}/${NIRView_MATLABMODULES_DIR}/${module}.m
+    ${moduleMFile}
+    ${CMAKE_BINARY_DIR}/${NIRView_MATLABMODULES_DIR}/${moduleMFile}
     COPY_ONLY
   )
   configure_file(
-    ${module}
-    ${CMAKE_BINARY_DIR}/${NIRView_MATLABMODULES_DIR}/${module}
+    ${moduleExecutable}
+    ${CMAKE_BINARY_DIR}/${NIRView_MATLABMODULES_DIR}/${moduleExecutable}
     COPY_ONLY
   )
   install(
-    FILES ${module}.xml ${module}.m
+    FILES ${moduleXMLFile} ${moduleMFile}
     DESTINATION ${NIRView_INSTALL_MATLABMODULES_DIR}
     COMPONENT Runtime
   )
   install(
-    PROGRAMS ${module}
+    PROGRAMS ${moduleExecutable}
     DESTINATION ${NIRView_INSTALL_MATLABMODULES_DIR}
     COMPONENT Runtime
   )
