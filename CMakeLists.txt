@@ -103,7 +103,7 @@ mark_as_superbuild(VARS Slicer_USE_PYTHONQT_WITH_OPENSSL:BOOL PROJECTS Slicer)
 
 #-----------------------------------------------------------------------------
 if(WIN32)
-  option(Slicer_BUILD_WIN32_CONSOLE "Build ${PROJECT_NAME} executable as a console app on windows (allows debug output)" ON)
+  option(Slicer_BUILD_WIN32_CONSOLE "Build ${PROJECT_NAME} executable as a console app on windows (allows debug output)" OFF)
 else()
   set(Slicer_BUILD_WIN32_CONSOLE OFF)
 endif()
