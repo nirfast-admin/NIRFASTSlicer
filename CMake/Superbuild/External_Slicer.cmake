@@ -150,7 +150,7 @@ if(NOT DEFINED ${proj}_DIR)
       -D${proj}_USE_PYTHONQT_WITH_TCL:BOOL=OFF
       -D${proj}_USE_PYTHONQT:BOOL=ON
       -D${proj}_USE_QtTesting:BOOL=OFF
-      -D${proj}_USE_SimpleITK:BOOL=OFF
+      -D${proj}_USE_SimpleITK:BOOL=ON
       # Slicer built-in modules
       -D${proj}_CLIMODULES_DISABLED:STRING=${${proj}_CLIMODULES_DISABLED}
       -D${proj}_QTLOADABLEMODULES_DISABLED:STRING=${${proj}_QTLOADABLEMODULES_DISABLED}
