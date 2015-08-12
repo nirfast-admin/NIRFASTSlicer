@@ -47,7 +47,7 @@ if(NOT DEFINED ${proj}_DIR)
   set(${proj}_QTLOADABLEMODULES_DISABLED
     SceneViews
     SlicerWelcome
-    ViewControllers
+    #ViewControllers
     )
   set(${proj}_QTSCRIPTEDMODULES_DISABLED
     Endoscopy
@@ -73,7 +73,7 @@ if(NOT DEFINED ${proj}_DIR)
     GrayscaleModelMaker
     HistogramMatching
     ImageLabelCombine
-    LabelMapSmoothing
+    #LabelMapSmoothing
     MedianImageFilter
     ModelToLabelMap
     N4ITKBiasFieldCorrection
@@ -83,7 +83,7 @@ if(NOT DEFINED ${proj}_DIR)
     RobustStatisticsSegmenter
     VotingBinaryHoleFillingImageFilter
     MergeModels
-    ModelMaker
+    #ModelMaker
     ResampleDTIVolume
     # ResampleScalarVectorDWIVolume # Needed by 'CropVolume' module
     )
