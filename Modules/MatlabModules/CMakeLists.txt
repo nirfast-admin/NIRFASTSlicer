@@ -90,17 +90,17 @@ foreach(module ${modules})
   configure_file(
     ${moduleXMLFile}
     ${CMAKE_BINARY_DIR}/${NIRView_MATLABMODULES_DIR}/${moduleXMLFile}
-    COPY_ONLY
+    COPYONLY
   )
   configure_file(
     ${moduleMFile}
     ${CMAKE_BINARY_DIR}/${NIRView_MATLABMODULES_DIR}/${moduleMFile}
-    COPY_ONLY
+    COPYONLY
   )
   configure_file(
     ${moduleExecutable}
     ${CMAKE_BINARY_DIR}/${NIRView_MATLABMODULES_DIR}/${moduleExecutable}
-    COPY_ONLY
+    COPYONLY
   )
   install(
     FILES ${moduleXMLFile} ${moduleMFile}
