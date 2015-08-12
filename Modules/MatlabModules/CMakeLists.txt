@@ -23,19 +23,24 @@ find_package(NIRView REQUIRED)
 ### NIRFast ###
 
 # Set paths
-set(NIRView_NIRFAST_DIR "${Slicer_LIB_DIR}")
+set(NIRView_NIRFAST_DIR "${Slicer_LIB_DIR}/NIRFast")
 set(NIRView_INSTALL_NIRFAST_DIR "${Slicer_INSTALL_ROOT}${NIRView_NIRFAST_DIR}")
 
 # Copy NIRFast
 message(STATUS "Copying project sources: NIRFast")
 file(
-  COPY ${NIRFast_SOURCE_DIR}
+  COPY ${NIRFast_SOURCE_DIR}/gui ${NIRFast_SOURCE_DIR}/toolbox
   DESTINATION ${CMAKE_BINARY_DIR}/${NIRView_NIRFAST_DIR}
 )
 
 # Install NIRFast
 install(
-  DIRECTORY ${NIRFast_SOURCE_DIR}
+  DIRECTORY ${NIRFast_SOURCE_DIR}/gui
+  DESTINATION ${NIRView_INSTALL_NIRFAST_DIR}
+  COMPONENT Runtime
+)
+install(
+  DIRECTORY ${NIRFast_SOURCE_DIR}/toolbox
   DESTINATION ${NIRView_INSTALL_NIRFAST_DIR}
   COMPONENT Runtime
 )
@@ -46,14 +51,14 @@ install(
 set(NIRView_NIRFASTMESHING_DIR "${Slicer_LIB_DIR}")
 set(NIRView_INSTALL_NIRFASTMESHING_DIR "${Slicer_INSTALL_ROOT}${NIRView_NIRFASTMESHING_DIR}")
 
-# Copy NIRFast
+# Copy NIRFastMeshing
 message(STATUS "Copying project sources: NIRFastMeshing")
 file(
   COPY ${NIRFastMeshing_SOURCE_DIR}
   DESTINATION ${CMAKE_BINARY_DIR}/${NIRView_NIRFASTMESHING_DIR}
 )
 
-# Install NIRFast
+# Install NIRFastMeshing
 install(
   DIRECTORY ${NIRFastMeshing_SOURCE_DIR}
   DESTINATION ${NIRView_INSTALL_NIRFASTMESHING_DIR}

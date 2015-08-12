@@ -48,8 +48,8 @@ set(ep_common_cxx_flags "${CMAKE_CXX_FLAGS_INIT} ${ADDITIONAL_CXX_FLAGS}")
 include(ExternalProjectAddSource)
 
 ExternalProject_Add_Source(NIRFast
-  GIT_REPOSITORY git@kwgitlab.kitware.com:dartmouth/NIRFast-3DSlicer.git
-  GIT_TAG 181a28a2
+  GIT_REPOSITORY https://github.com/nirfast/nirfast-dev.git
+  GIT_TAG v8
   SOURCE_DIR_VAR NIRFast_SOURCE_DIR
   PROJECTS Slicer
   )
