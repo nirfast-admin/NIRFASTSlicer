@@ -48,7 +48,7 @@ set(ep_common_cxx_flags "${CMAKE_CXX_FLAGS_INIT} ${ADDITIONAL_CXX_FLAGS}")
 include(ExternalProjectAddSource)
 
 ExternalProject_Add_Source(NIRFast
-  GIT_REPOSITORY https://github.com/nirfast/nirfast-dev.git
+  GIT_REPOSITORY https://github.com/nirfast-admin/nirfast-dev.git
   GIT_TAG v8
   SOURCE_DIR_VAR NIRFast_SOURCE_DIR
   PROJECTS Slicer
@@ -56,15 +56,15 @@ ExternalProject_Add_Source(NIRFast
 list(APPEND Slicer_REMOTE_DEPENDENCIES NIRFast)
 
 ExternalProject_Add_Source(NIRFastMeshing
-  GIT_REPOSITORY https://github.com/nirfast/nirfast-meshing-dev.git
-  GIT_TAG e5b3cb3
+  GIT_REPOSITORY https://github.com/nirfast-admin/nirfast-meshing-dev.git
+  GIT_TAG NIRView
   SOURCE_DIR_VAR NIRFastMeshing_SOURCE_DIR
   PROJECTS Slicer
   )
 list(APPEND Slicer_REMOTE_DEPENDENCIES NIRFastMeshing)
 
 ExternalProject_Add_Source(MultiVolumeExplorer
-  GIT_REPOSITORY git@kwgitlab.kitware.com:dartmouth/MultiVolumeExplorer.git
+  GIT_REPOSITORY https://kwgitlab.kitware.com/dartmouth/MultiVolumeExplorer.git
   GIT_TAG NIRView
   SOURCE_DIR_VAR MultiVolumeExplorer_SOURCE_DIR
   PROJECTS Slicer
@@ -72,7 +72,7 @@ ExternalProject_Add_Source(MultiVolumeExplorer
 list(APPEND Slicer_REMOTE_DEPENDENCIES MultiVolumeExplorer)
 
 ExternalProject_Add_Source(MatlabBridge
-  GIT_REPOSITORY git@kwgitlab.kitware.com:dartmouth/MatlabBridge.git
+  GIT_REPOSITORY https://kwgitlab.kitware.com/dartmouth/MatlabBridge.git
   GIT_TAG NIRView
   SOURCE_DIR_VAR MatlabBridge_SOURCE_DIR
   PROJECTS Slicer
