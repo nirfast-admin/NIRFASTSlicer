@@ -6,4 +6,91 @@
   <version>0.0.0.2</version>
   <license/>
   <contributor>Ricardo Ortiz (Kitware, Inc.), Alexis Girault (Kitware, Inc)</contributor>
+  <parameters>
+    <label>I/O</label>
+    <description><![CDATA[Inputs Outputs]]></description>
+    <image type="label">
+      <label>Input Label Map</label>
+      <longflag>labelmap</longflag>
+      <description><![CDATA[Input Label Map.]]></description>
+      <channel>input</channel>
+    </image>
+    <geometry fileExtensions=".vtk">
+      <label>Output Mesh</label>
+      <longflag>mesh</longflag>
+      <description><![CDATA[Output Mesh.]]></description>
+      <channel>output</channel>
+    </geometry>
+    <directory>
+      <label>Output Directory</label>
+      <longflag>outputdir</longflag>
+      <description><![CDATA[Save NIRFast mesh to this directory.]]></description>
+    </directory>
+  </parameters>
+  <parameters>
+  <label>Mesh Parameters</label>
+  <description><![CDATA[Mesh Parameters]]></description>
+  <string-enumeration>
+    <label>Mesh Type</label>
+    <longflag>meshtype</longflag>
+    <description><![CDATA[Mesh Type]]></description>
+    <channel>input</channel>
+    <default>Standard</default>
+    <element>Standard</element>
+    <element>Fluorescence</element>
+    <element>Spectral</element>
+    <element>BEM</element>
+    <element>BEM Fluorescence</element>
+    <element>BEM Spectral</element>
+    <element>SPN</element>
+  </string-enumeration>
+  <float>
+    <label>Cell radius edge</label>
+    <longflag>cellradiusedge</longflag>
+    <description><![CDATA[Cell radius edge]]></description>
+    <channel>input</channel>
+    <default>3.0</default>
+  </float>
+  <float>
+    <label>Facet angle</label>
+    <longflag>facetangle</longflag>
+    <description><![CDATA[Facet Angle]]></description>
+    <channel>input</channel>
+    <default>25.0</default>
+  </float>
+  <float>
+    <label>Facet distance</label>
+    <longflag>facetdistance</longflag>
+    <description><![CDATA[Facet Distance]]></description>
+    <channel>input</channel>
+    <default>3.0</default>
+  </float>
+  <boolean>
+    <label>Optimize mesh</label>
+    <longflag>optimizemesh</longflag>
+    <description><![CDATA[Optimize mesh generation]]></description>
+    <channel>input</channel>
+    <default>false</default>
+  </boolean>
+</parameters>
+  <parameters advanced='true'>
+    <label>NIRFast</label>
+    <description><![CDATA[NIRFast Directories]]></description>
+    <boolean>
+      <label>Use custom NIRFast</label>
+      <longflag>useothernirfast</longflag>
+      <description>If checked, use NIRFast from directories below instead of NIRFast packaged within NIRView.</description>
+      <default>false</default>
+    </boolean>
+    <directory>
+      <label>NIRFast sources</label>
+      <longflag>nirfastDir</longflag>
+      <description><![CDATA[Directory to NIRFast sources]]></description>
+    </directory>
+    <directory>
+      <label>NIRFast Meshing sources</label>
+      <longflag>nirfastMeshingDir</longflag>
+      <description><![CDATA[Directory to NIRFast Meshing sources]]></description>
+    </directory>
+  </parameters>
 </executable>
