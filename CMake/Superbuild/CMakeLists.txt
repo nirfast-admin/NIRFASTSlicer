@@ -49,7 +49,7 @@ include(ExternalProjectAddSource)
 
 ExternalProject_Add_Source(NIRFast
   GIT_REPOSITORY https://github.com/nirfast-admin/nirfast-dev.git
-  GIT_TAG v8
+  GIT_TAG NIRView
   SOURCE_DIR_VAR NIRFast_SOURCE_DIR
   PROJECTS Slicer
   )
