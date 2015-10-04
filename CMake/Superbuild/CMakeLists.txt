@@ -72,8 +72,10 @@ ExternalProject_Add_Source(MultiVolumeExplorer
 list(APPEND Slicer_REMOTE_DEPENDENCIES MultiVolumeExplorer)
 
 ExternalProject_Add_Source(MatlabBridge
-  GIT_REPOSITORY https://kwgitlab.kitware.com/dartmouth/MatlabBridge.git
-  GIT_TAG NIRView
+  SVN_REPOSITORY https://subversion.assembla.com/svn/slicerrt/trunk/MatlabBridge
+  SVN_REVISION -r "2468"
+  SVN_USERNAME slicerbot
+  SVN_PASSWORD slicer
   SOURCE_DIR_VAR MatlabBridge_SOURCE_DIR
   PROJECTS Slicer
   )
