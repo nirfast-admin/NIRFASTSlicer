@@ -1,6 +1,23 @@
 function outputParams=Image2Mesh(inputParams)
 
+slicer=true
+
+if(~slicer)
+    % made for testing through matlab directly
+	inputParams.labelmap = '/Users/alexis/Projects/Dartmouth/Data/test_slicer/PostContrastImageFrame1-subvolume-scale_1-label.nrrd'
+	inputParams.fiducials = '/Users/alexis/Projects/Dartmouth/Data/test_matlab/F.fcsv'
+	inputParams.mesh = '/Users/alexis/Projects/Dartmouth/Data/test_slicer/testoutput.vtk'
+	inputParams.cellradiusedge = 3
+	inputParams.facetangle = 25
+	inputParams.facetdistance = 3
+	inputParams.outputdir = '/Users/alexis/Projects/Dartmouth/Data/test_slicer/'
+	inputParams.meshtype = 'Standard'
+end
+
 %% NIRFAST PATH
+% Remove old path
+% restoredefaultpath()
+
 % Define new path
 if isfield(inputParams,'useothernirfast')
     NIRFASTPath=inputParams.nirfastDir
@@ -18,20 +35,38 @@ addpath(genpath(MESHINGPath));
 if isfield(inputParams,'labelmap')
     inputpath = inputParams.labelmap
 else
-    rmpath(genpath(NIRFASTPath))
-    rmpath(genpath(MESHINGPath));
-    errordlg('Select an input label map', 'File Error')
-    error('File Error: missing input (label map)')
+    errordlg('Select an input label map', 'I/O Error')
+    error('I/O Error: missing input (label map)')
 end
-if isfield(inputParams,'mesh')
-    outputpath = inputParams.mesh
+if isfield(inputParams,'fiducials')
+    fiducials = inputParams.fiducials
 else
-    rmpath(genpath(NIRFASTPath))
-    rmpath(genpath(MESHINGPath));
-    errordlg('Select an output mesh', 'File Error')
-    error('File Error: missing output (mesh)')
+    errordlg('Select a fiducials list', 'I/O Error')
+    error('I/O Error: missing input (fiducials)')
+end
+if isfield(inputParams,'vtkmesh')
+    vtkMeshPath = inputParams.vtkmesh;
+else
+    errordlg('Select a VTK output mesh', 'I/O Error')
+    error('I/O Error: missing output (vtk mesh)')
+end
+if strcmp(inputParams.meshdir,'/')
+    errordlg('Select an output mesh directory', 'I/O Error')
+    error('I/O Error: missing output mesh directory)')
+end
+if ~isfield(inputParams,'meshname')
+    errordlg('Select an output mesh name', 'I/O Error')
+    error('I/O Error: missing output mesh name)')
 end
 
+% READ SD
+if(~slicer)
+	fid=fopen(fiducials,'rt');
+	s=textscan(fid,'%s %f %f %f %n %n %n %n %n %n %n %s','Delimiter',',','MultipleDelimsAsOne',1,'CommentStyle','#');
+	sdcoords = [s{2} s{3} s{4}];
+else
+	sdcoords = cell2mat(fiducials)'
+end
 
 % READ IMAGE
 img = cli_imageread(inputpath)
@@ -46,13 +81,12 @@ mask = img.pixelData;
 
 % % Compression info
 % % TODO : understand those
-% param.CompressedData = 'true';
+% param.CompressedData = 'false';
 % param.ObjectType = 'image';
 % param.BinaryData = 'true';
 % param.ByteOrder = 'false';
-% param.CompressedDataSize = -1; % 35327
 % param.DataFile = 'LOCAL';
-% param.BitDepth = 16;
+% param.BitDepth = 32;
 % param.HeaderSize = 359;
 
 % Volume Information
@@ -97,7 +131,7 @@ param.special_subdomain_size  = (0); % TODO ? size of tetrahedron for the specia
 
 %% WRITE MESHES
 % Write CGAL mesh
-param.tmppath = inputParams.outputdir;
+param.tmppath = inputParams.meshdir;
 param.delmedit = 0;
 if (exist('RunCGALMeshGenerator'))
     [e p] = RunCGALMeshGenerator(mask,param);
@@ -145,18 +179,25 @@ switch inputParams.meshtype
     otherwise
         error('This type of Nirfast mesh is not supported!');
 end
-nirfastMeshPath = fullfile(inputParams.outputdir,'nirfast_mesh');
+
+nirfastMeshPath = fullfile(inputParams.meshdir,inputParams.meshname);
 solidmesh2nirfast(genmesh,nirfastMeshPath,meshtype);
 
 % Write VTK mesh
-% outputpath = fullfile(inputParams.outputdir,'polydata_me.vtk'); % Uncomment to save in outputdir
-nirfast2vtk(nirfastMeshPath,outputpath,'polydata');
+%vtkMeshPath = fullfile(inputParams.outputdir,'polydata.vtk'); % Uncomment to save in outputdir
+nirfast2vtk(nirfastMeshPath,vtkMeshPath,'polydata');
+
+%% S/D WINDOW
+h=gui_place_sources_detectors('mesh',nirfastMeshPath);
+hold on
+data=guidata(h);
+set(data.sources,  'String',cellstr(num2str(sdcoords,'%.8f %.8f %.8f')));
+set(data.detectors,'String',cellstr(num2str(sdcoords,'%.8f %.8f %.8f')));
+axes(data.mesh);
+plot3(sdcoords(:,1),sdcoords(:,2),sdcoords(:,3),'ro');
+plot3(sdcoords(:,1),sdcoords(:,2),sdcoords(:,3),'bx');
 
 %% CLEAN
-% Remove path
-rmpath(genpath(NIRFASTPath))
-rmpath(genpath(MESHINGPath));
-
 % Delete files
 % TODO ?
 

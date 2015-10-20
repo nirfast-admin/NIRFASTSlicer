@@ -12,20 +12,33 @@
     <image type="label">
       <label>Input Label Map</label>
       <longflag>labelmap</longflag>
-      <description><![CDATA[Input Label Map.]]></description>
+      <description><![CDATA[Input Label Map]]></description>
       <channel>input</channel>
     </image>
+    <point coordinateSystem="ras" multiple="true">
+      <label>Sources/Detectors</label>
+      <longflag>fiducials</longflag>
+      <description><![CDATA[Sources/Detectors Fiducials]]></description>
+      <channel>input</channel>
+    </point>
     <geometry fileExtensions=".vtk">
-      <label>Output Mesh</label>
-      <longflag>mesh</longflag>
-      <description><![CDATA[Output Mesh.]]></description>
+      <label>Output VTK Mesh</label>
+      <longflag>vtkmesh</longflag>
+      <description><![CDATA[VTK Mesh Node that will be outputed in NIRView scene.]]></description>
       <channel>output</channel>
     </geometry>
     <directory>
-      <label>Output Directory</label>
-      <longflag>outputdir</longflag>
+      <label>Output Mesh Directory</label>
+      <longflag>meshdir</longflag>
       <description><![CDATA[Save NIRFast mesh to this directory.]]></description>
+      <default>/</default>
     </directory>
+    <string>
+      <label>Output Mesh Name</label>
+      <longflag>meshname</longflag>
+      <description><![CDATA[Name of the saved NIRFast mesh.]]></description>
+      <default>nirfast_mesh</default>
+    </string>
   </parameters>
   <parameters>
   <label>Mesh Parameters</label>
