@@ -63,7 +63,7 @@ end
 % READ SD
 if(~slicer)
 	fid=fopen(fiducials,'rt');
-	s=textscan(fid,'%s %f %f %f %n %n %n %n %n %n %n %s','Delimiter',',','MultipleDelimsAsOne',1,'CommentStyle','#');
+	s=textscan(fid,'%s %f %f %f %n %n %n %n %n %n %n %s %s','Delimiter',',','MultipleDelimsAsOne',1,'CommentStyle','#');
 	sdcoords = [s{2} s{3} s{4}];
 else
 	sdcoords = cell2mat(fiducials)'
