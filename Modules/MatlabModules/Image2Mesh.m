@@ -4,19 +4,18 @@ slicer=true
 
 if(~slicer)
     % made for testing through matlab directly
-	inputParams.labelmap = '/Users/alexis/Projects/Dartmouth/Data/test_slicer/PostContrastImageFrame1-subvolume-scale_1-label.nrrd'
-	inputParams.fiducials = '/Users/alexis/Projects/Dartmouth/Data/test_matlab/F.fcsv'
-	inputParams.mesh = '/Users/alexis/Projects/Dartmouth/Data/test_slicer/testoutput.vtk'
-	inputParams.cellradiusedge = 3
-	inputParams.facetangle = 25
-	inputParams.facetdistance = 3
-	inputParams.outputdir = '/Users/alexis/Projects/Dartmouth/Data/test_slicer/'
-	inputParams.meshtype = 'Standard'
+	inputParams.labelmap = '/Users/alexis/Projects/Dartmouth/Data/test_slicer/PostContrastImageFrame1-subvolume-scale_1-label.nrrd';
+	inputParams.fiducials = '/Users/alexis/Projects/Dartmouth/Data/test_matlab/F.fcsv';
+	inputParams.vtkmesh = '/Users/alexis/Projects/Dartmouth/Data/test_slicer/testoutput.vtk';
+	inputParams.cellradiusedge = 3;
+	inputParams.facetangle = 25;
+	inputParams.facetdistance = 3;
+	inputParams.meshdir = '/Users/alexis/Projects/Dartmouth/Data/test_slicer/';
+	inputParams.meshname = 'nirfast_mesh';
+	inputParams.meshtype = 'Standard';
 end
 
 %% NIRFAST PATH
-% Remove old path
-% restoredefaultpath()
 
 % Define new path
 if isfield(inputParams,'useothernirfast')
@@ -32,14 +31,16 @@ addpath(genpath(NIRFASTPath));
 addpath(genpath(MESHINGPath));
 
 %% CHECK I/O
+inputParams
+
 if isfield(inputParams,'labelmap')
-    inputpath = inputParams.labelmap
+    inputpath = inputParams.labelmap;
 else
     errordlg('Select an input label map', 'I/O Error')
     error('I/O Error: missing input (label map)')
 end
 if isfield(inputParams,'fiducials')
-    fiducials = inputParams.fiducials
+    fiducials = inputParams.fiducials;
 else
     errordlg('Select a fiducials list', 'I/O Error')
     error('I/O Error: missing input (fiducials)')
@@ -188,14 +189,13 @@ solidmesh2nirfast(genmesh,nirfastMeshPath,meshtype);
 nirfast2vtk(nirfastMeshPath,vtkMeshPath,'polydata');
 
 %% S/D WINDOW
+mesh = load_mesh(nirfastMeshPath);
 h=gui_place_sources_detectors('mesh',nirfastMeshPath);
-hold on
 data=guidata(h);
 set(data.sources,  'String',cellstr(num2str(sdcoords,'%.8f %.8f %.8f')));
 set(data.detectors,'String',cellstr(num2str(sdcoords,'%.8f %.8f %.8f')));
-axes(data.mesh);
-plot3(sdcoords(:,1),sdcoords(:,2),sdcoords(:,3),'ro');
-plot3(sdcoords(:,1),sdcoords(:,2),sdcoords(:,3),'bx');
+plot3(data.mesh, sdcoords(:,1),sdcoords(:,2),sdcoords(:,3),'ro');
+plot3(data.mesh, sdcoords(:,1),sdcoords(:,2),sdcoords(:,3),'bx');
 
 %% CLEAN
 % Delete files
