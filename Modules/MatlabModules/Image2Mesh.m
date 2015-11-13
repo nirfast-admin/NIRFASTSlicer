@@ -1,19 +1,5 @@
 function outputParams=Image2Mesh(inputParams)
 
-slicer=true
-
-if(~slicer)
-    % made for testing through matlab directly
-	inputParams.labelmap = '/Users/alexis/Projects/Dartmouth/Data/test_slicer/PostContrastImageFrame1-subvolume-scale_1-label.nrrd';
-	inputParams.fiducials = '/Users/alexis/Projects/Dartmouth/Data/test_matlab/F.fcsv';
-	inputParams.vtkmesh = '/Users/alexis/Projects/Dartmouth/Data/test_slicer/testoutput.vtk';
-	inputParams.cellradiusedge = 3;
-	inputParams.facetangle = 25;
-	inputParams.facetdistance = 3;
-	inputParams.meshdir = '/Users/alexis/Projects/Dartmouth/Data/test_slicer/';
-	inputParams.meshname = 'nirfast_mesh';
-	inputParams.meshtype = 'Standard';
-end
 
 %% NIRFAST PATH
 
@@ -31,7 +17,6 @@ addpath(genpath(NIRFASTPath));
 addpath(genpath(MESHINGPath));
 
 %% CHECK I/O
-inputParams
 
 if isfield(inputParams,'labelmap')
     inputpath = inputParams.labelmap;
@@ -45,12 +30,6 @@ else
     errordlg('Select a fiducials list', 'I/O Error')
     error('I/O Error: missing input (fiducials)')
 end
-if isfield(inputParams,'vtkmesh')
-    vtkMeshPath = inputParams.vtkmesh;
-else
-    errordlg('Select a VTK output mesh', 'I/O Error')
-    error('I/O Error: missing output (vtk mesh)')
-end
 if strcmp(inputParams.meshdir,'/')
     errordlg('Select an output mesh directory', 'I/O Error')
     error('I/O Error: missing output mesh directory)')
@@ -61,18 +40,11 @@ if ~isfield(inputParams,'meshname')
 end
 
 % READ SD
-if(~slicer)
-	fid=fopen(fiducials,'rt');
-	s=textscan(fid,'%s %f %f %f %n %n %n %n %n %n %n %s %s','Delimiter',',','MultipleDelimsAsOne',1,'CommentStyle','#');
-	sdcoords = [s{2} s{3} s{4}];
-else
-	sdcoords = cell2mat(fiducials)'
-end
+sdcoords = cell2mat(fiducials)'
 
 % READ IMAGE
 img = cli_imageread(inputpath)
 mask = img.pixelData;
-
 
 % %% READ PARAMETERS
 % % File info
@@ -185,8 +157,8 @@ nirfastMeshPath = fullfile(inputParams.meshdir,inputParams.meshname);
 solidmesh2nirfast(genmesh,nirfastMeshPath,meshtype);
 
 % Write VTK mesh
-%vtkMeshPath = fullfile(inputParams.outputdir,'polydata.vtk'); % Uncomment to save in outputdir
-nirfast2vtk(nirfastMeshPath,vtkMeshPath,'polydata');
+vtkMeshPath = fullfile(inputParams.meshdir,'dataset.vtk');
+nirfast2vtk(nirfastMeshPath,vtkMeshPath);
 
 %% S/D WINDOW
 mesh = load_mesh(nirfastMeshPath);

@@ -21,12 +21,6 @@
       <description><![CDATA[Sources/Detectors Fiducials]]></description>
       <channel>input</channel>
     </point>
-    <geometry fileExtensions=".vtk">
-      <label>Output VTK Mesh</label>
-      <longflag>vtkmesh</longflag>
-      <description><![CDATA[VTK Mesh Node that will be outputed in NIRView scene.]]></description>
-      <channel>output</channel>
-    </geometry>
     <directory>
       <label>Output Mesh Directory</label>
       <longflag>meshdir</longflag>
