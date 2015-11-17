@@ -18,7 +18,6 @@
 
 # List all the modules (ordered by dependencies) to build by Slicer
 set(modules
-  Mesh2ImageCLI
   )
 
 set(${APPLICATION_NAME}_MODULES)
