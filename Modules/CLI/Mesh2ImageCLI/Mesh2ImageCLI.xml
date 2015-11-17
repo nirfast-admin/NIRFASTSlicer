@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<executable>
+  <category>NIRFast</category>
+  <title>Mesh2ImageCLI</title>
+  <description>
+    Maps the vtk mesh point data to a metaImage
+  </description>
+  <version>1.0</version>
+  <contributor>Alexis Girault, alexis.girault@kitware.com</contributor>
+  <acknowledgements>
+  </acknowledgements>
+  <parameters>
+
+    <label>Inputs</label>
+
+    <file>
+      <name>source</name>
+      <flag>s</flag>
+      <longflag>source</longflag>
+      <label>VTK dataset</label>
+      <channel>input</channel>
+      <description>VTK unstructured grid mesh</description>
+    </file>
+    <image type="scalar">
+      <name>input</name>
+      <flag>i</flag>
+      <longflag>input</longflag>
+      <label>Cropped Volume</label>
+      <channel>input</channel>
+      <description>Cropped Volume defining the ROI to resample the point data of the input mesh.</description>
+    </image>
+
+  </parameters>
+  <parameters>
+
+    <label>Outputs</label>
+
+    <image type="scalar">
+      <name>output</name>
+      <longflag>output</longflag>
+      <label>Output Volume</label>
+      <channel>output</channel>
+      <description>Output Volume holding the scalars data extracted from the VTK dataset.</description>
+    </image>
+  </parameters>
+</executable>
