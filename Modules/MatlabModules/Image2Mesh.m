@@ -152,10 +152,6 @@ end
 nirfastMeshPath = fullfile(inputParams.meshdir,inputParams.meshname);
 solidmesh2nirfast(genmesh,nirfastMeshPath,meshtype);
 
-% Write VTK mesh
-vtkMeshPath = fullfile(inputParams.meshdir,'dataset.vtk');
-nirfast2vtk(nirfastMeshPath,vtkMeshPath);
-
 %% S/D WINDOW
 mesh = load_mesh(nirfastMeshPath);
 h=gui_place_sources_detectors('mesh',nirfastMeshPath);

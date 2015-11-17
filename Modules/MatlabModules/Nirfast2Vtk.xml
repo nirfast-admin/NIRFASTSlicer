@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<executable>
+  <category>NIRFast</category>
+  <title>Nirfast2Vtk</title>
+  <description><![CDATA[Interface to NIRFast Matlab routines.]]></description>
+  <version>1.0</version>
+  <license/>
+  <contributor>Alexis Girault (Kitware, Inc)</contributor>
+  <parameters>
+    <label>I/O</label>
+    <description><![CDATA[Inputs Outputs]]></description>
+    <file>
+      <label>NIRFast Input Mesh</label>
+      <longflag>nirfastMeshPath</longflag>
+      <description><![CDATA[Select any file part of the NIRFast mesh to convert.]]></description>
+      <default>nirfast_mesh</default>
+    </file>
+    <directory>
+      <label>VTK Output Directory</label>
+      <longflag>vtkMeshDir</longflag>
+      <description><![CDATA[Save a VTK dataset in this directory.]]></description>
+      <default>/</default>
+    </directory>
+    <string>
+      <label>VTK Output Name</label>
+      <longflag>vtkMeshName</longflag>
+      <description><![CDATA[Name of the saved VTK mesh.]]></description>
+      <default>dataset.vtk</default>
+    </string>
+  </parameters>
+  <parameters advanced='true'>
+    <label>NIRFast</label>
+    <description><![CDATA[NIRFast Directories]]></description>
+    <boolean>
+      <label>Use custom NIRFast</label>
+      <longflag>useothernirfast</longflag>
+      <description>If checked, use NIRFast from directories below instead of NIRFast packaged within NIRView.</description>
+      <default>false</default>
+    </boolean>
+    <directory>
+      <label>NIRFast sources</label>
+      <longflag>nirfastDir</longflag>
+      <description><![CDATA[Directory to NIRFast sources]]></description>
+    </directory>
+  </parameters>
+</executable>
