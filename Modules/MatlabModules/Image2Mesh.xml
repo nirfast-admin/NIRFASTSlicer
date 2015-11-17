@@ -94,10 +94,5 @@
       <longflag>nirfastDir</longflag>
       <description><![CDATA[Directory to NIRFast sources]]></description>
     </directory>
-    <directory>
-      <label>NIRFast Meshing sources</label>
-      <longflag>nirfastMeshingDir</longflag>
-      <description><![CDATA[Directory to NIRFast Meshing sources]]></description>
-    </directory>
   </parameters>
 </executable>

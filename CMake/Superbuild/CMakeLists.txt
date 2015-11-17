@@ -48,20 +48,12 @@ set(ep_common_cxx_flags "${CMAKE_CXX_FLAGS_INIT} ${ADDITIONAL_CXX_FLAGS}")
 include(ExternalProjectAddSource)
 
 ExternalProject_Add_Source(NIRFast
-  GIT_REPOSITORY https://github.com/nirfast-admin/nirfast-dev.git
-  GIT_TAG NIRView
+  GIT_REPOSITORY https://github.com/nirfast-admin/NIRFAST.git
+  GIT_TAG bb37847ce1b891d6c7e2b874e5edf188b6162a50
   SOURCE_DIR_VAR NIRFast_SOURCE_DIR
   PROJECTS Slicer
   )
 list(APPEND Slicer_REMOTE_DEPENDENCIES NIRFast)
-
-ExternalProject_Add_Source(NIRFastMeshing
-  GIT_REPOSITORY https://github.com/nirfast-admin/nirfast-meshing-dev.git
-  GIT_TAG NIRView
-  SOURCE_DIR_VAR NIRFastMeshing_SOURCE_DIR
-  PROJECTS Slicer
-  )
-list(APPEND Slicer_REMOTE_DEPENDENCIES NIRFastMeshing)
 
 ExternalProject_Add_Source(MultiVolumeExplorer
   GIT_REPOSITORY https://kwgitlab.kitware.com/dartmouth/MultiVolumeExplorer.git
