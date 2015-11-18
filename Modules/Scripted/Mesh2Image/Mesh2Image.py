@@ -161,10 +161,11 @@ class Mesh2ImageLogic:
             outputNode = slicer.vtkMRMLScalarVolumeNode()
             outputNode.Copy(volumeNode)
             outputNode.SetName(outputNode.GetName() + "_" + arrayName)
-            outputNode.SetAndObserveDisplayNodeID(None)
             outputNode.SetAndObserveStorageNodeID(None)
+            outputNode.SetAndObserveDisplayNodeID(None)
             outputNode.SetImageDataConnection(passArrayFilter.GetOutputPort())
             slicer.mrmlScene.AddNode(outputNode)
+            outputNode.SetAndObserveStorageNodeID(None)
 
             self.OutputVolumes[arrayName] = outputNode
 
@@ -280,6 +281,9 @@ class Mesh2ImageWidget:
                     self.OutputsLayout.addRow(label, comboBox)
                     self.OutputWidgets.append(label)
                     self.OutputWidgets.append(comboBox)
+
+                    node.SetAndObserveDisplayNodeID(None)
+
                     i += 1
 
         self.ResamplePushButton.setEnabled(True)
