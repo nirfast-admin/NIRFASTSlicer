@@ -48,7 +48,11 @@ install(
 ### MatlabModules ###
 
 # Define names of MatlabModules
-set(modules Image2Mesh Nirfast2Vtk)
+set(modules
+  Image2Mesh
+  Nirfast2Vtk
+  SavePath
+)
 
 # Set paths
 set(NIRView_MATLABMODULES_DIR "${Slicer_LIB_DIR}/MatlabModules")
