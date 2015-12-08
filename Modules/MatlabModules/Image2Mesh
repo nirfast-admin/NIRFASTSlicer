@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # If this proxy is called with the --xml parameter then just return the module decriptor XML file,
 # otherwise run the associated Matlab script.
 # MatlabBridge proxy version: 1.1
