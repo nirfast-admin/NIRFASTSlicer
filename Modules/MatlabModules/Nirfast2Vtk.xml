@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <executable>
-  <category>NIRFast</category>
+  <category>NIRFAST</category>
   <title>Nirfast2Vtk</title>
-  <description><![CDATA[Interface to NIRFast Matlab routines.]]></description>
+  <description><![CDATA[Interface to NIRFAST Matlab routines.]]></description>
   <version>1.0</version>
   <license/>
   <contributor>Alexis Girault (Kitware, Inc)</contributor>
@@ -10,9 +10,9 @@
     <label>I/O</label>
     <description><![CDATA[Inputs Outputs]]></description>
     <file>
-      <label>NIRFast Input Mesh</label>
+      <label>NIRFAST Input Mesh</label>
       <longflag>nirfastMeshPath</longflag>
-      <description><![CDATA[Select any file part of the NIRFast mesh to convert.]]></description>
+      <description><![CDATA[Select any file part of the NIRFAST mesh to convert.]]></description>
       <default>nirfast_mesh</default>
     </file>
     <directory>
@@ -29,18 +29,18 @@
     </string>
   </parameters>
   <parameters advanced='true'>
-    <label>NIRFast</label>
-    <description><![CDATA[NIRFast Directories]]></description>
+    <label>NIRFAST Matlab</label>
+    <description><![CDATA[NIRFAST Matlab Directories]]></description>
     <boolean>
-      <label>Use custom NIRFast</label>
+      <label>Use custom NIRFAST Matlab</label>
       <longflag>useothernirfast</longflag>
-      <description>If checked, use NIRFast from directories below instead of NIRFast packaged within NIRView.</description>
+      <description>If checked, use NIRFAST Matlab from directories below instead of the one packaged within NIRFAST Slicer.</description>
       <default>false</default>
     </boolean>
     <directory>
-      <label>NIRFast sources</label>
+      <label>Matlab sources</label>
       <longflag>nirfastDir</longflag>
-      <description><![CDATA[Directory to NIRFast sources]]></description>
+      <description><![CDATA[Directory to NIRFAST Matlab sources]]></description>
     </directory>
   </parameters>
 </executable>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <executable>
-  <category>NIRFast</category>
+  <category>NIRFAST</category>
   <title>SavePath</title>
-  <description><![CDATA[Save search path including packaged NIRFast.]]></description>
+  <description><![CDATA[Save search path including packaged NIRFAST Matlab.]]></description>
   <version>1.0</version>
   <license/>
   <contributor>Alexis Girault (Kitware, Inc)</contributor>

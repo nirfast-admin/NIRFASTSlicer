@@ -16,4 +16,4 @@
 
 =========================================================================*/
 
-#define NIRView_MATLABMODULES_DIR "@NIRView_MATLABMODULES_DIR@"
+#define MATLABMODULES_DIR "@MATLABMODULES_DIR@"

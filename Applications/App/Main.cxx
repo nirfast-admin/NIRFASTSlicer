@@ -16,7 +16,7 @@
 ==============================================================================*/
 
 // MatlabModules include
-#include "NIRViewMatLabModulesConfigure.h"
+#include "NIRFASTSlicerMatlabModulesConfigure.h"
 
 // Qt includes
 #include <QDebug>
@@ -190,7 +190,7 @@ int SlicerAppMain(int argc, char* argv[])
     }
 
   // Append Matlab module path to the additional paths
-  QString matlabModulesPath = app.slicerHome() + "/" + NIRView_MATLABMODULES_DIR;
+  QString matlabModulesPath = app.slicerHome() + "/" + MATLABMODULES_DIR;
   QStringList additionalPaths = app.revisionUserSettings()->value("Modules/AdditionalPaths").toStringList();
   if (!isPathWithinPathsList(matlabModulesPath,additionalPaths))
     {
@@ -269,7 +269,7 @@ int SlicerAppMain(int argc, char* argv[])
     qWarning() << "Could not update UI for the module"<< matlabModuleGenerator->name();
     }
 
-  // Launch NIRView splashScreen & window
+  // Launch NIRFAST-Slicer splashScreen & window
   splashMessage(splashScreen, QString());
 
   if (window)

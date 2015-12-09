@@ -19,7 +19,7 @@
 # External project for the project.
 #
 
-set(proj NIRView)
+set(proj NIRFASTSlicer)
 
 # Set dependency list
 set(${proj}_DEPENDENCIES VTKv6 ITKv4)
@@ -62,7 +62,7 @@ if(NOT DEFINED ${proj}_DIR AND NOT ${CMAKE_PROJECT_NAME}_USE_SYSTEM_${proj})
       -DSubversion_SVN_EXECUTABLE:FILEPATH=${Subversion_SVN_EXECUTABLE}
       -DVTK_DIR:PATH=${VTK_DIR}
       -DITK_DIR:PATH=${ITK_DIR}
-      -DNIRFast_SOURCE_DIR:PATH=${NIRFast_SOURCE_DIR}
+      -DNIRFASTMatlab_SOURCE_DIR:PATH=${NIRFASTMatlab_SOURCE_DIR}
       #${dependency_args}
     DEPENDS
       ${${proj}_DEPENDENCIES}

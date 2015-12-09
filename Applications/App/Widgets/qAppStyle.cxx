@@ -68,14 +68,14 @@ QPalette qAppStyle::standardPalette()const
 
   palette.setColor(QPalette::Light, "#ffffff");
   palette.setColor(QPalette::Button, "#dedfe1");
-  palette.setColor(QPalette::Mid, "#005f9e");
-  palette.setColor(QPalette::Dark, "#005f9e");
+  palette.setColor(QPalette::Mid, "#dedfe1");
+  palette.setColor(QPalette::Dark, "#B40404");
   palette.setColor(QPalette::Active, QPalette::ButtonText, "#005f9e");
   palette.setColor(QPalette::Inactive, QPalette::ButtonText, "#005f9e");
   palette.setColor(QPalette::Disabled, QPalette::ButtonText, "#003050");
   palette.setColor(QPalette::Shadow, "#002f4f");
 
-  palette.setColor(QPalette::Highlight, "#009d49");
+  palette.setColor(QPalette::Highlight, "#B40404");
   palette.setColor(QPalette::HighlightedText, "#ffffff");
 
   return palette;
@@ -135,7 +135,7 @@ QPalette qAppStyle::tweakWidgetPalette(QPalette widgetPalette,
   if (pushButton &&
       !pushButton->text().isEmpty())
     {
-    QColor buttonColor = this->standardPalette().color(QPalette::Dark);
+    QColor buttonColor = this->standardPalette().color(QPalette::Mid);
     widgetPalette.setColor(QPalette::Active, QPalette::Button, buttonColor);
     widgetPalette.setColor(QPalette::Inactive, QPalette::Button, buttonColor);
     QColor disabledButtonColor = buttonColor.toHsv();
@@ -144,7 +144,7 @@ QPalette qAppStyle::tweakWidgetPalette(QPalette widgetPalette,
                                 disabledButtonColor.valueF() * 0.9);
     widgetPalette.setColor(QPalette::Disabled, QPalette::Button, disabledButtonColor);
     QColor buttonTextColor =
-      this->standardPalette().color(QPalette::Light);
+      this->standardPalette().color(QPalette::Active, QPalette::ButtonText);
     widgetPalette.setColor(QPalette::Active, QPalette::ButtonText, buttonTextColor);
     widgetPalette.setColor(QPalette::Inactive, QPalette::ButtonText, buttonTextColor);
     QColor disabledButtonTextColor = buttonTextColor.toHsv();

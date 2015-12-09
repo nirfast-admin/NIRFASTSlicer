@@ -7,7 +7,7 @@ function outputParams=Image2Mesh(inputParams)
 if isfield(inputParams,'useothernirfast')
     NIRFASTPath=inputParams.nirfastDir
 else
-    NIRFASTPath=fullfile('..','NIRFast')
+    NIRFASTPath=fullfile('..','NIRFASTMatlab')
 end
 
 % Add path
@@ -107,8 +107,8 @@ if (exist('RunCGALMeshGenerator'))
     [e p] = RunCGALMeshGenerator(mask,param);
 else
     rmpath(genpath(NIRFASTPath))
-    errordlg('RunCGALMeshGenerator function does not exist. Check that your path to NIRFast is correct.', 'Matlab Error')
-    error('Matlab Error: RunCGALMeshGenerator function does not exist. Check that your path to NIRFast is correct.')
+    errordlg('RunCGALMeshGenerator function does not exist. Check that your path to NIRFAST Matlab is correct.', 'Matlab Error')
+    error('Matlab Error: RunCGALMeshGenerator function does not exist. Check that your path to NIRFAST Matlab is correct.')
 end
 
 % Optimize mesh

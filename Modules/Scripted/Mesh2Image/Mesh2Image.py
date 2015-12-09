@@ -28,7 +28,7 @@ import sys
 class Mesh2Image:
     def __init__(self, parent):
         parent.title = "Mesh2Image"
-        parent.categories = ["NIRFast"]
+        parent.categories = ["NIRFAST"]
         parent.dependencies = []
         parent.contributors = ["Alexis Girault (Kitware)"]
         parent.helpText = """

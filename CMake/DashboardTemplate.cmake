@@ -27,7 +27,7 @@ macro(setOnlyIfNotDefined var defaultvalue)
   endif()
 endmacro()
 
-set(CTEST_PROJECT_NAME NIRView)
+set(CTEST_PROJECT_NAME NIRFASTSlicer)
 
 #-----------------------------------------------------------------------------
 # Repository
