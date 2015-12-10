@@ -6,7 +6,9 @@ if strcmp(inputParams.savingDir,'/')
 end
 
 %% NIRFAST PATH
-NIRFASTPath=fullfile('..','NIRFASTMatlab');
+curDir = pwd;
+libDir = fileparts(curDir);
+NIRFASTPath=fullfile(libDir,'NIRFASTMatlab');
 addpath(genpath(NIRFASTPath));
 status = savepath(fullfile(inputParams.savingDir,'pathdef.m'));
 if status == 1

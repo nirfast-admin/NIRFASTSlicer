@@ -7,7 +7,9 @@ function outputParams=Nirfast2Vtk(inputParams)
 if isfield(inputParams,'useothernirfast')
     NIRFASTPath=inputParams.nirfastDir
 else
-    NIRFASTPath=fullfile('..','NIRFASTMatlab')
+    curDir = pwd;
+    libDir = fileparts(curDir);
+    NIRFASTPath=fullfile(libDir,'NIRFASTMatlab');
 end
 
 % Add path
