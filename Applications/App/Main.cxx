@@ -89,7 +89,7 @@ bool isPathWithinPathsList(const QString& dirPath, const QStringList& pathsList)
   QDir dirToCheck(dirPath);
   foreach(const QString& path, pathsList)
   {
-    if (dirToCheck == QDir(dirPath))
+    if (dirToCheck == QDir(path))
     {
       return true;
     }
