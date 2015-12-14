@@ -219,24 +219,24 @@ class Mesh2ImageWidget:
         self.layout.addWidget(self.ProgressBar)
 
         # 1.1) Inputs Values
-        label = qt.QLabel("Cropped Volume: ")
+        label = qt.QLabel("Input Volume: ")
         self.InputVolumeComboBox = slicer.qMRMLNodeComboBox()
         self.InputVolumeComboBox.nodeTypes = (("vtkMRMLVolumeNode"), "")
         self.InputVolumeComboBox.setMRMLScene(slicer.mrmlScene)
         self.InputVolumeComboBox.addEnabled = False
         self.InputVolumeComboBox.renameEnabled = True
-        self.InputVolumeComboBox.toolTip = 'Cropped Volume defining the ROI to resample the point data of the input mesh.'
+        self.InputVolumeComboBox.toolTip = 'Volume defining the output geometric structure where the point data of the source mesh is resampled.'
         self.InputsLayout.addWidget(label, 0, 0)
         self.InputsLayout.addWidget(self.InputVolumeComboBox, 0, 1)
 
-        label = qt.QLabel("VTK Dataset: ")
+        label = qt.QLabel("Source Mesh: ")
         self.SourceMeshPathLine = ctk.ctkPathLineEdit()
-        self.SourceMeshPathLine.toolTip = 'VTK unstructured grid mesh'
+        self.SourceMeshPathLine.toolTip = 'VTK unstructured grid mesh holding the data to be interpolated into a Volume.'
         self.InputsLayout.addWidget(label, 1, 0)
         self.InputsLayout.addWidget(self.SourceMeshPathLine, 1, 1)
 
-        self.ResamplePushButton = qt.QPushButton("Resample Dataset")
-        self.ResamplePushButton.toolTip = "Resample Dataset"
+        self.ResamplePushButton = qt.QPushButton("Resample Mesh")
+        self.ResamplePushButton.toolTip = "Resample Mesh"
         self.ResamplePushButton.connect('clicked()', self.onResamplePressed)
         self.InputsLayout.addWidget(self.ResamplePushButton, 2, 1)
 
