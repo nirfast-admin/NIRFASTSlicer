@@ -32,8 +32,11 @@ class Mesh2Image:
         parent.dependencies = []
         parent.contributors = ["Alexis Girault (Kitware)"]
         parent.helpText = """
+        Mesh2Image module acts like a probe filter : it resamples the VTK mesh holding the point attributes (optical information) into the image space of the Input Volume, which can be the grayscale image or the label map, previously used to set the boundaries of the mesh in Image2Mesh.
+        This module will dynamically create a scalar volume for each point attribute of the VTK mesh. Those volumes can then be overlayed over the Input Volume.
         """
         parent.acknowledgementText = """
+        This work is part of the NIRFASTSlicer application developped at Kitware, Inc. to allow the use of the NIRFASTMatlab application developped by Dartmouth University and the University of Birmingham, funded by the National Institutes of Health, Grant R01 CA184354.
         """
 
         # parent.icon = qt.QIcon("%s/cranioIcon.png" % ICON_DIR)

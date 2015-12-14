@@ -2,10 +2,11 @@
 <executable>
   <category>NIRFAST</category>
   <title>Nirfast2Vtk</title>
-  <description><![CDATA[Interface to NIRFAST Matlab routines.]]></description>
+  <description><![CDATA[Nirfast2VTK is a utility module that exports the NIRFAST Mesh in a VTK unstructured grid. NIRFAST Input Mesh can be any of the files computed during the mesh creation (the extension does not matter as long as the prefix is correct). VTK Output Directory and VTK Output Name define the path to the exported VTK mesh.]]></description>
   <version>1.0</version>
-  <license/>
+  <license>slicer4</license>
   <contributor>Alexis Girault (Kitware, Inc)</contributor>
+  <acknowledgements><![CDATA[This work is part of the NIRFASTSlicer application developped at Kitware, Inc. to allow the use of the NIRFASTMatlab application developped by Dartmouth University and the University of Birmingham, funded by the National Institutes of Health, Grant R01 CA184354.]]></acknowledgements>
   <parameters>
     <label>I/O</label>
     <description><![CDATA[Inputs Outputs]]></description>
