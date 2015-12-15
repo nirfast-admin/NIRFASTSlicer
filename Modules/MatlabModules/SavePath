@@ -16,7 +16,7 @@ cd "$( dirname "$0" )"
 # Forward parameters to the Matlab CLI
 if [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
   # Linux: use Slicer launcher
-  "$SLICER_HOME/Slicer" --launcher-no-splash --launch "$SLICER_MATLAB_COMMANDER_PATH" --call-matlab-function $MODULE_NAME $*
+  "$SLICER_HOME/NIRFASTSlicer" --launcher-no-splash --launch "$SLICER_MATLAB_COMMANDER_PATH" --call-matlab-function $MODULE_NAME $*
   exit $?
 else
   # Mac OS X: there is no launcher, so run the commander directly
