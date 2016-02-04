@@ -12,6 +12,7 @@
     <directory>
       <label>Directory</label>
       <longflag>savingDir</longflag>
+      <default>~</default>
       <description><![CDATA[Directory where pathdef.m is written.]]></description>
     </directory>
   </parameters>
