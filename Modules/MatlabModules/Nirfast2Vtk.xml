@@ -20,7 +20,7 @@
       <label>VTK Output Directory</label>
       <longflag>vtkMeshDir</longflag>
       <description><![CDATA[Save a VTK dataset in this directory.]]></description>
-      <default>/</default>
+      <default>~</default>
     </directory>
     <string>
       <label>VTK Output Name</label>
