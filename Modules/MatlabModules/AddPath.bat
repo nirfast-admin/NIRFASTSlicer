@@ -1,4 +1,4 @@
-@set MODULE_NAME=SavePath
+@set MODULE_NAME=AddPath
 @rem MatlabBridge proxy version: 1.0
 
 @echo off

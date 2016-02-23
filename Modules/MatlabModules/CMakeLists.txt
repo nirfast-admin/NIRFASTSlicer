@@ -50,8 +50,8 @@ install(
 # Define names of MatlabModules
 set(modules
   Image2Mesh
+  AddPath
   Nirfast2Vtk
-  SavePath
 )
 
 # Set paths
