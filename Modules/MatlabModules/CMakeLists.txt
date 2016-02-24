@@ -51,7 +51,6 @@ install(
 set(modules
   Image2Mesh
   AddPath
-  Nirfast2Vtk
 )
 
 # Set paths
