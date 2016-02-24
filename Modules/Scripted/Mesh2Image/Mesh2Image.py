@@ -27,12 +27,12 @@ import sys
 
 class Mesh2Image:
     def __init__(self, parent):
-        parent.title = "Mesh2Image"
+        parent.title = "Import Optical Properties"
         parent.categories = ["NIRFAST"]
         parent.dependencies = []
         parent.contributors = ["Alexis Girault (Kitware)"]
         parent.helpText = """
-        Mesh2Image module acts like a probe filter : it resamples the VTK mesh holding the point attributes (optical information) into the image space of the Input Volume, which can be the grayscale image or the label map, previously used to set the boundaries of the mesh in Image2Mesh.
+        This module acts like a probe filter : it resamples the VTK mesh holding the point attributes (optical information) into the image space of the Input Volume, which can be the grayscale image or the label map, previously used to set the boundaries of the mesh in Image2Mesh.
         This module will dynamically create a scalar volume for each point attribute of the VTK mesh. Those volumes can then be overlayed over the Input Volume.
         """
         parent.acknowledgementText = """
