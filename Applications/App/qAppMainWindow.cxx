@@ -17,9 +17,13 @@
 
 // Qt includes
 #include <QDebug>
+#include <QTimer>
 
 // Slicer includes
 #include "qSlicerModuleSelectorToolBar.h"
+#include "qSlicerModulesMenu.h"
+#include "qSlicerModuleManager.h"
+#include "qSlicerAbstractModule.h"
 
 // SlicerApp includes
 #include "qAppAboutDialog.h"
@@ -82,6 +86,10 @@ void qAppMainWindowPrivate::setupUi(QMainWindow * mainWindow)
   this->DataProbeCollapsibleWidget->setCollapsed(false);
   this->DataProbeCollapsibleWidget->setVisible(true);
   this->StatusBar->setVisible(true);
+
+  // Change modules dropdown menu
+  qAppMainWindow* mainWin = qobject_cast<qAppMainWindow*>(mainWindow);
+  QTimer::singleShot(0, mainWin, SLOT(updateModuleMenu()));
 }
 
 //-----------------------------------------------------------------------------
@@ -105,4 +113,65 @@ void qAppMainWindow::on_HelpAboutSlicerAppAction_triggered()
 {
   qAppAboutDialog about(this);
   about.exec();
+}
+
+
+//-----------------------------------------------------------------------------
+void qAppMainWindow::updateModuleMenu()
+{
+    Q_D(qAppMainWindow);
+    qSlicerModulesMenu* qMenu = d->ModuleSelectorToolBar->modulesMenu();
+    qSlicerModuleManager * moduleManager = qSlicerApplication::application()->moduleManager();
+
+    // Modules to remove
+    QStringList removeModuleNames = QStringList()
+            << "Annotations"
+            << "DICOM"
+            << "Data"
+            << "Editor"
+            << "Markups"
+            << "Models"
+            << "SubjectHierarchy"
+            << "Transforms"
+            << "ViewControllers"
+            << "VolumeRendering"
+            << "Volumes";
+    foreach(const QString& moduleName, removeModuleNames)
+    {
+        //qDebug()<<"Removing Module "<<moduleName;
+        qSlicerAbstractCoreModule * coreModule = moduleManager->module(moduleName);
+        qSlicerAbstractModule* module = qobject_cast<qSlicerAbstractModule*>(coreModule);
+        qMenu->removeAction(module->action());
+        // We removed the action but need to keep the connection for the
+        // action in "All Modules", or if they are added back later on
+        QObject::connect(module->action(), SIGNAL(triggered(bool)),
+                         qMenu, SLOT(onActionTriggered()));
+        //qDebug()<<"(-) Removed Module "<<module->name();
+    }
+
+    // Modules to add
+    QStringList addModuleNames = QStringList()
+            << "DICOM"
+            << "VolumeRendering"
+            << "CropVolume"
+            << "Markups"
+            << "CastScalarVolume"
+            << "Editor"
+            << "Image2Mesh"
+            << "Mesh2Image"
+            << "ViewControllers"
+            << "Volumes";
+    QAction * beforeAction = qMenu->actions().at(1); // to insert after the "All Modules" menu
+    foreach(const QString& moduleName, addModuleNames)
+    {
+        //qDebug()<<"Adding Module "<<moduleName;
+        qSlicerAbstractCoreModule * coreModule = moduleManager->module(moduleName);
+        qSlicerAbstractModule* module = qobject_cast<qSlicerAbstractModule*>(coreModule);
+        qMenu->insertAction(beforeAction, module->action());
+        //qDebug()<<"(+) Added Module "<<module->name();
+    }
+
+    // Add missing separator (only if all modules removed from list)
+    beforeAction = qMenu->actions().at(1);
+    qMenu->insertSeparator(beforeAction);
 }

@@ -37,6 +37,9 @@ public:
   /// Reimplemented to use qAppAboutDialog instead of qSlicerAppAboutDialog.
   virtual void on_HelpAboutSlicerAppAction_triggered();
 
+public slots:
+  void updateModuleMenu();
+
 private:
   Q_DECLARE_PRIVATE(qAppMainWindow);
   Q_DISABLE_COPY(qAppMainWindow);
