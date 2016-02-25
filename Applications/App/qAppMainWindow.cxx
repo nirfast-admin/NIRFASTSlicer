@@ -180,4 +180,21 @@ void qAppMainWindow::updateModuleMenu()
     qSlicerAbstractModule* editorModule = qobject_cast<qSlicerAbstractModule*>(editorCoreModule);
     editorModule->action()->setText("Editor (Segment Tissue)");
 
+    // Update AddPath icon
+    qSlicerAbstractCoreModule * pathCoreModule = moduleManager->module("AddPath");
+    qSlicerAbstractModule* pathModule = qobject_cast<qSlicerAbstractModule*>(pathCoreModule);
+    qSlicerAbstractCoreModule * matlabCoreModule = moduleManager->module("MatlabModuleGenerator");
+    qSlicerAbstractModule* matlabModule = qobject_cast<qSlicerAbstractModule*>(matlabCoreModule);
+    pathModule->action()->setIcon(matlabModule->action()->icon());
+
+    // Update Image2Mesh icon
+    qSlicerAbstractCoreModule * meshCoreModule = moduleManager->module("Image2Mesh");
+    qSlicerAbstractModule* meshModule = qobject_cast<qSlicerAbstractModule*>(meshCoreModule);
+    meshModule->action()->setIcon(this->windowIcon());
+
+    // Update Mesh2Image icon
+    qSlicerAbstractCoreModule * imgCoreModule = moduleManager->module("Mesh2Image");
+    qSlicerAbstractModule* imgModule = qobject_cast<qSlicerAbstractModule*>(imgCoreModule);
+    imgModule->action()->setIcon(this->windowIcon());
+
 }
