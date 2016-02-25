@@ -174,4 +174,10 @@ void qAppMainWindow::updateModuleMenu()
     // Add missing separator (only if all modules removed from list)
     beforeAction = qMenu->actions().at(1);
     qMenu->insertSeparator(beforeAction);
+
+    // Rename Editor into "Editor (Segment Tissue)"
+    qSlicerAbstractCoreModule * editorCoreModule = moduleManager->module("Editor");
+    qSlicerAbstractModule* editorModule = qobject_cast<qSlicerAbstractModule*>(editorCoreModule);
+    editorModule->action()->setText("Editor (Segment Tissue)");
+
 }
