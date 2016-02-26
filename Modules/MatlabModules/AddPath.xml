@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <executable>
   <category>NIRFAST</category>
-  <title>AddPath</title>
+  <title>Add path to Matlab</title>
   <description><![CDATA[NIRFASTSlicer package holds a version of NIRFASTMatlab that you can run as a standalone application directly within Matlab. AddPath module adds the path to NIRFASTMatlab into startup.m. Upon opening a future instance of Matlab, the startup.m script will automatically run and place the NIRFASTMatlab folders to the Matlab path.]]></description>
   <version>1.0</version>
   <license>slicer4</license>
