@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ###########################################################################
-import vtk, qt, ctk, slicer
+import vtk, qt, ctk, slicer, PythonQt
 import os
 import sys
 
@@ -70,7 +70,7 @@ class Mesh2ImageLogic:
         self.Node.SetName(text)
         slicer.app.processEvents()
 
-    def resample(self, volumeNode, sourceMeshPath):
+    def resample(self, sourceMeshPath, volumeNode, imageSpacing):
 
         self.Node.SetStatus(self.Node.Running)
 
@@ -87,17 +87,26 @@ class Mesh2ImageLogic:
             self.Node.SetStatus(self.Node.CompletedWithErrors)
             return 0
 
-        # Read volumeNode
-        if volumeNode is None:
-            print >> sys.stderr, "Mesh2Image : Reading input volume failed"
-            self.Node.SetStatus(self.Node.CompletedWithErrors)
-            return 0
-
         # Get input image data from volumeNode
-        print "-- Setting imageData space information using volume information"
-        inputImageData = volumeNode.GetImageData()
-        inputImageData.SetOrigin(volumeNode.GetOrigin())
-        inputImageData.SetSpacing(volumeNode.GetSpacing())
+        if volumeNode:
+            print "-- Setting imageData space information using volume information"
+            inputImageData = volumeNode.GetImageData()
+            inputImageData.SetOrigin(volumeNode.GetOrigin())
+            inputImageData.SetSpacing(volumeNode.GetSpacing())
+            volumesLogic = slicer.modules.volumes.logic()
+
+        # Create input image data based on mesh bounds
+        else:
+            bd = inputMesh.GetBounds()
+            imgSpacing = [imageSpacing] * 3
+            imgOrigin = bd[0],bd[2],bd[4]
+            dimX = int(round(abs(bd[0]-bd[1])/imageSpacing))
+            dimY = int(round(abs(bd[2]-bd[3])/imageSpacing))
+            dimZ = int(round(abs(bd[4]-bd[5])/imageSpacing))
+            inputImageData = vtk.vtkImageData()
+            inputImageData.SetSpacing(imgSpacing)
+            inputImageData.SetOrigin(imgOrigin)
+            inputImageData.SetDimensions(dimX, dimY, dimZ)
 
         # Apply probe filter
         print "-- Resampling Mesh in ImageData space"
@@ -123,13 +132,13 @@ class Mesh2ImageLogic:
         outputImageData.SetOrigin(0, 0, 0)
         outputImageData.SetSpacing(1, 1, 1)
 
-        # Remove useless array
+        # Remove useless array(s)
         print "-- Removing unneeded arrays"
         removeArrayFilter = vtk.vtkPassArrays()
         removeArrayFilter.SetInputData(outputImageData)
         removeArrayFilter.RemoveArraysOn()
         removeArrayFilter.AddPointDataArray("vtkValidPointMask")
-        removeArrayFilter.AddPointDataArray("ImageScalars")
+        if volumeNode: removeArrayFilter.AddPointDataArray("ImageScalars")
         removeArrayFilter.Update()
 
         outputImageData = removeArrayFilter.GetOutput()
@@ -162,20 +171,32 @@ class Mesh2ImageLogic:
             # Update volumeNode ImageData
             print "Creating Output Node"
             outputNode = slicer.vtkMRMLScalarVolumeNode()
-            outputNode.Copy(volumeNode)
-            outputNode.SetName(outputNode.GetName() + "_" + arrayName)
-            outputNode.SetAndObserveStorageNodeID(None)
-            outputNode.SetAndObserveDisplayNodeID(None)
+            if volumeNode:
+                outputNode = volumesLogic.CloneVolume(volumeNode,
+                                                      volumeNode.GetName() + "_" + arrayName)
+            else:
+                outputNode.SetSpacing(imgSpacing)
+                outputNode.SetOrigin(imgOrigin)
+                outputNode.SetName("data_" + arrayName)
             outputNode.SetImageDataConnection(passArrayFilter.GetOutputPort())
-            slicer.mrmlScene.AddNode(outputNode)
-            outputNode.SetAndObserveStorageNodeID(None)
 
+            # Add to scene and handle display
+            slicer.mrmlScene.AddNode(outputNode)
+            SetSliceViewerLayers(slicer.mrmlScene,
+                                 foreground=outputNode,
+                                 foregroundOpacity=0.8)
+            displayNode = outputNode.GetDisplayNode()
+            displayNode.SetAndObserveColorNodeID("vtkMRMLColorTableNodeIron")
+            displayNode.ApplyThresholdOn()
+            displayNode.SetAutoThreshold(True)
+            displayNode.SetInterpolate(False)
+
+            # Add to list for the module GUI
             self.OutputVolumes[arrayName] = outputNode
 
         # FINISH
         self.Node.SetStatus(self.Node.Completed)
         return 1
-
 
 #
 # qMesh2ImageWidget
@@ -222,21 +243,21 @@ class Mesh2ImageWidget:
         self.layout.addWidget(self.ProgressBar)
 
         # 1.1) Inputs Values
-        label = qt.QLabel("Input Volume: ")
+        label = qt.QLabel("VTK Mesh: ")
+        self.SourceMeshPathLine = ctk.ctkPathLineEdit()
+        self.SourceMeshPathLine.toolTip = 'VTK unstructured grid mesh holding the data to be interpolated into a Volume.'
+        self.InputsLayout.addWidget(label, 0, 0)
+        self.InputsLayout.addWidget(self.SourceMeshPathLine, 0, 1)
+
+        label = qt.QLabel("Bounding Volume: ")
         self.InputVolumeComboBox = slicer.qMRMLNodeComboBox()
         self.InputVolumeComboBox.nodeTypes = (("vtkMRMLVolumeNode"), "")
         self.InputVolumeComboBox.setMRMLScene(slicer.mrmlScene)
         self.InputVolumeComboBox.addEnabled = False
         self.InputVolumeComboBox.renameEnabled = True
         self.InputVolumeComboBox.toolTip = 'Volume defining the output geometric structure where the point data of the source mesh is resampled.'
-        self.InputsLayout.addWidget(label, 0, 0)
-        self.InputsLayout.addWidget(self.InputVolumeComboBox, 0, 1)
-
-        label = qt.QLabel("Source Mesh: ")
-        self.SourceMeshPathLine = ctk.ctkPathLineEdit()
-        self.SourceMeshPathLine.toolTip = 'VTK unstructured grid mesh holding the data to be interpolated into a Volume.'
         self.InputsLayout.addWidget(label, 1, 0)
-        self.InputsLayout.addWidget(self.SourceMeshPathLine, 1, 1)
+        self.InputsLayout.addWidget(self.InputVolumeComboBox, 1, 1)
 
         self.ResamplePushButton = qt.QPushButton("Resample Mesh")
         self.ResamplePushButton.toolTip = "Resample Mesh"
@@ -252,17 +273,36 @@ class Mesh2ImageWidget:
 
         input_volume = self.InputVolumeComboBox.currentNode()
         source_mesh = self.SourceMeshPathLine.currentPath
+        img_spacing = 0.0
+        ok = True
 
-        # no good inputs
-        if (input_volume is None) or (source_mesh is None):
-            print >> sys.stderr, "Mesh2Image : Input missing"
+        # no mesh
+        if not source_mesh:
+            print >> sys.stderr, "Mesh2Image : VTK mesh file missing"
             qt.QMessageBox.critical(
                 slicer.util.mainWindow(),
-                "Mesh2Image", "Input missing")
+                "Mesh2Image", "VTK mesh file missing")
+            ok = False
 
+        # no volume
+        elif input_volume is None:
+            s = ("No bounding volume was selected to resample your mesh. You will get\n"
+                 "better results by using the original image used to create your mesh.\n"
+                 "You can still extract the mesh optical parameters without it by\n"
+                 "resampling your VTK mesh in its own bounding box space. To do so,\n"
+                 "select your image spacing (in mm) and press 'OK':")
 
+            boolResult = PythonQt.BoolResult()
+            img_spacing = qt.QInputDialog.getDouble(
+                slicer.util.mainWindow(),
+                "Mesh2Image", s, 1, 0, 10, 3, boolResult)
+            ok = boolResult
+
+        # put volume in background
         else:
+            SetSliceViewerLayers(slicer.mrmlScene, background=input_volume, labelOpacity=0.0)
 
+        if ok:
             # empty output list
             while len(self.OutputWidgets):
                 widget = self.OutputWidgets[0]
@@ -270,9 +310,9 @@ class Mesh2ImageWidget:
                 self.OutputWidgets.remove(widget)
 
             # resample
-            if self.Logic.resample(input_volume, source_mesh):
+            if self.Logic.resample(source_mesh, input_volume, img_spacing):
                 # display outputs
-                i = len(self.OutputWidgets) # should be 0
+                i = len(self.OutputWidgets)  # should be 0
                 for name, node in self.Logic.OutputVolumes.items():
                     label = qt.QLabel(name + " volume:")
                     comboBox = slicer.qMRMLNodeComboBox()
@@ -285,24 +325,57 @@ class Mesh2ImageWidget:
                     self.OutputWidgets.append(label)
                     self.OutputWidgets.append(comboBox)
 
-                    node.SetAndObserveDisplayNodeID(None)
-
                     i += 1
 
+                centerSlices(slicer.mrmlScene)
+
+        # update GUI
         self.ResamplePushButton.setEnabled(True)
         self.ProgressBar.setNameVisibility(False)
         return
 
 
-    def clearLayout(self, layout):
-        if layout is not None:
-            for i in reversed(range(layout.count())):
-                item = layout.takeAt(i)
-                widget = item.widget()
-                if widget is not None:
-                    label = layout.labelForField(widget)
-                    if label is not None:
-                        label.setParent(None)
-                    widget.setParent(None)
-                else:
-                    self.clearLayout(item.layout())
+
+#
+# Utilities
+#
+
+def clearLayout(layout):
+    if layout is not None:
+        for i in reversed(range(layout.count())):
+            item = layout.takeAt(i)
+            widget = item.widget()
+            if widget is not None:
+                label = layout.labelForField(widget)
+                if label is not None:
+                    label.setParent(None)
+                widget.setParent(None)
+            else:
+                clearLayout(item.layout())
+
+def SetSliceViewerLayers(scene, label=None, labelOpacity=None, background=None,
+                         foreground=None, foregroundOpacity=None):
+    if isinstance(label, slicer.vtkMRMLNode):
+        label = label.GetID()
+    if isinstance(background, slicer.vtkMRMLNode):
+        background = background.GetID()
+    if isinstance(foreground, slicer.vtkMRMLNode):
+        foreground = foreground.GetID()
+    num = scene.GetNumberOfNodesByClass('vtkMRMLSliceCompositeNode')
+    for i in range(num):
+        sliceViewer = scene.GetNthNodeByClass(i, 'vtkMRMLSliceCompositeNode')
+        if foreground is not None:
+            sliceViewer.SetForegroundVolumeID(foreground)
+        if background is not None:
+            sliceViewer.SetBackgroundVolumeID(background)
+        if label is not None:
+            sliceViewer.SetLabelVolumeID(label)
+        if foregroundOpacity is not None:
+            sliceViewer.SetForegroundOpacity(foregroundOpacity)
+        if labelOpacity is not None:
+            sliceViewer.SetLabelOpacity(labelOpacity)
+
+def centerSlices(scene):
+    sliceViewer = scene.GetNthNodeByClass(0, 'vtkMRMLSliceCompositeNode')
+    sliceViewer.LinkedControlOn()
+    # adjust to size of volume here ?
