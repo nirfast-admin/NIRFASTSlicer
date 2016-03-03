@@ -27,6 +27,8 @@
 #include <QTimer>
 #include <QLabel>
 #include <QLineEdit>
+#include <QFormLayout>
+#include <QCheckBox>
 
 // Slicer includes
 #include "vtkSlicerConfigure.h"
@@ -34,12 +36,14 @@
 // CTK includes
 #include <ctkAbstractLibraryFactory.h>
 #include <ctkCollapsibleButton.h>
+#include <ctkVTKVolumePropertyWidget.h>
 #ifdef Slicer_USE_PYTHONQT
 # include <ctkPythonConsole.h>
 #endif
 
 // Slicer includes
 #include "qSlicerAppVersionConfigure.h" // For qSlicerApp_VERSION_FULL, qSlicerApp_VERSION_FULL
+#include "qMRMLVolumePropertyNodeWidget.h"
 
 // SlicerApp includes
 #include "qSlicerApplication.h"
@@ -267,6 +271,35 @@ int SlicerAppMain(int argc, char* argv[])
   else
     {
     qWarning() << "Could not update UI for the module"<< matlabModuleGenerator->name();
+    }
+
+  // Edit volume rendering widget
+  qSlicerAbstractCoreModule * volRenCoreModule = moduleManager->module("VolumeRendering");
+  qSlicerAbstractModuleWidget* volRenModuleWidget = dynamic_cast<qSlicerAbstractModuleWidget*>(volRenCoreModule->widgetRepresentation());
+  if(volRenModuleWidget)
+    {
+    qMRMLVolumePropertyNodeWidget* volPropNodeWidget = volRenModuleWidget->findChild<qMRMLVolumePropertyNodeWidget*>("VolumePropertyNodeWidget");
+    QFormLayout* volRenDisplayLayout = volRenModuleWidget->findChild<QFormLayout*>("formLayout_11");
+    if(volPropNodeWidget && volRenDisplayLayout)
+      {
+      ctkVTKVolumePropertyWidget* ctkVolPropWidget =
+              volPropNodeWidget->findChild<ctkVTKVolumePropertyWidget*>("VolumeProperty");
+      if(ctkVolPropWidget)
+        {
+        QCheckBox* shadeCheckBox = ctkVolPropWidget->findChild<QCheckBox*>("ShadeCheckBox");
+        if(shadeCheckBox)
+          {
+          QCheckBox* newShadeCheckBox = new QCheckBox("", volRenModuleWidget);
+          QObject::connect(newShadeCheckBox, SIGNAL(toggled(bool)), shadeCheckBox, SLOT(setChecked(bool)));
+          QObject::connect(shadeCheckBox, SIGNAL(toggled(bool)), newShadeCheckBox, SLOT(setChecked(bool)));
+          volRenDisplayLayout->addRow("Shade:", newShadeCheckBox );
+          }
+        }
+      }
+    }
+  else
+    {
+    qWarning() << "Could not update UI for the module"<< volRenCoreModule->name();
     }
 
   // Launch NIRFAST-Slicer splashScreen & window

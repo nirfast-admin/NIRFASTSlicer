@@ -150,6 +150,8 @@ set(APP_SRCS
   Main.cxx
   )
 
+message(STATUS "##### : ${qSlicerVolumeRenderingModuleWidgets_INCLUDE_DIRS}")
+
 slicerMacroBuildApplication(
   NAME ${PROJECT_NAME}
   APPLICATION_NAME ${${PROJECT_NAME}_APPLICATION_NAME}
@@ -158,8 +160,12 @@ slicerMacroBuildApplication(
   LAUNCHER_SPLASHSCREEN_FILE "Resources/Images/SplashScreen.png"
   WIN_ICON_FILE "Resources/App.ico"
   SRCS ${APP_SRCS}
-  TARGET_LIBRARIES ${APPLIB_NAME}
+  TARGET_LIBRARIES
+    ${APPLIB_NAME}
+    qSlicerVolumeRenderingModuleWidgets
   TARGET_NAME_VAR "APP_TARGET_NAME"
+  INCLUDE_DIRECTORIES
+    ${qSlicerVolumeRenderingModuleWidgets_INCLUDE_DIRS}
   ${extra_args}
   )
 
