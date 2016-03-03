@@ -187,9 +187,10 @@ class Mesh2ImageLogic:
                                  foregroundOpacity=0.8)
             displayNode = outputNode.GetDisplayNode()
             displayNode.SetAndObserveColorNodeID("vtkMRMLColorTableNodeIron")
+            displayNode.AutoWindowLevelOn()
             displayNode.ApplyThresholdOn()
-            displayNode.SetAutoThreshold(True)
-            displayNode.SetInterpolate(False)
+            displayNode.SetLowerThreshold(0.000001)
+            displayNode.SetInterpolate(0)
 
             # Add to list for the module GUI
             self.OutputVolumes[arrayName] = outputNode
@@ -378,4 +379,6 @@ def SetSliceViewerLayers(scene, label=None, labelOpacity=None, background=None,
 def centerSlices(scene):
     sliceViewer = scene.GetNthNodeByClass(0, 'vtkMRMLSliceCompositeNode')
     sliceViewer.LinkedControlOn()
-    # adjust to size of volume here ?
+    sliceNames = ["Red","Yellow","Green"]
+    for sliceName in sliceNames:
+        slicer.app.layoutManager().sliceWidget(sliceName).sliceLogic().FitSliceToAll()
