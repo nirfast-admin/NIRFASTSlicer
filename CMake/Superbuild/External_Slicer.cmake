@@ -100,7 +100,7 @@ if(NOT DEFINED ${proj}_DIR)
     set(${proj}_SOURCE_DIR ${CMAKE_BINARY_DIR}/${proj})
     list(APPEND ${proj}_EP_ARGS
       GIT_REPOSITORY ${git_protocol}://github.com/Slicer/Slicer.git
-      GIT_TAG 52b12fa0b6987dc8a5deb88ff41e51ddc3ad5480 #2016-03-03
+      GIT_TAG c9e3a108f61f42a833fe580ea46407f66124f344 #2016-04-04
       )
   endif()
 
