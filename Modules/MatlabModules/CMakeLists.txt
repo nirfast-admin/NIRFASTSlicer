@@ -29,7 +29,10 @@ set(NIRFASTMatlab_INSTALL_DIR "${Slicer_INSTALL_ROOT}${NIRFASTMatlab_DIR}")
 # Copy NIRFAST Matlab
 message(STATUS "Copying project sources: NIRFASTMatlab")
 file(
-  COPY ${NIRFASTMatlab_SOURCE_DIR}/gui ${NIRFASTMatlab_SOURCE_DIR}/toolbox
+  COPY
+    ${NIRFASTMatlab_SOURCE_DIR}/gui
+    ${NIRFASTMatlab_SOURCE_DIR}/toolbox
+    ${NIRFASTMatlab_SOURCE_DIR}/meshes
   DESTINATION ${CMAKE_BINARY_DIR}/${NIRFASTMatlab_DIR}
 )
 
@@ -41,6 +44,11 @@ install(
 )
 install(
   DIRECTORY ${NIRFASTMatlab_SOURCE_DIR}/toolbox
+  DESTINATION ${NIRFASTMatlab_INSTALL_DIR}
+  COMPONENT Runtime
+)
+install(
+  DIRECTORY ${NIRFASTMatlab_SOURCE_DIR}/meshes
   DESTINATION ${NIRFASTMatlab_INSTALL_DIR}
   COMPONENT Runtime
 )
