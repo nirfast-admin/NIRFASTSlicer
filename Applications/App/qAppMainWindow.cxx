@@ -131,6 +131,7 @@ void qAppMainWindow::updateModuleMenu()
             << "Editor"
             << "Markups"
             << "Models"
+            << "SceneViews"
             << "SubjectHierarchy"
             << "Transforms"
             << "ViewControllers"
@@ -152,15 +153,16 @@ void qAppMainWindow::updateModuleMenu()
     // Modules to add
     QStringList addModuleNames = QStringList()
             << "DICOM"
+            << "Data"
+            << "Volumes"
             << "VolumeRendering"
             << "CropVolume"
-            << "Markups"
             << "CastScalarVolume"
             << "Editor"
+            << "Markups"
             << "Image2Mesh"
             << "Mesh2Image"
-            << "ViewControllers"
-            << "Volumes";
+            << "ViewControllers";
     QAction * beforeAction = qMenu->actions().at(1); // to insert after the "All Modules" menu
     foreach(const QString& moduleName, addModuleNames)
     {

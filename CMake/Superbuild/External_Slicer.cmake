@@ -45,7 +45,7 @@ if(NOT DEFINED ${proj}_DIR)
 
   get_property(${APPLICATION_NAME}_MODULES GLOBAL PROPERTY ${APPLICATION_NAME}_MODULES)
   set(${proj}_QTLOADABLEMODULES_DISABLED
-    SceneViews
+    #SceneViews # Needed to avoid warning when loading scene
     SlicerWelcome
     #ViewControllers
     )
