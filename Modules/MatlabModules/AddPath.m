@@ -8,12 +8,21 @@ NIRFASTPath=fullfile(libDir,'NIRFASTMatlab');
 %% MATLAB PATH
 pn = what('MATLAB');
 
-%% POPULATE startup.m
-[fid msg] = fopen(fullfile(pn.path,'startup.m'),'a+t');
-st = 'addpath(genpath(';
-fprintf(fid,'%% startup.m\n');
-fprintf(fid,'%%\n');
-fprintf(fid,'%% Adds top folder and subfolders of newdir to path at start of each MatLab instance.\n');
-fprintf(fid,'%%\n\n');
-fprintf(fid,'%s''%s''))\n\n',st,NIRFASTPath);
+%% Open startup.m
+startupFilePath = fullfile(pn.path,'startup.m');
+startupDoesntExist = ~exist(startupFilePath, 'file');
+[fid msg] = fopen(startupFilePath,'a+');
+
+%% Populate startup.m
+if startupDoesntExist
+  fprintf(fid,'%%% startup.m\n');
+  fprintf(fid,'%%  This script is executed everytime you start MatLab.\n\n');
+end
+
+fprintf(fid,'%%% Adding NIRFAST package to MatLab path\n');
+fprintf(fid,'NIRFASTMatlabPath = ''%s'';\n', NIRFASTPath);
+fprintf(fid,'disp(''Added NIRFAST-Matlab directory to the path:'');\n');
+fprintf(fid,'disp(NIRFASTMatlabPath);\n');
+fprintf(fid,'disp(''Edit startup.m to remove NIRFAST-Matlab from the path when starting MatLab.'');\n');
+fprintf(fid,'addpath(genpath(NIRFASTMatlabPath))\n\n');
 fclose(fid);
