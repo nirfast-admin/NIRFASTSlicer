@@ -152,8 +152,10 @@ void qAppMainWindow::updateModuleMenu()
 
     // Modules to add
     QStringList addModuleNames = QStringList()
+            << "Home"
             << "DICOM"
             << "Data"
+            << "ViewControllers"
             << "Volumes"
             << "VolumeRendering"
             << "CropVolume"
@@ -161,8 +163,7 @@ void qAppMainWindow::updateModuleMenu()
             << "Editor"
             << "Markups"
             << "Image2Mesh"
-            << "Mesh2Image"
-            << "ViewControllers";
+            << "Mesh2Image";
     QAction * beforeAction = qMenu->actions().at(1); // to insert after the "All Modules" menu
     foreach(const QString& moduleName, addModuleNames)
     {
@@ -192,11 +193,25 @@ void qAppMainWindow::updateModuleMenu()
     // Update Image2Mesh icon
     qSlicerAbstractCoreModule * meshCoreModule = moduleManager->module("Image2Mesh");
     qSlicerAbstractModule* meshModule = qobject_cast<qSlicerAbstractModule*>(meshCoreModule);
-    meshModule->action()->setIcon(this->windowIcon());
+    qSlicerAbstractCoreModule * modelsCoreModule = moduleManager->module("Models");
+    qSlicerAbstractModule* modelsModule = qobject_cast<qSlicerAbstractModule*>(modelsCoreModule);
+    meshModule->action()->setIcon(modelsModule->action()->icon());
 
     // Update Mesh2Image icon
     qSlicerAbstractCoreModule * imgCoreModule = moduleManager->module("Mesh2Image");
     qSlicerAbstractModule* imgModule = qobject_cast<qSlicerAbstractModule*>(imgCoreModule);
-    imgModule->action()->setIcon(this->windowIcon());
+    qSlicerAbstractCoreModule * colorsCoreModule = moduleManager->module("Colors");
+    qSlicerAbstractModule* colorsModule = qobject_cast<qSlicerAbstractModule*>(colorsCoreModule);
+    imgModule->action()->setIcon(colorsModule->action()->icon());
+
+    // Update Home icon
+    qSlicerAbstractCoreModule * homeCoreModule = moduleManager->module("Home");
+    qSlicerAbstractModule* homeModule = qobject_cast<qSlicerAbstractModule*>(homeCoreModule);
+    homeModule->action()->setIcon(this->windowIcon());
+
+    // Open Help & acknowledgment
+    qSlicerModulePanel* modulePanel = this->findChild<qSlicerModulePanel*>("ModulePanel");
+    ctkCollapsibleButton* helpButton = modulePanel->findChild<ctkCollapsibleButton*>("HelpCollapsibleButton");
+    helpButton->setCollapsed(false);
 
 }
