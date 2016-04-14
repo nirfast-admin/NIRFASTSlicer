@@ -252,7 +252,8 @@ class Mesh2ImageWidget:
 
         label = qt.QLabel("Bounding Volume: ")
         self.InputVolumeComboBox = slicer.qMRMLNodeComboBox()
-        self.InputVolumeComboBox.nodeTypes = (("vtkMRMLVolumeNode"), "")
+        self.InputVolumeComboBox.nodeTypes = (("vtkMRMLScalarVolumeNode"), "")
+        self.InputVolumeComboBox.showChildNodeTypes = False
         self.InputVolumeComboBox.setMRMLScene(slicer.mrmlScene)
         self.InputVolumeComboBox.addEnabled = False
         self.InputVolumeComboBox.renameEnabled = True
