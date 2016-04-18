@@ -16,7 +16,11 @@ startupDidntExist = ~exist(startupFileName, 'file');
 
 %% Make sure a startup file exists
 if fid == -1
-  error('\nCould not create startup.m file: %s.\nManually add the following path and its subdirectories to your MatLab path to use the NIRFAST package:\n%s', msg, NIRFASTPath)
+  outputParams.status = ['FAILURE: could not create startup.m file (', msg, ').'];
+  outputParams.instructions = ['Manually add ''', NIRFASTPath,''' and its subdirectories to your MatLab path to use the NIRFAST package.'];
+  outputParams.command = ['addpath(genpath(''',NIRFASTPath,'''))'];
+  fprintf('\nCould not create startup.m file: %s.\nManually add the following path and its subdirectories to your MatLab path to use the NIRFAST package:\n%s', msg, NIRFASTPath)
+  return
 end
 
 %% If startup file did not exist
@@ -33,3 +37,8 @@ fprintf(fid,'disp(NIRFASTPath);\n');
 fprintf(fid,'disp(''Edit startup.m to remove NIRFAST-Matlab from the path when starting MatLab.'');\n');
 fprintf(fid,'addpath(genpath(NIRFASTPath))\n\n');
 fclose(fid);
+
+%% Populate output message
+outputParams.status = 'SUCCESS: NIRFAST successfully added to MatLab path.';
+outputParams.instructions = ['Edit ''', startupFileName,''' if you need to remove NIRFAST from the path when starting MatLab.'];
+outputParams.command = ['edit(''',startupFileName,''')'];

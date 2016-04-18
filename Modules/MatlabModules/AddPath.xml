@@ -7,4 +7,26 @@
   <license>slicer4</license>
   <contributor>Alexis Girault (Kitware Inc), Vincent Rossi (Dartmouth University)</contributor>
   <acknowledgements><![CDATA[This work is part of the NIRFASTSlicer application developped at Kitware, Inc. to allow the use of the NIRFASTMatlab application developped by Dartmouth University and the University of Birmingham, funded by the National Institutes of Health, Grant R01 CA184354.]]></acknowledgements>
+  <parameters>
+    <label>Output messages</label>
+    <description><![CDATA[Output messages]]></description>
+    <string>
+      <label>Status</label>
+      <name>status</name>
+      <description><![CDATA[Status]]></description>
+      <channel>output</channel>
+    </string>
+    <string>
+      <label>Instructions</label>
+      <name>instructions</name>
+      <description><![CDATA[Instructions]]></description>
+      <channel>output</channel>
+    </string>
+    <string>
+      <label>Command</label>
+      <name>command</name>
+      <description><![CDATA[MatLab command to apply the instructions references above.]]></description>
+      <channel>output</channel>
+    </string>
+  </parameters>
 </executable>
