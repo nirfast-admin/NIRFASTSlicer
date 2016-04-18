@@ -6,22 +6,17 @@ libDir = fileparts(curDir);
 NIRFASTPath=fullfile(libDir,'NIRFASTMatlab');
 
 %% MATLAB PATH
-pn = what('MATLAB');
-startupFilePath = pn.path;
+startupFilePath = userpath;
+startupFilePath = startupFilePath(1:end-1);
 
 %% Open startup.m
 startupFileName = fullfile(startupFilePath,'startup.m');
 startupDidntExist = ~exist(startupFileName, 'file');
-fid = fopen(startupFileName,'a+t');
+[fid, msg] = fopen(startupFileName,'a+t');
 
 %% Make sure a startup file exists
 if fid == -1
-  disp('Generating new startup.m file since none was present.');
-  cd(startupFilePath)
-  fidm = fopen('startup.m','w');
-  fclose(fidm);
-  cd(curDir)
-  fid = fopen(startupFileName,'a+t');
+  error('\nCould not create startup.m file: %s.\nManually add the following path and its subdirectories to your MatLab path to use the NIRFAST package:\n%s', msg, NIRFASTPath)
 end
 
 %% If startup file did not exist
