@@ -12,7 +12,8 @@ class Home:
         parent.title = "Home"
         parent.categories = ["NIRFAST"]
         parent.dependencies = []
-        parent.contributors = ["Scott Davis (Darmouth College), Alexis Girault (Kitware)"]
+        parent.contributors = ["Scott Davis (Darmouth College), Hamid Dehghani (University of Birmingham), Alexis Girault (Kitware Inc). "
+                               "See <a href=\"http://www.nirfast.org/people.php\">here</a> for a list of current and former developers and contributors."]
         parent.helpText = """<center>
         <br>
         <b>Welcome to NIRFAST!</b><br>

@@ -5,6 +5,6 @@
   <description><![CDATA[NIRFASTSlicer package holds a version of NIRFASTMatlab that you can run as a standalone application directly within Matlab. AddPath module adds the path to NIRFASTMatlab into startup.m. Upon opening a future instance of Matlab, the startup.m script will automatically run and place the NIRFASTMatlab folders to the Matlab path.]]></description>
   <version>1.0</version>
   <license>slicer4</license>
-  <contributor>Alexis Girault (Kitware, Inc), Vincent Rossi (Dartmouth University)</contributor>
+  <contributor>Alexis Girault (Kitware Inc), Vincent Rossi (Dartmouth University)</contributor>
   <acknowledgements><![CDATA[This work is part of the NIRFASTSlicer application developped at Kitware, Inc. to allow the use of the NIRFASTMatlab application developped by Dartmouth University and the University of Birmingham, funded by the National Institutes of Health, Grant R01 CA184354.]]></acknowledgements>
 </executable>
