@@ -49,7 +49,7 @@ include(ExternalProjectAddSource)
 
 ExternalProject_Add_Source(NIRFASTMatlab
   GIT_REPOSITORY https://github.com/nirfast-admin/NIRFAST.git
-  GIT_TAG 6b8dad5c5f59c18887db418b27cb7fc9c8f51e2c # 2016-02-24
+  GIT_TAG v9.0 # 2016-04-20
   SOURCE_DIR_VAR NIRFASTMatlab_SOURCE_DIR
   PROJECTS Slicer
   )
