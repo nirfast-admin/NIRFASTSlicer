@@ -33,6 +33,15 @@ if strcmp(inputParams.meshdir,'/')
     errordlg('Select an output mesh directory', 'I/O Error')
     error('I/O Error: missing output mesh directory)')
 end
+if strcmp(inputParams.meshdir,'~')
+    if ispc
+        meshdir = [getenv('HOMEDRIVE') getenv('HOMEPATH')];
+    else
+        meshdir = getenv('HOME');
+    end
+else
+    meshdir = inputParams.meshdir;
+end
 if ~isfield(inputParams,'meshname')
     errordlg('Select an output mesh name', 'I/O Error')
     error('I/O Error: missing output mesh name)')
@@ -103,7 +112,7 @@ param.special_subdomain_size  = (0); % TODO ? size of tetrahedron for the specia
 
 %% WRITE MESHES
 % Write CGAL mesh
-param.tmppath = inputParams.meshdir;
+param.tmppath = meshdir;
 param.delmedit = 0;
 if (exist('RunCGALMeshGenerator'))
     [e p] = RunCGALMeshGenerator(mask,param);
@@ -151,7 +160,7 @@ switch inputParams.meshtype
         error('This type of Nirfast mesh is not supported!');
 end
 
-nirfastMeshPath = fullfile(inputParams.meshdir,inputParams.meshname);
+nirfastMeshPath = fullfile(meshdir,inputParams.meshname);
 solidmesh2nirfast(genmesh,nirfastMeshPath,meshtype);
 
 %% S/D WINDOW
