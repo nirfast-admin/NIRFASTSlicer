@@ -1,6 +1,5 @@
 function outputParams=Image2Mesh(inputParams)
 
-
 %% NIRFAST PATH
 
 % Define new path
@@ -100,9 +99,9 @@ param.SliceThickness  = z; %(1);
 
 % Mesh Parameters
 minsize = min(x, min(y,z));
-param.cell_size = 2*minsize; % (1.4777);
+param.cell_size = inputParams.cell_size;
 param.cell_radius_edge = inputParams.cellradiusedge; % (3.0)
-param.facet_size = 2*minsize; % (1.4777);
+param.facet_size = inputParams.facet_size;
 param.facet_angle = inputParams.facetangle; % (25.0)
 param.facet_distance = inputParams.facetdistance; % (3.0)
 param.special_subdomain_label = (0); % TODO ? label of region to be refined. If this is set to zero, no subdomain resizing will be performed

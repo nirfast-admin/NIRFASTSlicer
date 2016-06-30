@@ -53,11 +53,25 @@
     <element>SPN</element>
   </string-enumeration>
   <float>
+    <label>Cell size</label>
+    <longflag>cell_size</longflag>
+    <description><![CDATA[Cell size]]></description>
+    <channel>input</channel>
+    <default>1.5</default>
+  </float>
+  <float>
     <label>Cell radius edge</label>
     <longflag>cellradiusedge</longflag>
     <description><![CDATA[Cell radius edge]]></description>
     <channel>input</channel>
     <default>3.0</default>
+  </float>
+  <float>
+    <label>Facet size</label>
+    <longflag>facet_size</longflag>
+    <description><![CDATA[Facet size]]></description>
+    <channel>input</channel>
+    <default>1.5</default>
   </float>
   <float>
     <label>Facet angle</label>
