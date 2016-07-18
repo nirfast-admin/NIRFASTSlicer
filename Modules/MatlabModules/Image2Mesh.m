@@ -87,9 +87,22 @@ spacedir = strrep(spacedir,',',' ');
 spacedir = strrep(spacedir,')',' ');
 spacedir = sscanf(spacedir, '%f')';
 spacedir = reshape(spacedir, param.NumberOfDimensions, []);
-x=spacedir(1,1)*param.TransformMatrix(1,1);
-y=spacedir(2,2)*param.TransformMatrix(2,2);
-z=spacedir(3,3)*param.TransformMatrix(3,3);
+% Push negatives to transform since INR image can't handle negative spacing
+if spacedir(1,1) < 0
+    param.TransformMatrix(1,1) = 1;
+    param.Offset(1) = -1*param.Offset(1);
+end
+if spacedir(2,2) < 0
+    param.TransformMatrix(2,2) = 1;
+    param.Offset(2) = -1*param.Offset(2);
+end
+if spacedir(3,3) < 0
+    param.TransformMatrix(3,3) = -1;
+    param.Offset(3) = -1*param.Offset(3);
+end
+x=abs(spacedir(1,1));
+y=abs(spacedir(2,2));
+z=abs(spacedir(3,3));
 param.PixelDimensions(1) = x; %(0.73884);
 param.PixelDimensions(2) = y; %(0.73884);
 param.PixelDimensions(3) = z; %(1)
@@ -98,7 +111,6 @@ param.PixelSpacing(2) = y; %(0.73884);
 param.SliceThickness  = z; %(1);
 
 % Mesh Parameters
-minsize = min(x, min(y,z));
 param.cell_size = inputParams.cell_size;
 param.cell_radius_edge = inputParams.cellradiusedge; % (3.0)
 param.facet_size = inputParams.facet_size;
@@ -166,6 +178,8 @@ solidmesh2nirfast(genmesh,nirfastMeshPath,meshtype);
 mesh = load_mesh(nirfastMeshPath);
 h=gui_place_sources_detectors('mesh',nirfastMeshPath);
 data=guidata(h);
+
+sdcoords = sdcoords*param.TransformMatrix;
 set(data.sources,  'String',cellstr(num2str(sdcoords,'%.8f %.8f %.8f')));
 set(data.detectors,'String',cellstr(num2str(sdcoords,'%.8f %.8f %.8f')));
 plot3(data.mesh, sdcoords(:,1),sdcoords(:,2),sdcoords(:,3),'ro');
