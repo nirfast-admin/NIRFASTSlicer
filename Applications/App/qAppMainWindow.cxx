@@ -86,10 +86,6 @@ void qAppMainWindowPrivate::setupUi(QMainWindow * mainWindow)
   this->DataProbeCollapsibleWidget->setCollapsed(false);
   this->DataProbeCollapsibleWidget->setVisible(true);
   this->StatusBar->setVisible(true);
-
-  // Change modules dropdown menu
-  qAppMainWindow* mainWin = qobject_cast<qAppMainWindow*>(mainWindow);
-  QTimer::singleShot(0, mainWin, SLOT(updateModuleMenu()));
 }
 
 //-----------------------------------------------------------------------------
@@ -115,11 +111,11 @@ void qAppMainWindow::on_HelpAboutSlicerAppAction_triggered()
   about.exec();
 }
 
-
 //-----------------------------------------------------------------------------
-void qAppMainWindow::updateModuleMenu()
+void qAppMainWindow::show()
 {
     Q_D(qAppMainWindow);
+
     qSlicerModulesMenu* qMenu = d->ModuleSelectorToolBar->modulesMenu();
     qSlicerModuleManager * moduleManager = qSlicerApplication::application()->moduleManager();
 
@@ -178,40 +174,6 @@ void qAppMainWindow::updateModuleMenu()
     beforeAction = qMenu->actions().at(1);
     qMenu->insertSeparator(beforeAction);
 
-    // Rename Editor into "Editor (Segment Tissue)"
-    qSlicerAbstractCoreModule * editorCoreModule = moduleManager->module("Editor");
-    qSlicerAbstractModule* editorModule = qobject_cast<qSlicerAbstractModule*>(editorCoreModule);
-    editorModule->action()->setText("Editor (Segment Tissue)");
-
-    // Update AddPath icon
-    qSlicerAbstractCoreModule * pathCoreModule = moduleManager->module("AddPath");
-    qSlicerAbstractModule* pathModule = qobject_cast<qSlicerAbstractModule*>(pathCoreModule);
-    qSlicerAbstractCoreModule * matlabCoreModule = moduleManager->module("MatlabModuleGenerator");
-    qSlicerAbstractModule* matlabModule = qobject_cast<qSlicerAbstractModule*>(matlabCoreModule);
-    pathModule->action()->setIcon(matlabModule->action()->icon());
-
-    // Update Image2Mesh icon
-    qSlicerAbstractCoreModule * meshCoreModule = moduleManager->module("Image2Mesh");
-    qSlicerAbstractModule* meshModule = qobject_cast<qSlicerAbstractModule*>(meshCoreModule);
-    qSlicerAbstractCoreModule * modelsCoreModule = moduleManager->module("Models");
-    qSlicerAbstractModule* modelsModule = qobject_cast<qSlicerAbstractModule*>(modelsCoreModule);
-    meshModule->action()->setIcon(modelsModule->action()->icon());
-
-    // Update Mesh2Image icon
-    qSlicerAbstractCoreModule * imgCoreModule = moduleManager->module("Mesh2Image");
-    qSlicerAbstractModule* imgModule = qobject_cast<qSlicerAbstractModule*>(imgCoreModule);
-    qSlicerAbstractCoreModule * colorsCoreModule = moduleManager->module("Colors");
-    qSlicerAbstractModule* colorsModule = qobject_cast<qSlicerAbstractModule*>(colorsCoreModule);
-    imgModule->action()->setIcon(colorsModule->action()->icon());
-
-    // Update Home icon
-    qSlicerAbstractCoreModule * homeCoreModule = moduleManager->module("Home");
-    qSlicerAbstractModule* homeModule = qobject_cast<qSlicerAbstractModule*>(homeCoreModule);
-    homeModule->action()->setIcon(this->windowIcon());
-
-    // Open Help & acknowledgment
-    qSlicerModulePanel* modulePanel = this->findChild<qSlicerModulePanel*>("ModulePanel");
-    ctkCollapsibleButton* helpButton = modulePanel->findChild<ctkCollapsibleButton*>("HelpCollapsibleButton");
-    helpButton->setCollapsed(false);
-
+    // Show
+    this->Superclass::show();
 }
