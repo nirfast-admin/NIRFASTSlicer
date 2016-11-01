@@ -173,15 +173,6 @@ int SlicerAppMain(int argc, char* argv[])
   setEnableQtTesting(); // disabled the native menu bar.
 #endif
 
-#ifdef Slicer_USE_PYTHONQT
-  ctkPythonConsole pythonConsole;
-  pythonConsole.setWindowTitle("Python Interactor");
-  if (!qSlicerApplication::testAttribute(qSlicerApplication::AA_DisablePython))
-    {
-    qSlicerApplicationHelper::initializePythonConsole(&pythonConsole);
-    }
-#endif
-
   bool enableMainWindow = !app.commandOptions()->noMainWindow();
   enableMainWindow = enableMainWindow && !app.commandOptions()->runPythonAndExit();
   bool showSplashScreen = !app.commandOptions()->noSplash() && enableMainWindow;
@@ -208,8 +199,29 @@ int SlicerAppMain(int argc, char* argv[])
   // Define ModuleFactoryManager using the additional paths
   qSlicerModuleManager * moduleManager = qSlicerApplication::application()->moduleManager();
   qSlicerModuleFactoryManager * moduleFactoryManager = moduleManager->factoryManager();
-  moduleFactoryManager->addSearchPaths(app.commandOptions()->additonalModulePaths());
+  //moduleFactoryManager->addSearchPaths(app.commandOptions()->additonalModulePaths());
+  QStringList additionalModulePaths;
+  foreach(const QString& extensionOrModulePath, app.commandOptions()->additonalModulePaths())
+     {
+     QStringList modulePaths = moduleFactoryManager->modulePaths(extensionOrModulePath);
+     if (!modulePaths.empty())
+       {
+       additionalModulePaths << modulePaths;
+       }
+     else
+       {
+       additionalModulePaths << extensionOrModulePath;
+       }
+     }
+  moduleFactoryManager->addSearchPaths(additionalModulePaths);
   qSlicerApplicationHelper::setupModuleFactoryManager(moduleFactoryManager);
+
+  // Set list of modules to ignore
+  foreach(const QString& moduleToIgnore, app.commandOptions()->modulesToIgnore())
+     {
+     moduleFactoryManager->addModuleToIgnore(moduleToIgnore);
+     }
+ 
 
   // Register and instantiate modules
   splashMessage(splashScreen, "Registering modules...");
@@ -236,6 +248,19 @@ int SlicerAppMain(int argc, char* argv[])
     window->setWindowTitle(
       windowTitle.arg(Slicer_MAIN_PROJECT_APPLICATION_NAME).arg(qSlicerApp_VERSION));
     }
+    else if (app.commandOptions()->showPythonInteractor()
+     && !app.commandOptions()->runPythonAndExit())
+     {
+     // there is no main window but we need to show Python interactor
+ #ifdef Slicer_USE_PYTHONQT
+     ctkPythonConsole* pythonConsole = app.pythonConsole();
+     pythonConsole->setWindowTitle("Slicer Python Interactor");
+     pythonConsole->resize(600, 280);
+     pythonConsole->show();
+     pythonConsole->activateWindow();
+     pythonConsole->raise();
+ #endif
+     }
 
   // Load all available modules
   foreach(const QString& name, moduleFactoryManager->instantiatedModuleNames())
