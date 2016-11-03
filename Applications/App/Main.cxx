@@ -330,9 +330,9 @@ int SlicerAppMain(int argc, char* argv[])
     }
 
   // Rename Editor into "Editor (Segment Tissue)"
-  qSlicerAbstractCoreModule * editorCoreModule = moduleManager->module("Editor");
+  qSlicerAbstractCoreModule * editorCoreModule = moduleManager->module("SegmentEditor");
   qSlicerAbstractModule* editorModule = qobject_cast<qSlicerAbstractModule*>(editorCoreModule);
-  editorModule->action()->setText("Editor (Segment Tissue)");
+  editorModule->action()->setText("Segment Editor (Segment Tissue)");
 
   // Update AddPath icon
   qSlicerAbstractCoreModule * pathCoreModule = moduleManager->module("AddPath");

@@ -62,7 +62,7 @@ The drop-down Modules are ordered to follow the basic workflow for processing DI
 &nbsp; 2. Use <a href="#"><b>Volume Rendering</b></a> to view a 3D rendering of your DICOM images<br><br>
 &nbsp; 3. <a href="#"><b>Crop</b></a> the image volume to the tissue region of interest for which you will reconstruct optical images.<br><br>
 &nbsp; 4. Use the <a href="#"><b>Cast Scalar Volumes</b></a> module (cropped volume to "Short" format) to prepare to segment the tissue<br><br>
-&nbsp; 5. Use the <a href="#"><b>Editor (segment tissue)</b></a> module to segment the tissue into different tissue types which can guide the optical image reconstruction routines<br><br>
+&nbsp; 5. Use the <a href="#"><b>Segment Editor (segment tissue)</b></a> module to segment the tissue into different tissue types which can guide the optical image reconstruction routines<br><br>
 &nbsp; 6. Use the <a href="#"><b>Markups</b></a> module to place optical source and detector positions.<br><br>
 &nbsp; 7. Use the <a href="#"><b>Create Mesh</b></a> module to generate a NIRFAST-compatible mesh from the segmented tissue (label maps)<br><br>
 &nbsp; 8. After creating the mesh, follow tutorials on reconstructing optical images in the NIRFAST Matlab window<br><br>
@@ -92,7 +92,7 @@ The drop-down Modules are ordered to follow the basic workflow for processing DI
         elif pos >= 500 and pos <= 519 :
             slicer.util.selectModule(slicer.moduleNames.CastScalarVolume)
         elif pos >= 609 and pos <= 632 :
-            slicer.util.selectModule(slicer.moduleNames.Editor)
+            slicer.util.selectModule(slicer.moduleNames.SegmentEditor)
         elif pos >= 762 and pos <= 769 :
             slicer.util.selectModule(slicer.moduleNames.Markups)
         elif pos >= 839 and pos <= 850 :

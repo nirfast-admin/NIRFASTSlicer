@@ -56,6 +56,7 @@ if(NOT DEFINED ${proj}_DIR)
     SampleData
     SurfaceToolbox
     VectorToScalarVolume
+    DMRIInstall
     )
   set(Slicer_CLIMODULES_DISABLED
     ACPCTransform
