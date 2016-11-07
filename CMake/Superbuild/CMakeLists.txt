@@ -65,7 +65,7 @@ list(APPEND Slicer_REMOTE_DEPENDENCIES MultiVolumeExplorer)
 
 ExternalProject_Add_Source(MatlabBridge
   SVN_REPOSITORY https://subversion.assembla.com/svn/slicerrt/trunk/MatlabBridge
-  SVN_REVISION -r "3098"
+  SVN_REVISION -r "3099"
   SVN_USERNAME slicerbot
   SVN_PASSWORD slicer
   SOURCE_DIR_VAR MatlabBridge_SOURCE_DIR

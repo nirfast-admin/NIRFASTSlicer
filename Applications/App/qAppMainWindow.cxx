@@ -155,8 +155,7 @@ void qAppMainWindow::show()
             << "Volumes"
             << "VolumeRendering"
             << "CropVolume"
-            << "CastScalarVolume"
-            << "Editor"
+            << "SegmentEditor"
             << "Markups"
             << "Image2Mesh"
             << "Mesh2Image";
