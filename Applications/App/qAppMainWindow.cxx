@@ -132,7 +132,8 @@ void qAppMainWindow::show()
             << "Transforms"
             << "ViewControllers"
             << "VolumeRendering"
-            << "Volumes";
+            << "Volumes"
+            << "Segmentations";
     foreach(const QString& moduleName, removeModuleNames)
     {
         //qDebug()<<"Removing Module "<<moduleName;
@@ -156,6 +157,7 @@ void qAppMainWindow::show()
             << "VolumeRendering"
             << "CropVolume"
             << "SegmentEditor"
+            << "Segmentations"
             << "Markups"
             << "Image2Mesh"
             << "Mesh2Image";

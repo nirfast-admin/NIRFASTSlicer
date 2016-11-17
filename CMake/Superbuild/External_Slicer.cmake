@@ -86,7 +86,7 @@ if(NOT DEFINED ${proj}_DIR)
     MergeModels
     #ModelMaker
     ResampleDTIVolume
-    ResampleScalarVectorDWIVolume # Needed by 'CropVolume' module
+    #ResampleScalarVectorDWIVolume # Needed by 'CropVolume' module
     )
   # Legacy
   list(APPEND Slicer_CLIMODULES_DISABLED
@@ -101,7 +101,7 @@ if(NOT DEFINED ${proj}_DIR)
     set(${proj}_SOURCE_DIR ${CMAKE_BINARY_DIR}/${proj})
     list(APPEND ${proj}_EP_ARGS
       GIT_REPOSITORY ${git_protocol}://github.com/Slicer/Slicer.git
-      GIT_TAG 76ea6f7945a1135c2b8045fd8b281d5ed5965895 #2016-11-03
+      GIT_TAG 415d88f3bc8cc4172f161aad443b4ebc84a39e56 #2016-11-12
       )
   endif()
 
