@@ -49,9 +49,24 @@ qAppAboutDialog::qAppAboutDialog(QWidget* parentWidget)
     slicer->applicationVersion()+ " "
     + "r" + slicer->repositoryRevision());
   d->CreditsTextBrowser->append("");
-  d->CreditsTextBrowser->insertHtml(slicer->acknowledgment());
+  QString acknowledgmentText(
+    "NIRFAST is NOT an FDA approved medical device.<br /><br />"
+    "Supported by: NCI and the Slicer Community.<br /><br />"
+    "This work is part of the National Cancer Center (NCI) grant titled <i>MRI"
+    "Flourescence Tomography for Quantifying Tumor Receptor Concentration in Vivo</i>."
+    "NIRFAST is an open source software package for multi-modal optical imaging in "
+    "living tissue. <br /><br />"
+    "Originally developed at Dartmouth College in 2001, ongoing development, "
+    "maintenance, distribution, and training is managed by Dartmouth College, University "
+    "of Birmingham, and Kitware Inc. <br /><br />");
+  d->CreditsTextBrowser->insertHtml(acknowledgmentText);
   d->CreditsTextBrowser->insertHtml(slicer->libraries());
-  d->SlicerLinksTextBrowser->insertHtml(slicer->copyrights());
+    QString copyrightsText(
+    "<table align=\"center\" border=\"0\" width=\"80%\"><tr>"
+    "<td align=\"center\"><a href=\"http://slicer.org/pages/License\">Licensing Information</a></td>"
+    "<td align=\"center\"><a href=\"http://www.dartmouth.edu/~nir/nirfast/\">Website</a></td>"
+    "</tr></table>");
+  d->SlicerLinksTextBrowser->insertHtml(copyrightsText);
   d->CreditsTextBrowser->moveCursor(QTextCursor::Start, QTextCursor::MoveAnchor);
 }
 
