@@ -160,7 +160,7 @@ void qAppMainWindow::show()
             << "Segmentations"
             << "Markups"
             << "Image2Mesh"
-            << "Mesh2Image";
+            << "Models";
     QAction * beforeAction = qMenu->actions().at(1); // to insert after the "All Modules" menu
     foreach(const QString& moduleName, addModuleNames)
     {

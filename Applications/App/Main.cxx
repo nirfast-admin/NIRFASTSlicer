@@ -344,7 +344,7 @@ int SlicerAppMain(int argc, char* argv[])
   // Update Image2Mesh icon
   qSlicerAbstractCoreModule * meshCoreModule = moduleManager->module("Image2Mesh");
   qSlicerAbstractModule* meshModule = qobject_cast<qSlicerAbstractModule*>(meshCoreModule);
-  qSlicerAbstractCoreModule * modelsCoreModule = moduleManager->module("Models");
+  qSlicerAbstractCoreModule * modelsCoreModule = moduleManager->module("Colors");
   qSlicerAbstractModule* modelsModule = qobject_cast<qSlicerAbstractModule*>(modelsCoreModule);
   meshModule->action()->setIcon(modelsModule->action()->icon());
 
