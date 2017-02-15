@@ -127,6 +127,9 @@ param.tmppath = meshdir;
 param.delmedit = 0;
 if (exist('RunCGALMeshGenerator'))
     [e p] = RunCGALMeshGenerator(mask,param);
+    
+    %transform mesh points to correct location
+    p= p * param.TransformMatrix;
 else
     rmpath(genpath(NIRFASTPath))
     errordlg('RunCGALMeshGenerator function does not exist. Check that your path to NIRFAST Matlab is correct.', 'Matlab Error')
@@ -179,7 +182,6 @@ mesh = load_mesh(nirfastMeshPath);
 h=gui_place_sources_detectors('mesh',nirfastMeshPath);
 data=guidata(h);
 
-sdcoords = sdcoords*param.TransformMatrix;
 set(data.sources,  'String',cellstr(num2str(sdcoords,'%.8f %.8f %.8f')));
 set(data.detectors,'String',cellstr(num2str(sdcoords,'%.8f %.8f %.8f')));
 plot3(data.mesh, sdcoords(:,1),sdcoords(:,2),sdcoords(:,3),'ro');
