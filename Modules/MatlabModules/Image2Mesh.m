@@ -80,26 +80,23 @@ offset = strrep(offset,',',' ');
 offset = strrep(offset,')',' ');
 offset = sscanf(offset, '%f')';
 param.Offset = offset; % [126.9220,2.6726,-78.2673]
-% TODO : correct transform
-param.TransformMatrix = [-1,0,0;0,-1,0;0,0,1]; %img.ijkToLpsTransform
+
+%Transform setup
+param.TransformMatrix = img.ijkToLpsTransform(1:3, 1:3);
 spacedir = strrep(img.metaData.space_directions,'(',' ');
 spacedir = strrep(spacedir,',',' ');
 spacedir = strrep(spacedir,')',' ');
 spacedir = sscanf(spacedir, '%f')';
 spacedir = reshape(spacedir, param.NumberOfDimensions, []);
-% Push negatives to transform since INR image can't handle negative spacing
-if spacedir(1,1) < 0
-    param.TransformMatrix(1,1) = 1;
-    param.Offset(1) = -1*param.Offset(1);
-end
-if spacedir(2,2) < 0
-    param.TransformMatrix(2,2) = 1;
-    param.Offset(2) = -1*param.Offset(2);
-end
-if spacedir(3,3) < 0
-    param.TransformMatrix(3,3) = -1;
-    param.Offset(3) = -1*param.Offset(3);
-end
+param.TransformMatrix(1,1) = param.TransformMatrix(1,1) / abs(spacedir(1,1));
+param.TransformMatrix(2,2) = param.TransformMatrix(2,2) / abs(spacedir(2,2));
+param.TransformMatrix(3,3) = param.TransformMatrix(3,3) / abs(spacedir(3,3));
+param.Offset(1) = param.TransformMatrix(1,1)*param.Offset(1);
+param.Offset(2) = param.TransformMatrix(2,2)*param.Offset(2);
+param.Offset(3) = param.TransformMatrix(3,3)*param.Offset(3);
+param.TransformMatrix(1,1) = -1 * param.TransformMatrix(1,1);
+param.TransformMatrix(2,2) = -1 * param.TransformMatrix(2,2);
+
 x=abs(spacedir(1,1));
 y=abs(spacedir(2,2));
 z=abs(spacedir(3,3));
