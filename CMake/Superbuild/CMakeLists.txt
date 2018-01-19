@@ -64,17 +64,15 @@ ExternalProject_Add_Source(MultiVolumeExplorer
 list(APPEND Slicer_REMOTE_DEPENDENCIES MultiVolumeExplorer)
 
 ExternalProject_Add_Source(MatlabBridge
-  SVN_REPOSITORY https://subversion.assembla.com/svn/slicerrt/trunk/MatlabBridge
-  SVN_REVISION -r "3099"
-  SVN_USERNAME slicerbot
-  SVN_PASSWORD slicer
+  GIT_REPOSITORY https://github.com/PerkLab/SlicerMatlabBridge.git
+  GIT_TAG f7fee6340037f33e1fbabc9a96a51f60ebe3c857
   SOURCE_DIR_VAR MatlabBridge_SOURCE_DIR
   PROJECTS Slicer
   )
 list(APPEND Slicer_REMOTE_DEPENDENCIES MatlabBridge)
 
 set(Slicer_REMOTE_SOURCE_DIRS
-  ${MatlabBridge_SOURCE_DIR}/src
+  ${MatlabBridge_SOURCE_DIR}
   ${MultiVolumeExplorer_SOURCE_DIR}
   )
 
