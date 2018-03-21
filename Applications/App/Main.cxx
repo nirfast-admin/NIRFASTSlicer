@@ -15,79 +15,42 @@
 
 ==============================================================================*/
 
-// MatlabModules include
+// Slicer includes
+#include "qSlicerApplication.h"
+#include "qSlicerApplicationHelper.h"
+
+// SlicerApp includes
+#include "qAppMainWindow.h"
+#include "Widgets/qAppStyle.h"
+
+//
+// NIRFASTSlicer includes
+//
+
+// MatlabModules includes
 #include "NIRFASTSlicerMatlabModulesConfigure.h"
 
 // Qt includes
 #include <QDebug>
 #include <QAction>
-#include <QList>
-#include <QSettings>
-#include <QSplashScreen>
-#include <QString>
-#include <QTimer>
 #include <QLabel>
 #include <QLineEdit>
 #include <QFormLayout>
 #include <QCheckBox>
 
 // Slicer includes
-#include "vtkSlicerConfigure.h"
-
-// CTK includes
-#include <ctkAbstractLibraryFactory.h>
-#include <ctkCollapsibleButton.h>
-#include <ctkVTKVolumePropertyWidget.h>
-#ifdef Slicer_USE_PYTHONQT
-# include <ctkPythonConsole.h>
-#endif
-
-// Slicer includes
-#include "qSlicerAppVersionConfigure.h" // For qSlicerApp_VERSION_FULL, qSlicerApp_VERSION_FULL
-#include "qMRMLVolumePropertyNodeWidget.h"
-
-// SlicerApp includes
-#include "qSlicerApplication.h"
-#include "qSlicerApplicationHelper.h"
-#ifdef Slicer_BUILD_CLI_SUPPORT
-# include "qSlicerCLIExecutableModuleFactory.h"
-# include "qSlicerCLILoadableModuleFactory.h"
-#endif
-#include "qAppMainWindow.h"
-#include "qSlicerCommandOptions.h"
-#include "qSlicerModuleFactoryManager.h"
-#include "qSlicerModuleManager.h"
-#include "qSlicerModulePanel.h"
+#include <qMRMLVolumePropertyNodeWidget.h>
+#include <qSlicerModulePanel.h>
 #include <qSlicerAbstractModuleRepresentation.h>
 #include <qSlicerAbstractModuleWidget.h>
-#include "Widgets/qAppStyle.h"
 
-// ITK includes
-#include <itkFactoryRegistration.h>
+// CTK includes
+#include <ctkCollapsibleButton.h>
+#include <ctkVTKVolumePropertyWidget.h>
 
-// VTK includes
-//#include <vtkObject.h>
-#include <vtksys/SystemTools.hxx>
-
-#if defined (_WIN32) && !defined (Slicer_BUILD_WIN32_CONSOLE)
-# include <windows.h>
-# include <vtksys/Encoding.hxx>
-#endif
 
 namespace
 {
-
-#ifdef Slicer_USE_QtTesting
-//-----------------------------------------------------------------------------
-void setEnableQtTesting()
-{
-  if (qSlicerApplication::application()->commandOptions()->enableQtTesting() ||
-      qSlicerApplication::application()->userSettings()->value("QtTesting/Enabled").toBool())
-    {
-    QCoreApplication::setAttribute(Qt::AA_DontUseNativeMenuBar);
-    }
-}
-#endif
 
 //-----------------------------------------------------------------------------
 bool isPathWithinPathsList(const QString& dirPath, const QStringList& pathsList)
@@ -104,64 +67,11 @@ bool isPathWithinPathsList(const QString& dirPath, const QStringList& pathsList)
 }
 
 //----------------------------------------------------------------------------
-void splashMessage(QScopedPointer<QSplashScreen>& splashScreen, const QString& message)
-{
-  if (splashScreen.isNull())
-    {
-    return;
-    }
-  splashScreen->showMessage(message, Qt::AlignBottom | Qt::AlignHCenter);
-}
-
-//----------------------------------------------------------------------------
 int SlicerAppMain(int argc, char* argv[])
 {
-  itk::itkFactoryRegistration();
+  typedef qAppMainWindow SlicerMainWindowType;
 
-#if QT_VERSION >= 0x040803
-#ifdef Q_OS_MACX
-  if (QSysInfo::MacintoshVersion > QSysInfo::MV_10_8)
-    {
-    // Fix Mac OS X 10.9 (mavericks) font issue
-    // https://bugreports.qt-project.org/browse/QTBUG-32789
-    QFont::insertSubstitution(".Lucida Grande UI", "Lucida Grande");
-    }
-#endif
-#endif
-
-  // Allow a custom appliction name so that the settings
-  // can be distinct for differently named applications
-  QString applicationName("Slicer");
-  if (argv[0])
-    {
-    std::string name = vtksys::SystemTools::GetFilenameWithoutExtension(argv[0]);
-    applicationName = QString::fromLocal8Bit(name.c_str());
-    applicationName.remove(QString("App-real"));
-    }
-  QCoreApplication::setApplicationName(applicationName);
-
-  QCoreApplication::setApplicationVersion(qSlicerApp_VERSION_FULL);
-  QApplication::setDesktopSettingsAware(false);
-  QApplication::setStyle(new qAppStyle);
-
-  // Instantiate the settings that are being used everywhere in Slicer.
-  QSettings settings(
-    QSettings::IniFormat,
-    QSettings::UserScope,
-    Slicer_ORGANIZATION_NAME,
-    Slicer_MAIN_PROJECT_APPLICATION_NAME);
-
-  // Instantiate the built-in application settings located in the resources
-  // system.
-  QString defaultSettingsFilePath = QString(":/DefaultSettings.ini");
-  QSettings defaultSettings(defaultSettingsFilePath, QSettings::IniFormat);
-  foreach(const QString& key, defaultSettings.allKeys())
-    {
-    if (!settings.contains(key))
-      {
-      settings.setValue(key, defaultSettings.value(key));
-      }
-    }
+  qSlicerApplicationHelper::preInitializeApplication(argv[0], new qAppStyle);
 
   qSlicerApplication app(argc, argv);
   if (app.returnCode() != -1)
@@ -169,110 +79,30 @@ int SlicerAppMain(int argc, char* argv[])
     return app.returnCode();
     }
 
-#ifdef Slicer_USE_QtTesting
-  setEnableQtTesting(); // disabled the native menu bar.
-#endif
-
-  bool enableMainWindow = !app.commandOptions()->noMainWindow();
-  enableMainWindow = enableMainWindow && !app.commandOptions()->runPythonAndExit();
-  bool showSplashScreen = !app.commandOptions()->noSplash() && enableMainWindow;
-
-  QScopedPointer<QSplashScreen> splashScreen;
-  if (showSplashScreen)
-    {
-    QPixmap pixmap(":/SplashScreen.png");
-    splashScreen.reset(new QSplashScreen(pixmap));
-    splashMessage(splashScreen, "Initializing...");
-    splashScreen->show();
-    }
-
   // Append Matlab module path to the additional paths
   QString matlabModulesPath = app.slicerHome() + "/" + MATLABMODULES_DIR;
   QStringList additionalPaths = app.revisionUserSettings()->value("Modules/AdditionalPaths").toStringList();
-  if (!isPathWithinPathsList(matlabModulesPath,additionalPaths))
+  if (!isPathWithinPathsList(matlabModulesPath, additionalPaths))
     {
     additionalPaths << matlabModulesPath;
-    app.revisionUserSettings()->setValue("Modules/AdditionalPaths",additionalPaths);
+    app.revisionUserSettings()->setValue("Modules/AdditionalPaths", additionalPaths);
     qDebug() << "Adding path to Modules/AdditionalPaths : " << matlabModulesPath.toLatin1();
     }
 
-  // Define ModuleFactoryManager using the additional paths
-  qSlicerModuleManager * moduleManager = qSlicerApplication::application()->moduleManager();
-  qSlicerModuleFactoryManager * moduleFactoryManager = moduleManager->factoryManager();
-  //moduleFactoryManager->addSearchPaths(app.commandOptions()->additonalModulePaths());
-  QStringList additionalModulePaths;
-  foreach(const QString& extensionOrModulePath, app.commandOptions()->additionalModulePaths())
-     {
-     QStringList modulePaths = moduleFactoryManager->modulePaths(extensionOrModulePath);
-     if (!modulePaths.empty())
-       {
-       additionalModulePaths << modulePaths;
-       }
-     else
-       {
-       additionalModulePaths << extensionOrModulePath;
-       }
-     }
-  moduleFactoryManager->addSearchPaths(additionalModulePaths);
-  qSlicerApplicationHelper::setupModuleFactoryManager(moduleFactoryManager);
+  QScopedPointer<SlicerMainWindowType> window;
+  QScopedPointer<QSplashScreen> splashScreen;
 
-  // Set list of modules to ignore
-  foreach(const QString& moduleToIgnore, app.commandOptions()->modulesToIgnore())
-     {
-     moduleFactoryManager->addModuleToIgnore(moduleToIgnore);
-     }
- 
+  qSlicerApplicationHelper::postInitializeApplication<SlicerMainWindowType>(
+        app, splashScreen, window);
 
-  // Register and instantiate modules
-  splashMessage(splashScreen, "Registering modules...");
-  moduleFactoryManager->registerModules();
-  if (app.commandOptions()->verboseModuleDiscovery())
+  if (!window.isNull())
     {
-    qDebug() << "Number of registered modules:"
-             << moduleFactoryManager->registeredModuleNames().count();
+    QString windowTitle = QString("%1 %2").arg(Slicer_MAIN_PROJECT_APPLICATION_NAME).arg(Slicer_VERSION);
+    window->setWindowTitle(windowTitle);
+    window->setHomeModuleCurrent();
     }
-  splashMessage(splashScreen, "Instantiating modules...");
-  moduleFactoryManager->instantiateModules();
-  if (app.commandOptions()->verboseModuleDiscovery())
-    {
-    qDebug() << "Number of instantiated modules:"
-             << moduleFactoryManager->instantiatedModuleNames().count();
-    }
-  // Create main window
-  splashMessage(splashScreen, "Initializing user interface...");
-  QScopedPointer<qAppMainWindow> window;
-  if (enableMainWindow)
-    {
-    window.reset(new qAppMainWindow);
-    QString windowTitle = "%1 %2";
-    window->setWindowTitle(
-      windowTitle.arg(Slicer_MAIN_PROJECT_APPLICATION_NAME).arg(qSlicerApp_VERSION));
-    }
-    else if (app.commandOptions()->showPythonInteractor()
-     && !app.commandOptions()->runPythonAndExit())
-     {
-     // there is no main window but we need to show Python interactor
- #ifdef Slicer_USE_PYTHONQT
-     ctkPythonConsole* pythonConsole = app.pythonConsole();
-     pythonConsole->setWindowTitle("Slicer Python Interactor");
-     pythonConsole->resize(600, 280);
-     pythonConsole->show();
-     pythonConsole->activateWindow();
-     pythonConsole->raise();
- #endif
-     }
 
-  // Load all available modules
-  foreach(const QString& name, moduleFactoryManager->instantiatedModuleNames())
-    {
-    Q_ASSERT(!name.isNull());
-    splashMessage(splashScreen, "Loading module \"" + name + "\"...");
-    moduleFactoryManager->loadModule(name);
-    }
-  if (app.commandOptions()->verboseModuleDiscovery())
-    {
-    qDebug() << "Number of loaded modules:" << moduleManager->modulesNames().count();
-    }
+  qSlicerModuleManager * moduleManager = app.moduleManager();
 
   // Edit MatlabModuleGenerator widget
   qSlicerAbstractCoreModule * matlabModuleGenerator = moduleManager->module("MatlabModuleGenerator");
@@ -351,59 +181,9 @@ int SlicerAppMain(int argc, char* argv[])
   ctkCollapsibleButton* helpButton = modulePanel->findChild<ctkCollapsibleButton*>("HelpCollapsibleButton");
   helpButton->setCollapsed(false);
 
-  // Launch NIRFAST-Slicer splashScreen & window
-  splashMessage(splashScreen, QString());
-
-  if (window)
-    {
-    window->setHomeModuleCurrent();
-    window->show();
-    }
-
-  if (splashScreen && window)
-    {
-    splashScreen->finish(window.data());
-    }
-
-  // Process command line argument after the event loop is started
-  QTimer::singleShot(0, &app, SLOT(handleCommandLineArguments()));
-
-  // Look at QApplication::exec() documentation, it is recommended to connect
-  // clean up code to the aboutToQuit() signal
   return app.exec();
 }
 
 } // end of anonymous namespace
 
-#if defined (_WIN32) && !defined (Slicer_BUILD_WIN32_CONSOLE)
-int __stdcall WinMain(HINSTANCE hInstance,
-                      HINSTANCE hPrevInstance,
-                      LPSTR lpCmdLine, int nShowCmd)
-{
-  Q_UNUSED(hInstance);
-  Q_UNUSED(hPrevInstance);
-  Q_UNUSED(nShowCmd);
-
-  // CommandLineToArgvW has no narrow-character version, so we get the arguments in wide strings
-  // and then convert to regular string.
-  int argc;
-  LPWSTR* argvStringW = CommandLineToArgvW(GetCommandLineW(), &argc);
-
-  std::vector< const char* > argv(argc); // usual const char** array used in main() functions
-  std::vector< std::string > argvString(argc); // this stores the strings that the argv pointers point to
-  for(int i=0; i<argc; i++)
-    {
-    argvString[i] = vtksys::Encoding::ToNarrow(argvStringW[i]);
-    argv[i] = argvString[i].c_str();
-    }
-
-  LocalFree(argvStringW);
-
-  return SlicerAppMain(argc, const_cast< char** >(&argv[0]));
-}
-#else
-int main(int argc, char *argv[])
-{
-  return SlicerAppMain(argc, argv);
-}
-#endif
+#include "qSlicerApplicationMainWrapper.cxx"
