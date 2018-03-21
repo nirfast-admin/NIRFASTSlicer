@@ -55,14 +55,6 @@ ExternalProject_Add_Source(NIRFASTMatlab
   )
 list(APPEND Slicer_REMOTE_DEPENDENCIES NIRFASTMatlab)
 
-ExternalProject_Add_Source(MultiVolumeExplorer
-  GIT_REPOSITORY git@kwgitlab.kitware.com:dartmouth/MultiVolumeExplorer.git
-  GIT_TAG NIRView
-  SOURCE_DIR_VAR MultiVolumeExplorer_SOURCE_DIR
-  PROJECTS Slicer
-  )
-list(APPEND Slicer_REMOTE_DEPENDENCIES MultiVolumeExplorer)
-
 ExternalProject_Add_Source(MatlabBridge
   GIT_REPOSITORY https://github.com/PerkLab/SlicerMatlabBridge.git
   GIT_TAG f7fee6340037f33e1fbabc9a96a51f60ebe3c857
@@ -73,7 +65,6 @@ list(APPEND Slicer_REMOTE_DEPENDENCIES MatlabBridge)
 
 set(Slicer_REMOTE_SOURCE_DIRS
   ${MatlabBridge_SOURCE_DIR}
-  ${MultiVolumeExplorer_SOURCE_DIR}
   )
 
 set_property(GLOBAL APPEND PROPERTY ${APPLICATION_NAME}_MODULES ${Slicer_REMOTE_SOURCE_DIRS})

@@ -45,21 +45,47 @@ if(NOT DEFINED ${proj}_DIR)
 
   get_property(${APPLICATION_NAME}_MODULES GLOBAL PROPERTY ${APPLICATION_NAME}_MODULES)
   set(${proj}_QTLOADABLEMODULES_DISABLED
+    AtlasCreator
+    #Cameras
+    #Units
+    #Terminologies
+    #Colors
+    #SubjectHierarchy
+    #Annotations
+    #Markups
+    #Transforms
+    #Data
+    #DoubleArrays
+    #Models
     #SceneViews # Needed to avoid warning when loading scene
+    #Segmentations
     SlicerWelcome
+    #Tables
+    #Reformat
     #ViewControllers
+    #Volumes
+    #VolumeRendering
     )
   set(${proj}_QTSCRIPTEDMODULES_DISABLED
+    #DataProbe
+    DMRIInstall
+    Editor
+    EditorLib
     Endoscopy
     LabelStatistics
     PerformanceTests
     SampleData
+    #ScreenCapture
+    #SegmentEditor
+    #SegmentStatistics
+    SelfTests
     SurfaceToolbox
     VectorToScalarVolume
-    DMRIInstall
     )
   set(Slicer_CLIMODULES_DISABLED
     ACPCTransform
+    AddScalarVolumes
+    CastScalarVolume
     CheckerBoardFilter
     CreateDICOMSeries
     CurvatureAnisotropicDiffusion
@@ -75,18 +101,23 @@ if(NOT DEFINED ${proj}_DIR)
     HistogramMatching
     ImageLabelCombine
     #LabelMapSmoothing
+    MaskScalarVolume
     MedianImageFilter
+    MergeModels
+    #ModelMaker
     ModelToLabelMap
+    MultiplyScalarVolumes
     N4ITKBiasFieldCorrection
     OrientScalarVolume
     PETStandardUptakeValueComputation
     ProbeVolumeWithModel
-    RobustStatisticsSegmenter
-    VotingBinaryHoleFillingImageFilter
-    MergeModels
-    #ModelMaker
     ResampleDTIVolume
     #ResampleScalarVectorDWIVolume # Needed by 'CropVolume' module
+    RobustStatisticsSegmenter
+    SimpleRegionGrowingSegmentation
+    SubtractScalarVolumes
+    ThresholdScalarVolume
+    VotingBinaryHoleFillingImageFilter
     )
   # Legacy
   list(APPEND Slicer_CLIMODULES_DISABLED
@@ -146,20 +177,20 @@ if(NOT DEFINED ${proj}_DIR)
       -D${proj}_BUILD_DICOM_SUPPORT:BOOL=ON
       -D${proj}_BUILD_DIFFUSION_SUPPORT:BOOL=OFF
       -D${proj}_BUILD_EXTENSIONMANAGER_SUPPORT:BOOL=OFF
-      -D${proj}_BUILD_MULTIVOLUME_SUPPORT:BOOL=ON
+      -D${proj}_BUILD_QT_DESIGNER_PLUGINS:BOOL=OFF
+      -D${proj}_BUILD_MULTIVOLUME_SUPPORT:BOOL=OFF
       -D${proj}_USE_NUMPY:BOOL=ON
       -D${proj}_USE_OpenIGTLink:BOOL=ON
       -D${proj}_USE_PYTHONQT_WITH_TCL:BOOL=OFF
       -D${proj}_USE_PYTHONQT:BOOL=ON
       -D${proj}_USE_QtTesting:BOOL=OFF
-      -D${proj}_USE_SimpleITK:BOOL=ON
+      -D${proj}_USE_SimpleITK:BOOL=OFF
       # Slicer built-in modules
       -D${proj}_CLIMODULES_DISABLED:STRING=${${proj}_CLIMODULES_DISABLED}
       -D${proj}_QTLOADABLEMODULES_DISABLED:STRING=${${proj}_QTLOADABLEMODULES_DISABLED}
       -D${proj}_QTSCRIPTEDMODULES_DISABLED:STRING=${${proj}_QTSCRIPTEDMODULES_DISABLED}
       -D${proj}_BUILD_EMSegment:BOOL=OFF
       # Slicer remote modules
-      -D${proj}_BUILD_MultiVolumeExplorer:BOOL=OFF
       -D${proj}_BUILD_BRAINSTOOLS:BOOL=OFF
       -D${proj}_BUILD_ChangeTrackerPy:BOOL=OFF
       -D${proj}_BUILD_CompareVolumes:BOOL=OFF
