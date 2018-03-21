@@ -18,7 +18,6 @@
 
 set(modules
   Home
-  Mesh2Image
   )
 
 set(${APPLICATION_NAME}_MODULES)

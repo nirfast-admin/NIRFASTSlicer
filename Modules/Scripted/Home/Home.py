@@ -66,7 +66,7 @@ The drop-down Modules are ordered to follow the basic workflow for processing DI
 &nbsp; 6. Use the <a href="#"><b>Markups</b></a> module to place optical source and detector positions.<br><br>
 &nbsp; 7. Use the <a href="#"><b>Create Mesh</b></a> module to generate a NIRFAST-compatible mesh from the segmented tissue (label maps)<br><br>
 &nbsp; 8. After creating the mesh, follow tutorials on reconstructing optical images in the NIRFAST Matlab window<br><br>
-&nbsp; 9. Once images have been reconstructed use the <a href="#"><b>Import Optical Properties</b></a> module to view the optical parameter images overlaid on the original DICOMS<br>
+&nbsp; 9. Once optical properties have been reconstructed, open the resulting volumetric mesh in NIRFAST-Slicer and use the <a href="#"><b>Models</b></a> module to visualize the data overlaid on the original DICOM: in the Display menu, check 'Slice Intersections Visible' from the Visibility submenu, and select the parameters to display in the Scalars submenu.<br>
 """
 
         # TEXTEDIT
@@ -97,5 +97,5 @@ The drop-down Modules are ordered to follow the basic workflow for processing DI
             slicer.util.selectModule(slicer.moduleNames.Markups)
         elif pos >= 825 and pos <= 837 :
             slicer.util.selectModule(slicer.moduleNames.Image2Mesh)
-	elif pos >= 1081 and pos <= 1107 :
-             slicer.util.selectModule(slicer.moduleNames.Mesh2Image)
+        elif pos >= 1150 and pos <= 1156 :
+             slicer.util.selectModule(slicer.moduleNames.Models)

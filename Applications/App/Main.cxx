@@ -348,13 +348,6 @@ int SlicerAppMain(int argc, char* argv[])
   qSlicerAbstractModule* modelsModule = qobject_cast<qSlicerAbstractModule*>(modelsCoreModule);
   meshModule->action()->setIcon(modelsModule->action()->icon());
 
-  // Update Mesh2Image icon
-  qSlicerAbstractCoreModule * imgCoreModule = moduleManager->module("Mesh2Image");
-  qSlicerAbstractModule* imgModule = qobject_cast<qSlicerAbstractModule*>(imgCoreModule);
-  qSlicerAbstractCoreModule * colorsCoreModule = moduleManager->module("Colors");
-  qSlicerAbstractModule* colorsModule = qobject_cast<qSlicerAbstractModule*>(colorsCoreModule);
-  imgModule->action()->setIcon(colorsModule->action()->icon());
-
   // Update Home icon
   qSlicerAbstractCoreModule * homeCoreModule = moduleManager->module("Home");
   qSlicerAbstractModule* homeModule = qobject_cast<qSlicerAbstractModule*>(homeCoreModule);
