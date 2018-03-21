@@ -16,49 +16,9 @@
 #
 #============================================================================
 
-# The following call will include the NIRFASTSlicerConfig.cmake
-# defining the variable NIRFASTMatlab_SOURCE_DIR
-find_package(NIRFASTSlicer REQUIRED)
-
-### NIRFAST ###
-
-# Set paths
-set(NIRFASTMatlab_DIR "${Slicer_LIB_DIR}/NIRFASTMatlab")
-set(NIRFASTMatlab_INSTALL_DIR "${Slicer_INSTALL_ROOT}${NIRFASTMatlab_DIR}")
-
-# Copy NIRFAST Matlab
-message(STATUS "Copying project sources: NIRFASTMatlab")
-file(
-  COPY
-    ${NIRFASTMatlab_SOURCE_DIR}/gui
-    ${NIRFASTMatlab_SOURCE_DIR}/toolbox
-    ${NIRFASTMatlab_SOURCE_DIR}/meshes
-  DESTINATION ${CMAKE_BINARY_DIR}/${NIRFASTMatlab_DIR}
-)
-
-# Install NIRFAST Matlab
-install(
-  DIRECTORY ${NIRFASTMatlab_SOURCE_DIR}/gui
-  DESTINATION ${NIRFASTMatlab_INSTALL_DIR}
-  COMPONENT Runtime
-)
-install(
-  DIRECTORY ${NIRFASTMatlab_SOURCE_DIR}/toolbox
-  DESTINATION ${NIRFASTMatlab_INSTALL_DIR}
-  COMPONENT Runtime
-)
-install(
-  DIRECTORY ${NIRFASTMatlab_SOURCE_DIR}/meshes
-  DESTINATION ${NIRFASTMatlab_INSTALL_DIR}
-  COMPONENT Runtime
-)
-
-### MatlabModules ###
-
 # Define names of MatlabModules
 set(modules
   Image2Mesh
-  AddPath
 )
 
 # Set paths

@@ -3,12 +3,11 @@ function outputParams=Image2Mesh(inputParams)
 %% NIRFAST PATH
 
 % Define new path
-if isfield(inputParams,'useothernirfast')
+if isfield(inputParams,'nirfastDir') & exist(inputParams.nirfastDir, 'dir')
     NIRFASTPath=inputParams.nirfastDir
 else
-    curDir = pwd;
-    libDir = fileparts(curDir);
-    NIRFASTPath=fullfile(libDir,'NIRFASTMatlab');
+    errordlg('Select a NIRFAST Matlab directory', 'I/O Error')
+    error('I/O Error: missing input (nirfast matlab path)')
 end
 
 % Add path
