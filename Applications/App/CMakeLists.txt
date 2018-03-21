@@ -17,7 +17,6 @@
 #============================================================================
 
 set(APPLICATION_NAME ${Slicer_MAIN_PROJECT_APPLICATION_NAME})
-
 project(${APPLICATION_NAME}App)
 
 include(SlicerMacroBuildApplication)
@@ -61,6 +60,34 @@ set(${PROJECT_NAME}_VERSION_FULL ${${APPLICATION_NAME}_VERSION})
 # --------------------------------------------------------------------------
 # Folder
 # --------------------------------------------------------------------------
+
+set(APPLIB_DESCRIPTION_SUMMARY
+  "Customized version of Slicer for NIRFAST"
+  )
+
+set(APPLIB_DESCRIPTION_FILE
+  "${${PROJECT_NAME}_SOURCE_DIR}/../../README.md"
+  )
+
+set(APP_LAUNCHER_SPLASHSCREEN_FILE
+  "Resources/Images/SplashScreen.png"
+  )
+
+set(APP_APPLE_ICON_FILE
+  "Resources/Icons/XLarge/DesktopIcon.icns"
+  )
+
+set(APP_WIN_ICON_FILE
+  "Resources/App.ico"
+  )
+
+set(APP_LICENSE_FILE
+  "${${PROJECT_NAME}_SOURCE_DIR}/../../LICENSE"
+  )
+
+# --------------------------------------------------------------------------
+# Folder
+# --------------------------------------------------------------------------
 set(${PROJECT_NAME}_FOLDER "App-${PROJECT_NAME}")
 
 # --------------------------------------------------------------------------
@@ -69,9 +96,6 @@ set(${PROJECT_NAME}_FOLDER "App-${PROJECT_NAME}")
 
 set(APPLIB_NAME "q${PROJECT_NAME}")
 
-set(APPLIB_DESCRIPTION_SUMMARY
-  "Customized version of Slicer for NIRFAST"
-  )
 
 set(APPLIB_SRCS
   qAppAboutDialog.cxx
@@ -125,7 +149,7 @@ configure_file(
 slicerMacroBuildAppLibrary(
   NAME ${APPLIB_NAME}
   DESCRIPTION_SUMMARY ${APPLIB_DESCRIPTION_SUMMARY}
-  DESCRIPTION_FILE ${Slicer_SOURCE_DIR}/README.txt
+  DESCRIPTION_FILE ${APPLIB_DESCRIPTION_FILE}
   APPLICATION_NAME ${SlicerApp_APPLICATION_NAME}
   EXPORT_DIRECTIVE "Q_SLICER_APP_EXPORT"
   FOLDER ${${PROJECT_NAME}_FOLDER}
@@ -155,10 +179,11 @@ message(STATUS "##### : ${qSlicerVolumeRenderingModuleWidgets_INCLUDE_DIRS}")
 slicerMacroBuildApplication(
   NAME ${PROJECT_NAME}
   APPLICATION_NAME ${${PROJECT_NAME}_APPLICATION_NAME}
+  LAUNCHER_SPLASHSCREEN_FILE ${APP_LAUNCHER_SPLASHSCREEN_FILE}
+  APPLE_ICON_FILE ${APP_APPLE_ICON_FILE}
+  WIN_ICON_FILE ${APP_WIN_ICON_FILE}
+  LICENSE_FILE ${APP_LICENSE_FILE}
   FOLDER ${${PROJECT_NAME}_FOLDER}
-  APPLE_ICON_FILE "Resources/Icons/XLarge/DesktopIcon.icns"
-  LAUNCHER_SPLASHSCREEN_FILE "Resources/Images/SplashScreen.png"
-  WIN_ICON_FILE "Resources/App.ico"
   SRCS ${APP_SRCS}
   TARGET_LIBRARIES
     ${APPLIB_NAME}

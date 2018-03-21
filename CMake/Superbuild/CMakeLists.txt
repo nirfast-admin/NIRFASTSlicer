@@ -49,7 +49,7 @@ include(ExternalProjectAddSource)
 
 ExternalProject_Add_Source(MatlabBridge
   GIT_REPOSITORY https://github.com/PerkLab/SlicerMatlabBridge.git
-  GIT_TAG f7fee6340037f33e1fbabc9a96a51f60ebe3c857
+  GIT_TAG 934a1eff4db11b16af7d3de31357d08515dd05cd # 2018-02-21
   SOURCE_DIR_VAR MatlabBridge_SOURCE_DIR
   PROJECTS Slicer
   )
