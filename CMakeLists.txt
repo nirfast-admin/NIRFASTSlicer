@@ -17,7 +17,7 @@ if(NOT DEFINED slicersources_SOURCE_DIR)
   # Download Slicer sources and set variables slicersources_SOURCE_DIR and slicersources_BINARY_DIR
   FetchContent_Populate(slicersources
 	  GIT_REPOSITORY git://github.com/Slicer/Slicer
-	  GIT_TAG        e6878b0065778a56d2e7f182f4c9abba20f4ca88 # 2018-03-22
+	  GIT_TAG        121ce6ad7aad9b77a7cd5773e726c0dc7a87490f # 2018-03-22
 	  GIT_PROGRESS   1
 	  )
 else()
@@ -165,11 +165,16 @@ Slicer_Remote_Add(MatlabBridge
 list(APPEND Slicer_REMOTE_DEPENDENCIES MatlabBridge)
 
 # OpenIGTLink options
+include(SlicerDirectories)
 set(OpenIGTLink_BUILD_TESTING OFF)
+set(OpenIGTLink_INSTALL_BIN_DIR "${Slicer_INSTALL_BIN_DIR}")
+set(OpenIGTLink_INSTALL_LIB_DIR "${Slicer_INSTALL_LIB_DIR}")
 set(OpenIGTLink_INSTALL_NO_DEVELOPMENT ON)
 
 mark_as_superbuild(VARS
   OpenIGTLink_BUILD_TESTING:BOOL
+  OpenIGTLink_INSTALL_BIN_DIR:PATH
+  OpenIGTLink_INSTALL_LIB_DIR:PATH
   OpenIGTLink_INSTALL_NO_DEVELOPMENT:BOOL
   )
 
