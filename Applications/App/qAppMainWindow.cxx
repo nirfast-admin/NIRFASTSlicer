@@ -183,6 +183,11 @@ void qAppMainWindow::show()
         //qDebug()<<"Adding Module "<<moduleName;
         qSlicerAbstractCoreModule * coreModule = moduleManager->module(moduleName);
         qSlicerAbstractModule* module = qobject_cast<qSlicerAbstractModule*>(coreModule);
+        if (!module)
+        {
+          qWarning() << "qAppMainWindow::show:" << "Failed to get reference to" << moduleName << "module";
+          continue;
+        }
         qMenu->insertAction(beforeAction, module->action());
         //qDebug()<<"(+) Added Module "<<module->name();
     }
