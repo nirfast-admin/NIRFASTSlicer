@@ -136,6 +136,7 @@ set(Slicer_QTSCRIPTEDMODULES_DISABLED
 set(Slicer_EXTENSION_SOURCE_DIRS
   ${${APPLICATION_NAME}_SOURCE_DIR}/Modules/MatlabModules
   ${${APPLICATION_NAME}_SOURCE_DIR}/Modules/Scripted/Home
+  ${${APPLICATION_NAME}_SOURCE_DIR}/Modules/Scripted/CreateMesh
   )
 
 # Add remote extension source directories

@@ -159,13 +159,8 @@ int SlicerAppMain(int argc, char* argv[])
     qWarning() << "Could not update UI for the module"<< volRenCoreModule->name();
     }
 
-  // Rename Editor into "Editor (Segment Tissue)"
-  qSlicerAbstractCoreModule * editorCoreModule = moduleManager->module("SegmentEditor");
-  qSlicerAbstractModule* editorModule = qobject_cast<qSlicerAbstractModule*>(editorCoreModule);
-  editorModule->action()->setText("Segment Editor (Segment Tissue)");
-
-  // Update Image2Mesh icon
-  qSlicerAbstractCoreModule * meshCoreModule = moduleManager->module("Image2Mesh");
+  // Update CreateMesh icon
+  qSlicerAbstractCoreModule * meshCoreModule = moduleManager->module("CreateMesh");
   qSlicerAbstractModule* meshModule = qobject_cast<qSlicerAbstractModule*>(meshCoreModule);
   qSlicerAbstractCoreModule * modelsCoreModule = moduleManager->module("Colors");
   qSlicerAbstractModule* modelsModule = qobject_cast<qSlicerAbstractModule*>(modelsCoreModule);

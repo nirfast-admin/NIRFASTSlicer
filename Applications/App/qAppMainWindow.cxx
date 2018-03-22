@@ -169,15 +169,13 @@ void qAppMainWindow::show()
     QStringList addModuleNames = QStringList()
             << "Home"
             << "DICOM"
-            << "Data"
-            << "ViewControllers"
             << "Volumes"
+            << "ViewControllers"
             << "VolumeRendering"
             << "CropVolume"
             << "SegmentEditor"
-            << "Segmentations"
             << "Markups"
-            << "Image2Mesh"
+            << "CreateMesh"
             << "Models";
     QAction * beforeAction = qMenu->actions().at(1); // to insert after the "All Modules" menu
     foreach(const QString& moduleName, addModuleNames)

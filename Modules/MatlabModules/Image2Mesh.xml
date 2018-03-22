@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <executable>
   <category>NIRFAST</category>
-  <title>Create Mesh</title>
-  <description><![CDATA[Create Mesh (Image2Mesh) module first creates a tetrahedral mesh using an Input Label Map. It then launches a Matlab GUI allowing the user to generate the locations of the light Sources and Detectors, based on the initial positions of the Sources/Detectors fiducials input. The output mesh files are written in Output Mesh Directory with the prefix Output Mesh Name. They are computed using the parameters set in the Mesh Parameters section.]]></description>
+  <title>Image2Mesh (Matlab)</title>
+  <description><![CDATA[Image2Mesh module first creates a tetrahedral mesh using an Input Label Map. It then launches a Matlab GUI allowing the user to generate the locations of the light Sources and Detectors, based on the initial positions of the Sources/Detectors fiducials input. The output mesh files are written in Output Mesh Directory with the prefix Output Mesh Name. They are computed using the parameters set in the Mesh Parameters section.]]></description>
   <version>1.0</version>
   <license>slicer4</license>
   <contributor>Alexis Girault (Kitware Inc)</contributor>
