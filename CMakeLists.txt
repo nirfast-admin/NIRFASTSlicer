@@ -65,7 +65,6 @@ if(WIN32)
   option(Slicer_BUILD_WIN32_CONSOLE             "Build application executable as a console app"       OFF)
 endif()
 
-option(Slicer_BUILD_QT_DESIGNER_PLUGINS         "Build Qt designer plugins"                           OFF)
 option(Slicer_BUILD_DICOM_SUPPORT               "Build application with DICOM support"                ON)
 option(Slicer_BUILD_DIFFUSION_SUPPORT           "Build application with Diffusion support"            OFF)
 option(Slicer_BUILD_EXTENSIONMANAGER_SUPPORT    "Build application with ExtensionManager support"     OFF)
