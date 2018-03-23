@@ -141,6 +141,7 @@ void qAppMainWindow::show()
             << "Markups"
             << "Models"
             << "SceneViews"
+            << "SegmentEditor"
             << "SubjectHierarchy"
             << "Transforms"
             << "ViewControllers"
