@@ -78,7 +78,7 @@ void qAppMainWindowPrivate::setupUi(QMainWindow * mainWindow)
   this->LogoLabel->setPixmap(logo);
 
   // Hide the toolbars
-  this->MainToolBar->setVisible(false);
+  //this->MainToolBar->setVisible(false);
   //this->ModuleSelectorToolBar->setVisible(false);
   this->ModuleToolBar->setVisible(false);
   //this->ViewToolBar->setVisible(false);
