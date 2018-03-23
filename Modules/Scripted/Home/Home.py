@@ -26,8 +26,7 @@ class Home:
         parent.acknowledgementText = """
         NIRFAST is an open source software package for multi-modal optical imaging in living tissue.  Originally developed at Dartmouth College in 2001, ongoing development, maintenance, distribution, and training is managed by Dartmouth College, University of Birmingham, and Kitware Inc.  The project is supported by NCI R01CA184354 (Davis, SC).
         """
-
-        # parent.icon = qt.QIcon("%s/cranioIcon.png" % ICON_DIR)
+        parent.icon = qt.QIcon(':Logo.png')
 
         self.parent = parent
 

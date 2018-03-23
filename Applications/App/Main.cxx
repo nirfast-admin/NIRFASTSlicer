@@ -166,11 +166,6 @@ int SlicerAppMain(int argc, char* argv[])
   qSlicerAbstractModule* modelsModule = qobject_cast<qSlicerAbstractModule*>(modelsCoreModule);
   meshModule->action()->setIcon(modelsModule->action()->icon());
 
-  // Update Home icon
-  qSlicerAbstractCoreModule * homeCoreModule = moduleManager->module("Home");
-  qSlicerAbstractModule* homeModule = qobject_cast<qSlicerAbstractModule*>(homeCoreModule);
-  homeModule->action()->setIcon(window->windowIcon());
-
   // Open Help & acknowledgment
   qSlicerModulePanel* modulePanel = window->findChild<qSlicerModulePanel*>("ModulePanel");
   ctkCollapsibleButton* helpButton = modulePanel->findChild<ctkCollapsibleButton*>("HelpCollapsibleButton");
