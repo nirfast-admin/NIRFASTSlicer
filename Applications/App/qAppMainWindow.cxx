@@ -17,18 +17,27 @@
 
 // Qt includes
 #include <QDebug>
-#include <QTimer>
+#include <QDesktopWidget>
 
 // Slicer includes
 #include "qSlicerModuleSelectorToolBar.h"
-#include "qSlicerModulesMenu.h"
-#include "qSlicerModuleManager.h"
-#include "qSlicerAbstractModule.h"
 
 // SlicerApp includes
 #include "qAppAboutDialog.h"
 #include "qAppMainWindow_p.h"
 #include "qSlicerApplication.h"
+
+//
+// NIRFastSlicer includes
+//
+
+// Qt includes
+#include <QTimer>
+
+// Slicer includes
+#include "qSlicerModulesMenu.h"
+#include "qSlicerModuleManager.h"
+#include "qSlicerAbstractModule.h"
 
 //-----------------------------------------------------------------------------
 // qAppMainWindowPrivate methods
@@ -61,10 +70,15 @@ void qAppMainWindowPrivate::setupUi(QMainWindow * mainWindow)
   this->HelpAboutSlicerAppAction->setText("About " + app->applicationName());
   this->HelpAboutSlicerAppAction->setToolTip("");
 
-  this->LogoLabel->setPixmap(QPixmap(":/LogoFull.png"));
+  QPixmap logo(":/LogoFull.png");
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+  qreal dpr = sqrt(qApp->desktop()->logicalDpiX()*qreal(qApp->desktop()->logicalDpiY()) / (qApp->desktop()->physicalDpiX()*qApp->desktop()->physicalDpiY()));
+  logo.setDevicePixelRatio(dpr);
+#endif
+  this->LogoLabel->setPixmap(logo);
 
   // Hide the toolbars
-  this->MainToolBar->setVisible(false);
+  //this->MainToolBar->setVisible(false);
   //this->ModuleSelectorToolBar->setVisible(false);
   this->ModuleToolBar->setVisible(false);
   //this->ViewToolBar->setVisible(false);
@@ -124,10 +138,10 @@ void qAppMainWindow::show()
             << "Annotations"
             << "DICOM"
             << "Data"
-            << "Editor"
             << "Markups"
             << "Models"
             << "SceneViews"
+            << "SegmentEditor"
             << "SubjectHierarchy"
             << "Transforms"
             << "ViewControllers"
@@ -139,6 +153,11 @@ void qAppMainWindow::show()
         //qDebug()<<"Removing Module "<<moduleName;
         qSlicerAbstractCoreModule * coreModule = moduleManager->module(moduleName);
         qSlicerAbstractModule* module = qobject_cast<qSlicerAbstractModule*>(coreModule);
+        if (!module)
+        {
+          qWarning() << "qAppMainWindow::show:" << "Failed to get reference to" << moduleName << "module";
+          continue;
+        }
         qMenu->removeAction(module->action());
         // We removed the action but need to keep the connection for the
         // action in "All Modules", or if they are added back later on
@@ -151,15 +170,13 @@ void qAppMainWindow::show()
     QStringList addModuleNames = QStringList()
             << "Home"
             << "DICOM"
-            << "Data"
-            << "ViewControllers"
             << "Volumes"
+            << "ViewControllers"
             << "VolumeRendering"
             << "CropVolume"
             << "SegmentEditor"
-            << "Segmentations"
             << "Markups"
-            << "Image2Mesh"
+            << "CreateMesh"
             << "Models";
     QAction * beforeAction = qMenu->actions().at(1); // to insert after the "All Modules" menu
     foreach(const QString& moduleName, addModuleNames)
@@ -167,6 +184,11 @@ void qAppMainWindow::show()
         //qDebug()<<"Adding Module "<<moduleName;
         qSlicerAbstractCoreModule * coreModule = moduleManager->module(moduleName);
         qSlicerAbstractModule* module = qobject_cast<qSlicerAbstractModule*>(coreModule);
+        if (!module)
+        {
+          qWarning() << "qAppMainWindow::show:" << "Failed to get reference to" << moduleName << "module";
+          continue;
+        }
         qMenu->insertAction(beforeAction, module->action());
         //qDebug()<<"(+) Added Module "<<module->name();
     }

@@ -1,5 +1,7 @@
+include(SlicerMacroBuildScriptedModule)
+
 #-----------------------------------------------------------------------------
-set(MODULE_NAME Mesh2Image)
+set(MODULE_NAME CreateMesh)
 
 #-----------------------------------------------------------------------------
 set(MODULE_PYTHON_RESOURCES

@@ -1,3 +1,5 @@
+include(SlicerMacroBuildScriptedModule)
+
 #-----------------------------------------------------------------------------
 set(MODULE_NAME Home)
 

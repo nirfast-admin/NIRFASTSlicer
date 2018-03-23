@@ -26,8 +26,7 @@ class Home:
         parent.acknowledgementText = """
         NIRFAST is an open source software package for multi-modal optical imaging in living tissue.  Originally developed at Dartmouth College in 2001, ongoing development, maintenance, distribution, and training is managed by Dartmouth College, University of Birmingham, and Kitware Inc.  The project is supported by NCI R01CA184354 (Davis, SC).
         """
-
-        # parent.icon = qt.QIcon("%s/cranioIcon.png" % ICON_DIR)
+        parent.icon = qt.QIcon(':Logo.png')
 
         self.parent = parent
 
@@ -61,12 +60,11 @@ The drop-down Modules are ordered to follow the basic workflow for processing DI
 &nbsp; 1. Use the <a href="#"><b>DICOM</b></a> module to load your MRI/CT/US DICOMS<br><br>
 &nbsp; 2. Use <a href="#"><b>Volume Rendering</b></a> to view a 3D rendering of your DICOM images<br><br>
 &nbsp; 3. <a href="#"><b>Crop</b></a> the image volume to the tissue region of interest for which you will reconstruct optical images.<br><br>
-&nbsp; 4. Use the <a href="#"><b>Segment Editor (segment tissue)</b></a> module to segment the tissue into different tissue types which can guide the optical image reconstruction routines<br><br>
-&nbsp; 5. Use the <a href="#"><b>Segmentations</b></a> module to export the tissue segmentation into a label map<br><br>
-&nbsp; 6. Use the <a href="#"><b>Markups</b></a> module to place optical source and detector positions.<br><br>
-&nbsp; 7. Use the <a href="#"><b>Create Mesh</b></a> module to generate a NIRFAST-compatible mesh from the segmented tissue (label maps)<br><br>
-&nbsp; 8. After creating the mesh, follow tutorials on reconstructing optical images in the NIRFAST Matlab window<br><br>
-&nbsp; 9. Once images have been reconstructed use the <a href="#"><b>Import Optical Properties</b></a> module to view the optical parameter images overlaid on the original DICOMS<br>
+&nbsp; 4. Use the <a href="#"><b>Segment Editor</b></a> module to segment the tissue into different tissue types which can guide the optical image reconstruction routines<br><br>
+&nbsp; 5. Use the <a href="#"><b>Markups</b></a> module to place optical source and detector positions.<br><br>
+&nbsp; 6. Use the <a href="#"><b>Create Mesh</b></a> module to generate a NIRFAST-compatible mesh from the segmented tissue (label maps)<br><br>
+&nbsp; 7. After creating the mesh, follow tutorials on reconstructing optical images in the NIRFAST Matlab window<br><br>
+&nbsp; 8. Once optical properties have been reconstructed, open the resulting volumetric mesh in NIRFAST-Slicer and use the <a href="#"><b>Models</b></a> module to visualize the data overlaid on the original DICOM: in the Display menu, check 'Slice Intersections Visible' from the Visibility submenu, and select the parameters to display in the Scalars submenu.<br>
 """
 
         # TEXTEDIT
@@ -91,11 +89,9 @@ The drop-down Modules are ordered to follow the basic workflow for processing DI
             slicer.util.selectModule(slicer.moduleNames.CropVolume)
         elif pos >= 499 and pos <= 533 :
             slicer.util.selectModule(slicer.moduleNames.SegmentEditor)
-        elif pos >= 662 and pos <= 676 :
-            slicer.util.selectModule(slicer.moduleNames.Segmentations)
-        elif pos >= 748 and pos <= 756 :
+        elif pos >= 645 and pos <= 653 :
             slicer.util.selectModule(slicer.moduleNames.Markups)
-        elif pos >= 825 and pos <= 837 :
-            slicer.util.selectModule(slicer.moduleNames.Image2Mesh)
-	elif pos >= 1081 and pos <= 1107 :
-             slicer.util.selectModule(slicer.moduleNames.Mesh2Image)
+        elif pos >= 722 and pos <= 734 :
+            slicer.util.selectModule(slicer.moduleNames.CreateMesh)
+        elif pos >= 1047 and pos <= 1053 :
+             slicer.util.selectModule(slicer.moduleNames.Models)

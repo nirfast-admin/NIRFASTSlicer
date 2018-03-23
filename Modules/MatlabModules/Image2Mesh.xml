@@ -1,12 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <executable>
   <category>NIRFAST</category>
-  <title>Create Mesh</title>
-  <description><![CDATA[Create Mesh (Image2Mesh) module first creates a tetrahedral mesh using an Input Label Map. It then launches a Matlab GUI allowing the user to generate the locations of the light Sources and Detectors, based on the initial positions of the Sources/Detectors fiducials input. The output mesh files are written in Output Mesh Directory with the prefix Output Mesh Name. They are computed using the parameters set in the Mesh Parameters section.]]></description>
+  <title>Image2Mesh (Matlab)</title>
+  <description><![CDATA[Image2Mesh module first creates a tetrahedral mesh using an Input Label Map. It then launches a Matlab GUI allowing the user to generate the locations of the light Sources and Detectors, based on the initial positions of the Sources/Detectors fiducials input. The output mesh files are written in Output Mesh Directory with the prefix Output Mesh Name. They are computed using the parameters set in the Mesh Parameters section.]]></description>
   <version>1.0</version>
   <license>slicer4</license>
   <contributor>Alexis Girault (Kitware Inc)</contributor>
   <acknowledgements><![CDATA[This work is part of the NIRFASTSlicer application developped at Kitware, Inc. to allow the use of the NIRFASTMatlab application developped by Dartmouth University and the University of Birmingham, funded by the National Institutes of Health, Grant R01 CA184354.]]></acknowledgements>
+  <parameters>
+    <label>NIRFAST</label>
+    <description><![CDATA[NIRFAST Matlab Directories]]></description>
+    <directory>
+      <label>Path to NIRFAST Matlab</label>
+      <longflag>nirfastDir</longflag>
+      <description><![CDATA[Directory to NIRFAST Matlab]]></description>
+      <channel>input</channel>
+    </directory>
+  </parameters>
   <parameters>
     <label>I/O</label>
     <description><![CDATA[Inputs Outputs]]></description>
@@ -27,6 +37,7 @@
       <longflag>meshdir</longflag>
       <description><![CDATA[Save NIRFAST mesh to this directory.]]></description>
       <default>~</default>
+      <channel>input</channel>
     </directory>
     <string>
       <label>Output Mesh Name</label>
@@ -94,20 +105,5 @@
     <channel>input</channel>
     <default>false</default>
   </boolean>
-  </parameters>
-  <parameters advanced='true'>
-    <label>NIRFAST Matlab</label>
-    <description><![CDATA[NIRFAST Matlab Directories]]></description>
-    <boolean>
-      <label>Use custom NIRFAST Matlab</label>
-      <longflag>useothernirfast</longflag>
-      <description>If checked, use NIRFAST Matlab from directories below instead of the one packaged within NIRFAST Slicer.</description>
-      <default>false</default>
-    </boolean>
-    <directory>
-      <label>Matlab sources</label>
-      <longflag>nirfastDir</longflag>
-      <description><![CDATA[Directory to NIRFAST Matlab sources]]></description>
-    </directory>
   </parameters>
 </executable>
