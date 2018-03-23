@@ -29,8 +29,8 @@ include(SlicerInitializeOSXVariables)
 
 # Set application metadata
 set(APPLICATION_NAME           "NIRFASTSlicer")
-set(Slicer_VERSION_MAJOR       "1")
-set(Slicer_VERSION_MINOR       "1")
+set(Slicer_VERSION_MAJOR       "2")
+set(Slicer_VERSION_MINOR       "0")
 set(Slicer_VERSION_PATCH       "0")
 project(${APPLICATION_NAME} VERSION "${Slicer_VERSION_MAJOR}.${Slicer_VERSION_MINOR}.${Slicer_VERSION_PATCH}")
 
