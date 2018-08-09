@@ -145,7 +145,7 @@ include(ExternalProjectAddSource)
 # Remote modules (added in topological order)
 Slicer_Remote_Add(OpenIGTLink
   GIT_REPOSITORY ${EP_GIT_PROTOCOL}://github.com/Slicer/OpenIGTLink.git
-  GIT_TAG 18db20552ac5cd48afdb94555d11a2f4f2c5417f # version 3.0 from 2017-06-28 + few Slicer patches
+  GIT_TAG 256bc40b331c989602b71e54ec715dfc1b734296 # version 3.0 from 2017-06-28 + few Slicer patches
   LABELS REMOTE_MODULE
   )
 list(APPEND Slicer_REMOTE_DEPENDENCIES OpenIGTLink)
